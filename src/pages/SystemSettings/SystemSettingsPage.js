@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { mockSystemSettings } from '../../data/mockData';
-import './SystemSettingsPage.css';
+import './SystemSettingsPage.scss';
 
 const tabs = ['site', 'device', 'notification', 'realtime'];
 
@@ -40,7 +40,7 @@ export default function SystemSettingsPage() {
   );
 
   return (
-    <div className="page-stack animate-fadeIn">
+    <div className="page animate-fadeIn">
       <div className="card">
         <div className="page-toolbar">
           <div>

@@ -4,7 +4,7 @@ import Modal from '../../components/shared/Modal';
 import StatusBadge from '../../components/shared/StatusBadge';
 import { useAuth } from '../../contexts/AuthContext';
 import { mockAlarms } from '../../data/mockData';
-import './AlarmPage.css';
+import './AlarmPage.scss';
 
 export default function AlarmPage() {
   const { hasPermission } = useAuth();
@@ -54,7 +54,7 @@ export default function AlarmPage() {
   };
 
   return (
-    <div className="alarm-page animate-fadeIn">
+    <div className="alarm animate-fadeIn">
       <div className="card alarm-filter-bar">
         <div className="flex items-center gap-sm flex-wrap">
           <select className="form-select" style={{ width: 130 }} value={filterLevel} onChange={(e) => { setFilterLevel(e.target.value); setPage(1); }}>

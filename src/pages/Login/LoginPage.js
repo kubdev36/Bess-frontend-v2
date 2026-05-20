@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LuEye, LuEyeOff, LuGlobe, LuLock, LuUser } from 'react-icons/lu';
 import { useAuth } from '../../contexts/AuthContext';
-import './LoginPage.css';
+import './LoginPage.scss';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page" style={backgroundStyle}>
+    <div className="login" style={backgroundStyle}>
       <div className="login-overlay"></div>
 
       <div className="login-card">

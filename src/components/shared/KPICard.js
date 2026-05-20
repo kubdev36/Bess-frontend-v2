@@ -1,6 +1,6 @@
 import React from 'react';
 import { LuTrendingDown, LuTrendingUp } from 'react-icons/lu';
-import './KPICard.css';
+import './KPICard.scss';
 import StatusBadge from './StatusBadge';
 
 export default function KPICard({

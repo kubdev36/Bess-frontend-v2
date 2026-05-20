@@ -29,7 +29,7 @@ import {
   mockHourlyData,
   mockSystemSummary as sys,
 } from "../../data/mockData";
-import "./DashboardPage.css";
+import "./DashboardPage.scss";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="dashboard-page animate-fadeIn">
+    <div className="dashboard animate-fadeIn">
       <section className="dashboard-section">
         <div className="card dashboard-visual-card">
           <div className="card-header">

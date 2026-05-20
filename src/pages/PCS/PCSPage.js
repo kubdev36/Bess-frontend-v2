@@ -3,11 +3,11 @@ import { LuBatteryCharging, LuDownload, LuZap } from 'react-icons/lu';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import StatusBadge from '../../components/shared/StatusBadge';
 import { mockHourlyData, mockPCSFaults, mockSystemSummary as sys } from '../../data/mockData';
-import './PCSPage.css';
+import './PCSPage.scss';
 
 export default function PCSPage() {
   return (
-    <div className="pcs-page animate-fadeIn">
+    <div className="pcs animate-fadeIn">
       <div className="card pcs-overview">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-base">

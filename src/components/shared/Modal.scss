@@ -1,0 +1,131 @@
+.modal {
+
+  &-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal-overlay);
+    animation: fadeIn 0.15s ease-out;
+    backdrop-filter: blur(2px);
+  }
+
+  &-content {
+    background: var(--card-bg);
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.2s ease-out;
+  }
+
+  &-small {
+    width: 400px;
+  }
+
+  &-medium {
+    width: 520px;
+  }
+
+  &-large {
+    width: 680px;
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  &-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-danger &-header {
+    background: var(--warning-light);
+  }
+
+  &-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: var(--gray-200);
+      color: var(--text-primary);
+    }
+  }
+
+  &-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px 20px;
+    border-top: 1px solid var(--border-light);
+  }
+
+  &-message {
+    font-size: var(--font-size-base);
+    color: var(--text-body);
+    line-height: 1.6;
+    margin-bottom: var(--space-base);
+  }
+
+  &-warning-icon,
+  &-form-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &-changes-table {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--space-base);
+
+    .table th,
+    .table td {
+      padding: 8px 14px;
+      font-size: var(--font-size-sm);
+    }
+  }
+
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

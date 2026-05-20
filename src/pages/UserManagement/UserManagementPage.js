@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import Modal from '../../components/shared/Modal';
 import StatusBadge from '../../components/shared/StatusBadge';
 import { mockUsers } from '../../data/mockData';
-import './UserManagementPage.css';
+import './UserManagementPage.scss';
 
 const emptyUser = { name: '', email: '', password: '', confirmPassword: '', role: 'Viewer', status: 'Active' };
 
@@ -67,7 +67,7 @@ export default function UserManagementPage() {
   };
 
   return (
-    <div className="page-stack animate-fadeIn">
+    <div className="page animate-fadeIn">
       <div className="card">
         <div className="page-toolbar">
           <div>

@@ -3,7 +3,7 @@ import { LuBadgeCheck, LuSearch } from 'react-icons/lu';
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import StatusBadge from '../../components/shared/StatusBadge';
 import { mockAlarms, mockContainers } from '../../data/mockData';
-import './BatteryPage.css';
+import './BatteryPage.scss';
 
 export default function BatteryPage() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
@@ -21,11 +21,11 @@ export default function BatteryPage() {
 
   const rackChartData = selectedRack
     ? Array.from({ length: 24 }, (_, i) => ({
-        time: `${String(i).padStart(2, '0')}:00`,
-        voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
-        temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
-        soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
-      }))
+      time: `${String(i).padStart(2, '0')}:00`,
+      voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
+      temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
+      soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
+    }))
     : [];
 
   const getCellColor = (cell) => {

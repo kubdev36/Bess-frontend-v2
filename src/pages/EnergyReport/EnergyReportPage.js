@@ -12,7 +12,7 @@ import {
   YAxis,
 } from 'recharts';
 import { mockEnergyReport } from '../../data/mockData';
-import './EnergyReportPage.css';
+import './EnergyReportPage.scss';
 
 const presets = ['Today', 'Yesterday', 'Last 7 days', 'This month', 'This year', 'Custom range'];
 
@@ -47,7 +47,7 @@ export default function EnergyReportPage() {
   const revenue = Math.round(summary.gridExport * 0.08);
 
   return (
-    <div className="page-stack animate-fadeIn">
+    <div className="page animate-fadeIn">
       <div className="card">
         <div className="page-toolbar">
           <div>
@@ -55,7 +55,7 @@ export default function EnergyReportPage() {
             <div className="card-subtitle">Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.</div>
           </div>
           <div className="page-toolbar-actions">
-            <div className="chip-group">
+            <div className="chip">
               {presets.map(item => (
                 <button
                   key={item}

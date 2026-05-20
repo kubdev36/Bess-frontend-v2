@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LuBell, LuClock3, LuFactory, LuLogOut, LuMenu } from 'react-icons/lu';
 import { useAuth } from '../../contexts/AuthContext';
-import './Header.css';
+import './Header.scss';
 
 const pageTitles = {
   '/dashboard': 'Dashboard Overview',
@@ -55,12 +55,12 @@ export default function Header({ onMenuToggle }) {
           </span>
         </div>
         <div className="header-connection">
-          <span className="connection-dot connected"></span>
-          <span className="connection-text">Connected</span>
+          <span className="header-connection-dot connected"></span>
+          <span className="header-connection-text">Connected</span>
         </div>
         <button className="header-notification" onClick={() => navigate('/alarms')} aria-label="Open alarms">
           <LuBell />
-          <span className="notification-badge">3</span>
+          <span className="header-notification-badge">3</span>
         </button>
         <div className="header-user" onClick={() => setShowUserMenu(!showUserMenu)}>
           <div className="header-avatar">{currentUser?.name?.charAt(0) || 'U'}</div>

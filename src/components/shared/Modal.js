@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FaTriangleExclamation } from 'react-icons/fa6';
 import { LuCheck, LuLock, LuX } from 'react-icons/lu';
-import './Modal.css';
+import './Modal.scss';
 
 export default function Modal({ isOpen, onClose, title, children, footer, size = 'medium', danger = false }) {
   useEffect(() => {

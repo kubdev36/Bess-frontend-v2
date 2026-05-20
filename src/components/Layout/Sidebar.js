@@ -11,7 +11,7 @@ import {
   LuWaves,
 } from 'react-icons/lu';
 import { useAuth } from '../../contexts/AuthContext';
-import './Sidebar.css';
+import './Sidebar.scss';
 
 const menuGroups = [
   {
