@@ -48,15 +48,7 @@ function AppRoutes() {
         path="/login"
         element={
           <PublicOnlyRoute>
-            <LoginPage mode="login" />
-          </PublicOnlyRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicOnlyRoute>
-            <LoginPage mode="register" />
+            <LoginPage />
           </PublicOnlyRoute>
         }
       />

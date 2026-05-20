@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuEye, LuEyeOff, LuGlobe, LuLock, LuUser } from "react-icons/lu";
 import { useAuth } from "../../contexts/AuthContext";
@@ -7,10 +7,9 @@ import "./LoginPage.scss";
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const backgroundStyle = useMemo(
-    () => ({ backgroundImage: `url(${process.env.PUBLIC_URL}/intro.jpg)` }),
-    [],
-  );
+  const backgroundStyle = {
+    backgroundImage: `linear-gradient(rgba(7, 15, 32, 0.28), rgba(7, 15, 32, 0.42)), url(${process.env.PUBLIC_URL}/intro.jpg)`,
+  };
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -24,12 +23,12 @@ export default function LoginPage() {
     setError("");
 
     if (!identifier.trim()) {
-      setError("Vui lòng nhập tên tài khoản.");
+      setError("Vui long nhap ten tai khoan.");
       return;
     }
 
     if (!password) {
-      setError("Vui lòng nhập mật khẩu.");
+      setError("Vui long nhap mat khau.");
       return;
     }
 
@@ -45,6 +44,10 @@ export default function LoginPage() {
 
       setError(result.error);
     }, 300);
+  };
+
+  const handleForgotPassword = () => {
+    window.alert("Vui long lien he quan tri vien de duoc cap lai mat khau.");
   };
 
   const handleDemoLogin = () => {
@@ -75,7 +78,7 @@ export default function LoginPage() {
             <button
               type="button"
               className="login-language"
-              aria-label="Ngôn ngữ tiếng Việt"
+              aria-label="Ngon ngu tieng Viet"
             >
               <LuGlobe />
               <span>Vi</span>
@@ -89,7 +92,7 @@ export default function LoginPage() {
               </span>
               <input
                 type="text"
-                placeholder="Tên tài khoản"
+                placeholder="Ten tai khoan"
                 value={identifier}
                 onChange={(event) => setIdentifier(event.target.value)}
                 autoFocus
@@ -102,7 +105,7 @@ export default function LoginPage() {
               </span>
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Mật khẩu"
+                placeholder="Mat khau"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
               />
@@ -110,7 +113,7 @@ export default function LoginPage() {
                 type="button"
                 className="login-field-action"
                 onClick={() => setShowPassword((prev) => !prev)}
-                aria-label="Hiện hoặc ẩn mật khẩu"
+                aria-label="Hien hoac an mat khau"
               >
                 {showPassword ? <LuEyeOff /> : <LuEye />}
               </button>
@@ -128,24 +131,11 @@ export default function LoginPage() {
             {error && <div className="login-error">{error}</div>}
 
             <button type="submit" className="login-submit" disabled={loading}>
-              {loading ? "Đang đăng nhập" : "Đăng nhập"}
+              {loading ? "Dang dang nhap" : "Dang nhap"}
             </button>
 
             <div className="login-links">
-              <button
-                type="button"
-                onClick={() => window.alert("Chưa cấu hình đăng ký tài khoản.")}
-              >
-                Đăng ký tài khoản
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  window.alert(
-                    "Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.",
-                  )
-                }
-              >
+              <button type="button" onClick={handleForgotPassword}>
                 Quên mật khẩu
               </button>
             </div>
