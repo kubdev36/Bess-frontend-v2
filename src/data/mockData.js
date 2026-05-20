@@ -79,16 +79,16 @@ function genCells(rackId, count = 16) {
     let status = 'Normal';
     if (v > 3.28) status = 'High';
     if (v < 3.10) status = 'Low';
-    cells.push({ id: `${rackId}-C${String(i).padStart(2,'0')}`, voltage: v, temperature: temp, status });
+    cells.push({ id: `${rackId}-C${String(i).padStart(2, '0')}`, voltage: v, temperature: temp, status });
   }
   return cells;
 }
 
 function genRacks(containerId, count = 10) {
-  const statuses = ['Normal','Normal','Normal','Normal','Normal','Normal','Normal','Normal','Warning','Normal'];
+  const statuses = ['Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Warning', 'Normal'];
   const racks = [];
   for (let i = 1; i <= count; i++) {
-    const id = `${containerId}-R${String(i).padStart(2,'0')}`;
+    const id = `${containerId}-R${String(i).padStart(2, '0')}`;
     const soc = +(80 + Math.random() * 10).toFixed(1);
     const soh = +(94 + Math.random() * 5).toFixed(1);
     const voltage = Math.round(380 + Math.random() * 8);
@@ -96,13 +96,22 @@ function genRacks(containerId, count = 10) {
     const temp = +(26 + Math.random() * 8).toFixed(1);
     const cycles = Math.round(100 + Math.random() * 60);
     const cells = genCells(id);
-    const maxCellV = Math.max(...cells.map(c => c.voltage));
-    const minCellV = Math.min(...cells.map(c => c.voltage));
+    const maxCellV = Math.max(...cells.map((c) => c.voltage));
+    const minCellV = Math.min(...cells.map((c) => c.voltage));
     racks.push({
-      id, status: statuses[i - 1], voltage, current, soc, soh,
-      temperature: temp, cycles, cells, maxCellV: +maxCellV.toFixed(3),
-      minCellV: +minCellV.toFixed(3), deltaV: +(maxCellV - minCellV).toFixed(3),
-      maxTemp: Math.max(...cells.map(c => c.temperature)),
+      id,
+      status: statuses[i - 1],
+      voltage,
+      current,
+      soc,
+      soh,
+      temperature: temp,
+      cycles,
+      cells,
+      maxCellV: +maxCellV.toFixed(3),
+      minCellV: +minCellV.toFixed(3),
+      deltaV: +(maxCellV - minCellV).toFixed(3),
+      maxTemp: Math.max(...cells.map((c) => c.temperature)),
     });
   }
   return racks;
@@ -127,22 +136,37 @@ export const mockPCSFaults = [
 const alarmLevels = ['Info', 'Warning', 'Fault', 'Critical'];
 const alarmDevices = ['BMS', 'PCS', 'Grid', 'Battery', 'System'];
 const alarmMessages = [
-  'Overtemperature detected', 'High voltage warning', 'Communication lost', 'SOC below minimum',
-  'Grid reconnected', 'PCS efficiency drop', 'Cell voltage imbalance', 'Rack offline',
-  'Fan failure', 'Current sensor fault', 'Frequency deviation', 'Power limit reached',
-  'Battery over-discharge', 'Insulation fault', 'Emergency stop activated',
+  'Overtemperature detected',
+  'High voltage warning',
+  'Communication lost',
+  'SOC below minimum',
+  'Grid reconnected',
+  'PCS efficiency drop',
+  'Cell voltage imbalance',
+  'Rack offline',
+  'Fan failure',
+  'Current sensor fault',
+  'Frequency deviation',
+  'Power limit reached',
+  'Battery over-discharge',
+  'Insulation fault',
+  'Emergency stop activated',
 ];
 const alarmStatuses = ['Active', 'Acknowledged', 'Cleared'];
 
 export const mockAlarms = Array.from({ length: 55 }, (_, i) => {
   const id = i + 1;
-  const d = new Date(2026, 4, 19, 14 - Math.floor(i / 3), (60 - (i * 7) % 60));
+  const d = new Date(2026, 4, 19, 14 - Math.floor(i / 3), 60 - ((i * 7) % 60));
   const level = alarmLevels[i < 3 ? (i === 0 ? 3 : 2) : Math.floor(Math.random() * 4)];
   const status = i < 3 ? 'Active' : alarmStatuses[Math.floor(Math.random() * 3)];
   return {
-    id, time: d.toISOString().slice(0, 16).replace('T', ' '),
-    level, device: alarmDevices[i % 5], message: alarmMessages[i % alarmMessages.length],
-    status, operator: status === 'Acknowledged' ? 'Admin' : status === 'Cleared' ? 'Op User' : '-',
+    id,
+    time: d.toISOString().slice(0, 16).replace('T', ' '),
+    level,
+    device: alarmDevices[i % 5],
+    message: alarmMessages[i % alarmMessages.length],
+    status,
+    operator: status === 'Acknowledged' ? 'Admin' : status === 'Cleared' ? 'Op User' : '-',
     code: `ALM-${String(id).padStart(3, '0')}`,
     description: `Detailed description for alarm ${id}. System detected abnormal condition.`,
     acknowledgedAt: status !== 'Active' ? '2026-05-19 14:15' : null,
@@ -167,116 +191,29 @@ export const mockEnergyReport = Array.from({ length: 30 }, (_, i) => {
   };
 });
 
-// --- Schedules ---
-export const mockSchedules = [
-  { id: 1, name: 'Morning Charge', start: '06:00', end: '10:00', mode: 'Charge', power: 200, socTarget: 90, socMin: null, repeat: 'Daily', status: 'Enabled' },
-  { id: 2, name: 'Peak Shaving', start: '17:00', end: '21:00', mode: 'Discharge', power: 150, socTarget: null, socMin: 20, repeat: 'Daily', status: 'Enabled' },
-  { id: 3, name: 'Night Standby', start: '22:00', end: '05:00', mode: 'Standby', power: null, socTarget: null, socMin: null, repeat: 'Daily', status: 'Enabled' },
-  { id: 4, name: 'Weekend Maintenance', start: '08:00', end: '12:00', mode: 'Maintenance', power: null, socTarget: null, socMin: null, repeat: 'Weekly', status: 'Disabled' },
-  { id: 5, name: 'Afternoon Backup', start: '13:00', end: '16:00', mode: 'Backup', power: 100, socTarget: null, socMin: 30, repeat: 'Daily', status: 'Enabled' },
-  { id: 6, name: 'Peak Shaving Evening', start: '18:00', end: '20:00', mode: 'Peak Shaving', power: 180, socTarget: null, socMin: 25, repeat: 'Daily', status: 'Enabled' },
-];
-
-// --- Command History ---
-const cmdTypes = ['Charge', 'Discharge', 'SetMode', 'Start', 'Stop', 'E-Stop', 'ResetAlarm', 'SetPower', 'SetSOC', 'RemoteToggle'];
-const cmdStatuses = ['Pending', 'Sent', 'Accepted', 'Rejected', 'Failed', 'Timeout', 'Completed'];
-export const mockCommands = Array.from({ length: 35 }, (_, i) => {
-  const d = new Date(2026, 4, 19, 14 - Math.floor(i / 4), 59 - (i * 5) % 60);
-  const type = cmdTypes[i % cmdTypes.length];
-  const status = i < 2 ? 'Completed' : cmdStatuses[Math.floor(Math.random() * cmdStatuses.length)];
-  const user = i % 3 === 0 ? 'Admin' : i % 3 === 1 ? 'Op User' : 'Jane Operator';
-  const role = i % 3 === 0 ? 'Admin' : 'Operator';
-  return {
-    id: i + 1, time: d.toISOString().slice(0, 19).replace('T', ' '),
-    user, role, type, device: i % 2 === 0 ? 'Battery' : 'System',
-    oldValue: type === 'SetMode' ? 'Auto' : type === 'SetPower' ? '150 kW' : '-',
-    newValue: type === 'SetMode' ? 'Charge' : type === 'SetPower' ? '200 kW' : type === 'Charge' ? '200 kW' : '-',
-    status, message: status === 'Completed' ? 'OK' : status === 'Failed' ? 'Safety check failed' : '',
-    reason: 'Peak shaving optimization', ip: '192.168.1.10',
-  };
-});
-
-// --- Operation Logs ---
-const logActions = ['Login', 'Logout', 'Start System', 'Stop System', 'Set Power', 'Ack Alarm', 'Clear Alarm', 'Create Schedule', 'Edit Parameter', 'Export Report', 'Add User', 'Lock User'];
-const logModules = ['Auth', 'Control', 'Alarm', 'Schedule', 'Parameter', 'Report', 'User'];
-export const mockOperationLogs = Array.from({ length: 55 }, (_, i) => {
-  const d = new Date(2026, 4, 19, 14 - Math.floor(i / 5), 59 - (i * 3) % 60);
-  const action = logActions[i % logActions.length];
-  const module = logModules[i % logModules.length];
-  const user = i % 4 === 0 ? 'Admin' : i % 4 === 1 ? 'Op User' : i % 4 === 2 ? 'Tech Engineer' : 'Jane Operator';
-  const role = i % 4 === 0 ? 'Admin' : i % 4 === 1 ? 'Operator' : i % 4 === 2 ? 'Engineer' : 'Operator';
-  return {
-    id: i + 1, time: d.toISOString().slice(0, 19).replace('T', ' '),
-    user, role, action, module,
-    description: `${action} - ${module} operation performed`,
-    ip: `192.168.1.${10 + (i % 8)}`,
-    result: i === 4 ? 'Failed' : 'Success',
-    oldValue: action.includes('Set') ? '150 kW' : null,
-    newValue: action.includes('Set') ? '200 kW' : null,
-    errorMessage: i === 4 ? 'Invalid credentials' : null,
-  };
-});
-
-// --- Parameter Settings ---
-export const mockParameters = {
-  battery: {
-    socMin: 20, socMax: 90, sohWarning: 80,
-    maxBatteryTemp: 55, minBatteryTemp: -10,
-    maxCellVoltage: 3.65, minCellVoltage: 2.80, maxCellVoltageDiff: 0.10,
-    maxRackVoltage: 800, minRackVoltage: 600, maxRackCurrent: 200,
-    cycleCountWarning: 5000,
-  },
-  pcs: {
-    maxChargePower: 500, maxDischargePower: 500,
-    acVoltageMin: 360, acVoltageMax: 440, dcVoltageMin: 600, dcVoltageMax: 850,
-    freqMin: 49.5, freqMax: 50.5, pfLimit: 0.9, pcsMaxTemp: 85,
-  },
-  grid: {
-    gridVoltageMin: 20, gridVoltageMax: 24,
-    gridFreqMin: 49.5, gridFreqMax: 50.5,
-    exportPowerLimit: 500, importPowerLimit: 500,
-  },
-  alarm: [
-    { id: 1, name: 'Overtemperature', enabled: true, level: 'Critical', threshold: '55°C', delay: 5, notify: true },
-    { id: 2, name: 'SOC Low', enabled: true, level: 'Warning', threshold: '20%', delay: 10, notify: true },
-    { id: 3, name: 'Cell Voltage High', enabled: true, level: 'Fault', threshold: '3.65V', delay: 3, notify: true },
-    { id: 4, name: 'Cell Voltage Low', enabled: true, level: 'Warning', threshold: '2.80V', delay: 3, notify: true },
-    { id: 5, name: 'Communication Lost', enabled: true, level: 'Fault', threshold: '30s', delay: 0, notify: true },
-    { id: 6, name: 'Grid Disconnected', enabled: true, level: 'Critical', threshold: '-', delay: 0, notify: true },
-    { id: 7, name: 'PCS Fault', enabled: true, level: 'Critical', threshold: '-', delay: 0, notify: true },
-    { id: 8, name: 'Fan Failure', enabled: false, level: 'Info', threshold: '-', delay: 60, notify: false },
-  ],
-  control: {
-    remoteControl: true, manualMode: false, eStopEnabled: true,
-    commandTimeout: 30, passwordConfirm: true, requireReason: true,
-  },
-};
-
 // --- System Settings ---
 export const mockSystemSettings = {
   site: {
-    siteName: 'BESS Station 01', location: 'Ho Chi Minh City',
-    capacity: 2000, batteryType: 'LFP',
-    commissioningDate: '2024-01-15', owner: 'Energy Corp', operator: 'BESS Operations',
+    siteName: 'BESS Station 01',
+    location: 'Ho Chi Minh City',
+    capacity: 2000,
+    batteryType: 'LFP',
+    commissioningDate: '2024-01-15',
+    owner: 'Energy Corp',
+    operator: 'BESS Operations',
   },
   notification: {
-    emailEnabled: true, emailRecipients: 'admin@bess.com, op@bess.com',
-    telegramEnabled: true, botToken: '***************************', chatId: '-100123456789',
+    emailEnabled: true,
+    emailRecipients: 'admin@bess.com, op@bess.com',
+    telegramEnabled: true,
+    botToken: '***************************',
+    chatId: '-100123456789',
     notifyLevels: { critical: true, fault: true, warning: true, info: false },
   },
   realtime: {
-    refreshInterval: 5, chartUpdateInterval: 10,
-    dataRetention: 30, reconnectInterval: 5,
+    refreshInterval: 5,
+    chartUpdateInterval: 10,
+    dataRetention: 30,
+    reconnectInterval: 5,
   },
 };
-
-// --- Safety Conditions ---
-export const mockSafetyConditions = [
-  { label: 'PCS Online', met: true },
-  { label: 'BMS Online', met: true },
-  { label: 'Grid Normal', met: true },
-  { label: 'SOC In Range', met: true },
-  { label: 'Remote Control ON', met: true },
-  { label: 'No Critical Alarm', met: false },
-  { label: 'Power ≤ Rated', met: true },
-];

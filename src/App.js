@@ -16,7 +16,6 @@ import BatteryPage from './pages/Battery/BatteryPage';
 import PCSPage from './pages/PCS/PCSPage';
 import AlarmPage from './pages/Alarm/AlarmPage';
 import EnergyReportPage from './pages/EnergyReport/EnergyReportPage';
-import SchedulePage from './pages/Schedule/SchedulePage';
 import UserManagementPage from './pages/UserManagement/UserManagementPage';
 import SystemSettingsPage from './pages/SystemSettings/SystemSettingsPage';
 import { VietnameseLocalization } from './utils/localizeVi';
@@ -70,9 +69,6 @@ function AppRoutes() {
           <Route path="/alarms" element={<AlarmPage />} />
           <Route path="/energy-report" element={<EnergyReportPage />} />
 
-          <Route element={<ProtectedRoute permission="manage_schedule" />}>
-            <Route path="/schedule" element={<SchedulePage />} />
-          </Route>
           <Route element={<ProtectedRoute permission="manage_users" />}>
             <Route path="/users" element={<UserManagementPage />} />
           </Route>

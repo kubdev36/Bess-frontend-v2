@@ -4,25 +4,17 @@ import { mockUsers } from '../data/mockData';
 const AuthContext = createContext(null);
 
 const permissions = {
-  Viewer: ['view_dashboard', 'view_realtime', 'view_powerflow', 'view_battery', 'view_pcs', 'view_alarm', 'view_report'],
+  Viewer: ['view_dashboard', 'view_battery', 'view_pcs', 'view_alarm', 'view_report'],
   Operator: [
-    'view_dashboard', 'view_realtime', 'view_powerflow', 'view_battery', 'view_pcs',
-    'view_alarm', 'view_report', 'view_command_history',
-    'ack_alarm', 'clear_alarm', 'start_stop', 'charge_discharge', 'reset_alarm',
-    'manage_schedule', 'emergency_stop',
+    'view_dashboard', 'view_battery', 'view_pcs', 'view_alarm', 'view_report',
   ],
   Admin: [
-    'view_dashboard', 'view_realtime', 'view_powerflow', 'view_battery', 'view_pcs',
-    'view_alarm', 'view_report', 'view_command_history', 'view_operation_logs',
-    'ack_alarm', 'clear_alarm', 'start_stop', 'charge_discharge', 'reset_alarm',
-    'manage_schedule', 'emergency_stop',
-    'set_parameters', 'set_alarm_thresholds', 'manage_users', 'system_settings', 'export_report',
+    'view_dashboard', 'view_battery', 'view_pcs',
+    'view_alarm', 'view_report', 'manage_users', 'system_settings',
   ],
   Engineer: [
-    'view_dashboard', 'view_realtime', 'view_powerflow', 'view_battery', 'view_pcs',
-    'view_alarm', 'view_report', 'view_command_history', 'view_operation_logs',
-    'ack_alarm', 'clear_alarm',
-    'set_parameters', 'set_alarm_thresholds', 'configure_devices', 'system_settings', 'export_report',
+    'view_dashboard', 'view_battery', 'view_pcs',
+    'view_alarm', 'view_report', 'system_settings',
   ],
 };
 

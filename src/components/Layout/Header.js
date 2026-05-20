@@ -6,18 +6,11 @@ import './Header.css';
 
 const pageTitles = {
   '/dashboard': 'Dashboard Overview',
-  '/realtime': 'Realtime Monitoring',
-  '/powerflow': 'Power Flow',
   '/battery': 'Battery Detail',
   '/pcs': 'PCS Detail',
   '/alarms': 'Alarm Management',
-  '/schedule': 'Schedule Management',
-  '/control': 'Control Panel',
   '/energy-report': 'Energy Report',
-  '/command-history': 'Command History',
-  '/operation-logs': 'Operation Logs',
   '/users': 'User Management',
-  '/parameters': 'Parameter Settings',
   '/settings': 'System Settings',
 };
 

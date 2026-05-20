@@ -3,19 +3,12 @@ import { NavLink } from 'react-router-dom';
 import {
   LuBatteryCharging,
   LuBell,
-  LuChartColumn,
   LuChartNoAxesCombined,
-  LuClipboardList,
   LuCpu,
-  LuGauge,
-  LuHistory,
   LuLayoutDashboard,
   LuSettings,
-  LuSlidersHorizontal,
-  LuSquareTerminal,
   LuUsers,
   LuWaves,
-  LuZap,
 } from 'react-icons/lu';
 import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.css';
