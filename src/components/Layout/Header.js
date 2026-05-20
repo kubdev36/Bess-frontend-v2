@@ -16,18 +16,9 @@ const pageTitles = {
 
 export default function Header({ onMenuToggle }) {
   const { currentUser, logout } = useAuth();
-  const location = useLocation();
+
   const navigate = useNavigate();
-  const [time, setTime] = useState(new Date());
   const [showUserMenu, setShowUserMenu] = useState(false);
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  const pageTitle = pageTitles[location.pathname] || 'BESS Dashboard';
-
   const handleLogout = () => {
     logout();
     navigate('/login');
@@ -36,28 +27,11 @@ export default function Header({ onMenuToggle }) {
   return (
     <header className="header">
       <div className="header-left">
-        <button className="header-menu-btn" onClick={onMenuToggle} aria-label="Toggle navigation">
-          <LuMenu />
-        </button>
-        <h1 className="header-title">{pageTitle}</h1>
+        <h1 className="header-title">Hệ thống lưu trữ toàn diện</h1>
       </div>
       <div className="header-center">
-        <span className="header-station">
-          <LuFactory />
-          BESS Station 01
-        </span>
       </div>
       <div className="header-right">
-        <div className="header-time">
-          <span className="header-clock">
-            <LuClock3 />
-            {time.toLocaleTimeString()}
-          </span>
-        </div>
-        <div className="header-connection">
-          <span className="header-connection-dot connected"></span>
-          <span className="header-connection-text">Connected</span>
-        </div>
         <button className="header-notification" onClick={() => navigate('/alarms')} aria-label="Open alarms">
           <LuBell />
           <span className="header-notification-badge">3</span>

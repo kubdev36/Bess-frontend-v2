@@ -8,7 +8,6 @@ import {
   LuLayoutDashboard,
   LuSettings,
   LuUsers,
-  LuWaves,
 } from 'react-icons/lu';
 import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.scss';
@@ -49,10 +48,11 @@ export default function Sidebar({ collapsed, onToggle }) {
   return (
     <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
       <div className="sidebar-logo" onClick={onToggle}>
-        <span className="sidebar-logo-icon">
-          <LuWaves />
-        </span>
-        {!collapsed && <span className="sidebar-logo-text">BESS Monitor</span>}
+        <img
+          className={`sidebar-logo-image ${collapsed ? 'sidebar-logo-image-small' : 'sidebar-logo-image-large'}`}
+          src={collapsed ? '/logoNho.png' : '/logoTo.png'}
+          alt="BESS Monitor"
+        />
       </div>
       <nav className="sidebar-nav">
         {menuGroups.map((group) => {

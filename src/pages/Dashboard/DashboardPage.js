@@ -1,8 +1,6 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  LuActivity,
-  LuBadgeAlert,
   LuBatteryCharging,
   LuCable,
   LuFactory,
@@ -23,25 +21,157 @@ import {
   YAxis,
 } from "recharts";
 import KPICard from "../../components/shared/KPICard";
-import StatusBadge from "../../components/shared/StatusBadge";
 import {
-  mockAlarms,
+  mockEnergyReport,
   mockHourlyData,
   mockSystemSummary as sys,
 } from "../../data/mockData";
 import "./DashboardPage.scss";
 
+const trendModes = [
+  { key: "day", label: "Ngày" },
+  { key: "month", label: "Tháng" },
+];
+
+function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
+  const [mode, setMode] = useState(defaultMode);
+
+  const chartData = useMemo(() => {
+    if (mode === "month") {
+      return mockEnergyReport
+        .slice()
+        .reverse()
+        .map((item) => ({
+          time: item.date.slice(5),
+          batteryPower: item.discharge,
+          gridPower: item.gridImport,
+          pvPower: item.pv,
+          loadPower: item.load,
+        }));
+    }
+
+    return mockHourlyData;
+  }, [mode]);
+
+  const modeSubtitle =
+    mode === "day" ? `${subtitle} Theo dữ liệu trong ngày.` : `${subtitle} Theo dữ liệu theo tháng.`;
+
+  return (
+    <div className="card">
+      <div className="card-header dashboard-chart-header">
+        <div>
+          <span className="card-title">{title}</span>
+          <div className="card-subtitle">{modeSubtitle}</div>
+        </div>
+        <div className="dashboard-chart-switcher">
+          {trendModes.map((item) => (
+            <button
+              key={item.key}
+              type="button"
+              className={`dashboard-chart-switcher-btn ${mode === item.key ? "active" : ""}`}
+              onClick={() => setMode(item.key)}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <ResponsiveContainer width="100%" height={280}>
+        <LineChart data={chartData}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
+          <XAxis dataKey="time" tick={{ fontSize: 11 }} />
+          <YAxis tick={{ fontSize: 11 }} />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="batteryPower"
+            name={mode === "day" ? "Battery" : "Discharge"}
+            stroke="#0EA5E9"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="gridPower"
+            name={mode === "day" ? "Grid" : "Grid Import"}
+            stroke="#1677FF"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="pvPower"
+            name="PV"
+            stroke="#F59E0B"
+            strokeWidth={2}
+            dot={false}
+          />
+          <Line
+            type="monotone"
+            dataKey="loadPower"
+            name="Load"
+            stroke="#22C55E"
+            strokeWidth={2}
+            dot={false}
+          />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
 export default function DashboardPage() {
   const navigate = useNavigate();
-
-  const recentAlarms = useMemo(
-    () => mockAlarms.filter((alarm) => alarm.status !== "Cleared").slice(0, 5),
-    [],
-  );
 
   return (
     <div className="dashboard animate-fadeIn">
       <section className="dashboard-section">
+        <div className="kpi-grid kpi-grid-compact">
+          <KPICard
+            icon={<LuGauge />}
+            title="SOC"
+            value={`${sys.soc}%`}
+            progress={sys.soc}
+            progressColor="green"
+            clickable
+            onClick={() => navigate("/battery")}
+          />
+          <KPICard
+            icon={<LuShield />}
+            title="SOH"
+            value={`${sys.soh}%`}
+            progress={sys.soh}
+            progressColor="green"
+            clickable
+            onClick={() => navigate("/battery")}
+          />
+          <KPICard
+            icon={<LuBatteryCharging />}
+            title="Battery Power"
+            value={sys.batteryPower}
+            unit="kW"
+            status={sys.batteryPower < 0 ? "Charging" : "Discharging"}
+            clickable
+            onClick={() => navigate("/battery")}
+          />
+          <KPICard
+            icon={<LuSun />}
+            title="PV Power"
+            value={sys.pvPower}
+            unit="kW"
+          />
+          <KPICard
+            icon={<LuCable />}
+            title="Grid Power"
+            value={sys.gridPower}
+            unit="kW"
+            status={sys.gridStatus}
+          />
+        </div>
+      </section>
+
+      <section className="dashboard-section mt-base">
         <div className="card dashboard-visual-card">
           <div className="card-header">
             <div>
@@ -53,39 +183,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="visual-kpi-row">
-            <div className="visual-kpi-box">
-              <span className="visual-kpi-icon">
-                <LuBatteryCharging />
-              </span>
-              <div>
-                <div className="visual-kpi-label">Dung lượng khả dụng</div>
-                <strong>{sys.availableEnergy} MWh</strong>
-              </div>
-            </div>
-
-            <div className="visual-kpi-box">
-              <span className="visual-kpi-icon">
-                <LuShield />
-              </span>
-              <div>
-                <div className="visual-kpi-label">Tình trạng pin</div>
-                <strong>{sys.soh}% SOH</strong>
-              </div>
-            </div>
-
-            <div className="visual-kpi-box">
-              <span className="visual-kpi-icon">
-                <LuBadgeAlert />
-              </span>
-              <div>
-                <div className="visual-kpi-label">Cảnh báo hoạt động</div>
-                <strong>{sys.activeAlarms} alarm</strong>
-              </div>
-            </div>
-          </div>
-
-          {/* // hình nền mô tả hệ thống */}
           <div className="visual-scene">
             <div className="visual-scene-canvas">
               <div className="visual-sky"></div>
@@ -190,146 +287,17 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      {/* các thông số cơ bản */}
-      <section className="dashboard-section mt-base">
-        <div className="section-heading">
-          <div>
-            <h2 className="card-title">Realtime Overview</h2>
-            <p className="card-subtitle">
-              Các chỉ số chính cần theo dõi nhanh.
-            </p>
-          </div>
-        </div>
-
-        <div className="kpi-grid kpi-grid-compact">
-          <KPICard
-            icon={<LuActivity />}
-            title="System Status"
-            value={sys.systemStatus}
-            status={sys.systemStatus}
-          />
-          <KPICard
-            icon={<LuGauge />}
-            title="SOC"
-            value={`${sys.soc}%`}
-            progress={sys.soc}
-            progressColor="green"
-            clickable
-            onClick={() => navigate("/battery")}
-          />
-          <KPICard
-            icon={<LuBatteryCharging />}
-            title="Battery Power"
-            value={sys.batteryPower}
-            unit="kW"
-            status={sys.batteryPower < 0 ? "Charging" : "Discharging"}
-            clickable
-            onClick={() => navigate("/battery")}
-          />
-          <KPICard
-            icon={<LuSun />}
-            title="PV Power"
-            value={sys.pvPower}
-            unit="kW"
-          />
-          <KPICard
-            icon={<LuCable />}
-            title="Grid Power"
-            value={sys.gridPower}
-            unit="kW"
-            status={sys.gridStatus}
-          />
-          <KPICard
-            icon={<LuShield />}
-            title="PCS Status"
-            value={sys.pcsStatus}
-            status={sys.pcsStatus}
-          />
-        </div>
-      </section>
-
       <section className="dashboard-grid mt-base">
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <span className="card-title">Power Trend (24h)</span>
-              <div className="card-subtitle">
-                Xu hướng công suất của Battery, Grid, PV và Load.
-              </div>
-            </div>
-          </div>
-          <ResponsiveContainer width="100%" height={280}>
-            <LineChart data={mockHourlyData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
-              <XAxis dataKey="time" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="batteryPower"
-                name="Battery"
-                stroke="#0EA5E9"
-                strokeWidth={2}
-                dot={false}
-              />
-              <Line
-                type="monotone"
-                dataKey="gridPower"
-                name="Grid"
-                stroke="#1677FF"
-                strokeWidth={2}
-                dot={false}
-              />
-              <Line
-                type="monotone"
-                dataKey="pvPower"
-                name="PV"
-                stroke="#F59E0B"
-                strokeWidth={2}
-                dot={false}
-              />
-              <Line
-                type="monotone"
-                dataKey="loadPower"
-                name="Load"
-                stroke="#22C55E"
-                strokeWidth={2}
-                dot={false}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="card">
-          <div className="card-header">
-            <div>
-              <span className="card-title">Alarm Center</span>
-              <div className="card-subtitle">
-                Các cảnh báo đang hoạt động gần nhất.
-              </div>
-            </div>
-            <button
-              className="btn btn-ghost btn-sm"
-              onClick={() => navigate("/alarms")}
-            >
-              Xem tất cả
-            </button>
-          </div>
-          <div className="event-list">
-            {recentAlarms.map((alarm) => (
-              <div key={alarm.id} className="event-item">
-                <div>
-                  <div className="event-title">{alarm.message}</div>
-                  <div className="event-meta">
-                    {alarm.time} | {alarm.device}
-                  </div>
-                </div>
-                <StatusBadge status={alarm.level} />
-              </div>
-            ))}
-          </div>
-        </div>
+        <PowerTrendCard
+          title="Power Trend"
+          subtitle="Xu hướng công suất của Battery, Grid, PV và Load."
+          defaultMode="day"
+        />
+        <PowerTrendCard
+          title="Power Trend"
+          subtitle="Biểu đồ công suất tại khu vực bên phải."
+          defaultMode="month"
+        />
       </section>
     </div>
   );
