@@ -33,30 +33,54 @@ const trendModes = [
   { key: "month", label: "Tháng" },
 ];
 
+const defaultChartDate = mockEnergyReport[0]?.date ?? "2026-05-19";
+
+function formatMonthLabel(dateValue) {
+  const [year, month] = dateValue.split("-");
+  return `${month}/${year}`;
+}
+
 function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
   const [mode, setMode] = useState(defaultMode);
+  const [selectedDate, setSelectedDate] = useState(defaultChartDate);
 
   const chartData = useMemo(() => {
+    const selectedDay = Number(selectedDate.slice(-2)) || 1;
+
     if (mode === "month") {
       return mockEnergyReport
         .slice()
         .reverse()
+        .filter((item) => item.date.slice(0, 7) === selectedDate.slice(0, 7))
         .map((item) => ({
-          time: item.date.slice(5),
-          batteryPower: item.discharge,
-          gridPower: item.gridImport,
-          pvPower: item.pv,
-          loadPower: item.load,
+          time: item.date.slice(8, 10),
+          batteryPower: item.discharge + (selectedDay % 4),
+          gridPower: item.gridImport + (selectedDay % 3),
+          pvPower: item.pv + (selectedDay % 2),
+          loadPower: item.load + (selectedDay % 5),
         }));
     }
 
-    return mockHourlyData;
-  }, [mode]);
+    return mockHourlyData.map((item, index) => ({
+      ...item,
+      batteryPower:
+        item.batteryPower +
+        Math.round(Math.sin((index + selectedDay) / 4) * 8),
+      gridPower:
+        item.gridPower + Math.round(Math.cos((index + selectedDay) / 5) * 6),
+      pvPower: Math.max(
+        0,
+        item.pvPower + Math.round(Math.sin((index + selectedDay) / 6) * 4),
+      ),
+      loadPower:
+        item.loadPower + Math.round(Math.cos((index + selectedDay) / 7) * 5),
+    }));
+  }, [mode, selectedDate]);
 
   const modeSubtitle =
     mode === "day"
-      ? `${subtitle} Theo dữ liệu trong ngày.`
-      : `${subtitle} Theo dữ liệu theo tháng.`;
+      ? `${subtitle} Theo dữ liệu ngày ${selectedDate}.`
+      : `${subtitle} Theo dữ liệu tháng ${formatMonthLabel(selectedDate)}.`;
 
   return (
     <div className="card">
@@ -65,17 +89,27 @@ function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
           <span className="card-title">{title}</span>
           <div className="card-subtitle">{modeSubtitle}</div>
         </div>
-        <div className="dashboard-chart-switcher">
-          {trendModes.map((item) => (
-            <button
-              key={item.key}
-              type="button"
-              className={`dashboard-chart-switcher-btn ${mode === item.key ? "active" : ""}`}
-              onClick={() => setMode(item.key)}
-            >
-              {item.label}
-            </button>
-          ))}
+        <div className="dashboard-chart-controls">
+          <input
+            type="date"
+            className="dashboard-chart-date-input"
+            value={selectedDate}
+            min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+            max={mockEnergyReport[0]?.date}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+          <div className="dashboard-chart-switcher">
+            {trendModes.map((item) => (
+              <button
+                key={item.key}
+                type="button"
+                className={`dashboard-chart-switcher-btn ${mode === item.key ? "active" : ""}`}
+                onClick={() => setMode(item.key)}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
       <ResponsiveContainer width="100%" height={280}>

@@ -19,9 +19,9 @@
   &-logo {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: var(--header-height);
-    padding: 0 20px;
+    padding: 0 10px 0 6px;
     box-sizing: border-box;
     border-bottom: 1px solid var(--border-light);
     cursor: pointer;
@@ -39,11 +39,11 @@
     object-fit: contain;
 
     &-large {
-      height: 40px;
+      height: 52px;
     }
 
     &-small {
-      height: 28px;
+      height: 34px;
     }
   }
 
@@ -112,6 +112,7 @@
   }
 
   &-collapsed &-logo {
+    justify-content: center;
     padding: 0 12px;
   }
 }
