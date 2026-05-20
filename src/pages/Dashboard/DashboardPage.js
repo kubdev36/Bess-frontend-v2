@@ -173,116 +173,112 @@ export default function DashboardPage() {
 
       <section className="dashboard-section mt-base">
         <div className="card dashboard-visual-card">
-          <div className="card-header">
-            <div>
-              <span className="card-title">BESS Visual Board</span>
-              <div className="card-subtitle">
-                Mô hình trực quan theo hệ thống BESS: Grid, PV, PCS, Battery và
-                Load.
+
+          <div className="visual-layout">
+            <div className="visual-layout-main">
+              <div className="visual-scene">
+                <div className="visual-scene-canvas">
+                  <div className="visual-sky"></div>
+                  <div className="visual-field"></div>
+
+                  <div className="visual-pole visual-pole-left"></div>
+                  <div className="visual-pole visual-pole-right"></div>
+
+                  <div className="visual-info visual-info-left">
+                    Grid:{" "}
+                    <strong>
+                      {sys.gridVoltage} kV / {sys.gridFrequency} Hz
+                    </strong>
+                  </div>
+
+                  <div className="visual-stack visual-info-center">
+                    <div className="visual-info">
+                      Trạng thái hệ thống: <strong>{sys.systemStatus}</strong>
+                    </div>
+                    <div className="visual-info">
+                      PCS AC Power: <strong>{sys.pcsACPower} kW</strong>
+                    </div>
+                    <div className="visual-info">
+                      DC Bus: <strong>{sys.batteryVoltage} V</strong>
+                    </div>
+                  </div>
+
+                  <div className="visual-panel-array">
+                    <div className="visual-panel-grid"></div>
+                  </div>
+
+                  <div className="visual-inverter">
+                    <LuSettings2 />
+                  </div>
+
+                  <div className="visual-battery-rack">
+                    <div className="visual-battery-cell-row">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div className="visual-battery-core"></div>
+                    <div className="visual-battery-cell-row">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </div>
+
+                  <div className="visual-load-block">
+                    <LuFactory />
+                  </div>
+
+                  <div className="visual-line visual-line-green"></div>
+                  <div className="visual-line visual-line-orange-left"></div>
+                  <div className="visual-line visual-line-orange-right"></div>
+                  <div className="visual-line visual-line-blue"></div>
+                  <div className="visual-line visual-line-red"></div>
+
+                  <div className="visual-label visual-label-pv">
+                    <LuPanelTop />
+                    <span>PV Array</span>
+                  </div>
+                  <div className="visual-label visual-label-grid">
+                    <LuCable />
+                    <span>Grid</span>
+                  </div>
+                  <div className="visual-label visual-label-pcs">
+                    <LuSettings2 />
+                    <span>PCS</span>
+                  </div>
+                  <div className="visual-label visual-label-battery">
+                    <LuBatteryCharging />
+                    <span>Battery Rack</span>
+                  </div>
+                  <div className="visual-label visual-label-load">
+                    <LuFactory />
+                    <span>Tải</span>
+                  </div>
+
+                  <div className="visual-info visual-info-bottom-left">
+                    Công suất PV: <strong>{sys.pvPower} kW</strong>
+                  </div>
+                  <div className="visual-stack visual-info-bottom-center">
+                    <div className="visual-info">
+                      Battery Power: <strong>{sys.batteryPower} kW</strong>
+                    </div>
+                    <div className="visual-info">
+                      SOC / SOH:{" "}
+                      <strong>
+                        {sys.soc}% / {sys.soh}%
+                      </strong>
+                    </div>
+                  </div>
+                  <div className="visual-info visual-info-bottom-right">
+                    Tải tiêu thụ: <strong>{sys.loadPower} kW</strong>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <div className="visual-scene">
-            <div className="visual-scene-canvas">
-              <div className="visual-sky"></div>
-              <div className="visual-field"></div>
-
-              <div className="visual-pole visual-pole-left"></div>
-              <div className="visual-pole visual-pole-right"></div>
-
-              <div className="visual-info visual-info-left">
-                Grid:{" "}
-                <strong>
-                  {sys.gridVoltage} kV / {sys.gridFrequency} Hz
-                </strong>
-              </div>
-
-              <div className="visual-stack visual-info-center">
-                <div className="visual-info">
-                  Trạng thái hệ thống: <strong>{sys.systemStatus}</strong>
-                </div>
-                <div className="visual-info">
-                  PCS AC Power: <strong>{sys.pcsACPower} kW</strong>
-                </div>
-                <div className="visual-info">
-                  DC Bus: <strong>{sys.batteryVoltage} V</strong>
-                </div>
-              </div>
-
-              <div className="visual-panel-array">
-                <div className="visual-panel-grid"></div>
-              </div>
-
-              <div className="visual-inverter">
-                <LuSettings2 />
-              </div>
-
-              <div className="visual-battery-rack">
-                <div className="visual-battery-cell-row">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-                <div className="visual-battery-core"></div>
-                <div className="visual-battery-cell-row">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-
-              <div className="visual-load-block">
-                <LuFactory />
-              </div>
-
-              <div className="visual-line visual-line-green"></div>
-              <div className="visual-line visual-line-orange-left"></div>
-              <div className="visual-line visual-line-orange-right"></div>
-              <div className="visual-line visual-line-blue"></div>
-              <div className="visual-line visual-line-red"></div>
-
-              <div className="visual-label visual-label-pv">
-                <LuPanelTop />
-                <span>PV Array</span>
-              </div>
-              <div className="visual-label visual-label-grid">
-                <LuCable />
-                <span>Grid</span>
-              </div>
-              <div className="visual-label visual-label-pcs">
-                <LuSettings2 />
-                <span>PCS</span>
-              </div>
-              <div className="visual-label visual-label-battery">
-                <LuBatteryCharging />
-                <span>Battery Rack</span>
-              </div>
-              <div className="visual-label visual-label-load">
-                <LuFactory />
-                <span>Tải</span>
-              </div>
-
-              <div className="visual-info visual-info-bottom-left">
-                Công suất PV: <strong>{sys.pvPower} kW</strong>
-              </div>
-              <div className="visual-stack visual-info-bottom-center">
-                <div className="visual-info">
-                  Battery Power: <strong>{sys.batteryPower} kW</strong>
-                </div>
-                <div className="visual-info">
-                  SOC / SOH:{" "}
-                  <strong>
-                    {sys.soc}% / {sys.soh}%
-                  </strong>
-                </div>
-              </div>
-              <div className="visual-info visual-info-bottom-right">
-                Tải tiêu thụ: <strong>{sys.loadPower} kW</strong>
-              </div>
-            </div>
+            <div className="visual-layout-side" aria-hidden="true"></div>
           </div>
         </div>
       </section>

@@ -19,6 +19,8 @@ import EnergyReportPage from './pages/EnergyReport/EnergyReportPage';
 import UserManagementPage from './pages/UserManagement/UserManagementPage';
 import SystemSettingsPage from './pages/SystemSettings/SystemSettingsPage';
 import { VietnameseLocalization } from './utils/localizeVi';
+import RolePage from './pages/Role/Role';
+import UserInfoPage from './pages/UserInfo/UserInfo';
 
 function ProtectedRoute({ permission }) {
   const { isAuthenticated, hasPermission } = useAuth();
@@ -68,6 +70,8 @@ function AppRoutes() {
           <Route path="/pcs" element={<PCSPage />} />
           <Route path="/alarms" element={<AlarmPage />} />
           <Route path="/energy-report" element={<EnergyReportPage />} />
+          <Route path="/roles" element={<RolePage />} />
+          <Route path="/user-info" element={<UserInfoPage />} />
 
           <Route element={<ProtectedRoute permission="manage_users" />}>
             <Route path="/users" element={<UserManagementPage />} />
@@ -79,7 +83,7 @@ function AppRoutes() {
         </Route>
       </Route>
 
-      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+      
     </Routes>
   );
 }

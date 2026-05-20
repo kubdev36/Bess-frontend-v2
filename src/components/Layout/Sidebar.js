@@ -9,6 +9,8 @@ import {
   LuSettings,
   LuUsers,
 } from 'react-icons/lu';
+import { FaUserEdit } from "react-icons/fa";
+import { RiFolderSettingsFill } from "react-icons/ri";
 import { useAuth } from '../../contexts/AuthContext';
 import './Sidebar.scss';
 
@@ -38,6 +40,9 @@ const menuGroups = [
     items: [
       { path: '/users', icon: <LuUsers />, label: 'User Management', perm: 'manage_users' },
       { path: '/settings', icon: <LuSettings />, label: 'System Settings', perm: 'system_settings' },
+      { path: '/roles', icon: <RiFolderSettingsFill />, label: 'Role Management', perm: 'manage_roles' },
+      { path: '/user-info', icon: <FaUserEdit />, label: 'User Info', perm: 'view_user_info' }
+
     ],
   },
 ];

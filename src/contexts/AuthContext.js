@@ -11,6 +11,7 @@ const permissions = {
   Admin: [
     'view_dashboard', 'view_battery', 'view_pcs',
     'view_alarm', 'view_report', 'manage_users', 'system_settings',
+    'manage_roles', 'view_user_info',
   ],
   Engineer: [
     'view_dashboard', 'view_battery', 'view_pcs',

@@ -20,6 +20,22 @@
 
 }
 
+.visual-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+  gap: var(--space-base);
+  align-items: stretch;
+}
+
+.visual-layout-main,
+.visual-layout-side {
+  min-width: 0;
+}
+
+.visual-layout-side {
+  min-height: 560px;
+}
+
 
 .section-heading {
   display: flex;
@@ -508,6 +524,14 @@
 @media (max-width: 1100px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+
+  .visual-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .visual-layout-side {
+    display: none;
   }
 
   .visual-kpi-row {
