@@ -1,35 +1,35 @@
-import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { LuEye, LuEyeOff, LuGlobe, LuLock, LuUser } from 'react-icons/lu';
-import { useAuth } from '../../contexts/AuthContext';
-import './LoginPage.scss';
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { LuEye, LuEyeOff, LuGlobe, LuLock, LuUser } from "react-icons/lu";
+import { useAuth } from "../../contexts/AuthContext";
+import "./LoginPage.scss";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const backgroundStyle = useMemo(
     () => ({ backgroundImage: `url(${process.env.PUBLIC_URL}/intro.jpg)` }),
-    []
+    [],
   );
 
-  const [identifier, setIdentifier] = useState('');
-  const [password, setPassword] = useState('');
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setError('');
+    setError("");
 
     if (!identifier.trim()) {
-      setError('Vui lòng nhập tên tài khoản.');
+      setError("Vui lòng nhập tên tài khoản.");
       return;
     }
 
     if (!password) {
-      setError('Vui lòng nhập mật khẩu.');
+      setError("Vui lòng nhập mật khẩu.");
       return;
     }
 
@@ -39,7 +39,7 @@ export default function LoginPage() {
       setLoading(false);
 
       if (result.success) {
-        navigate('/dashboard');
+        navigate("/dashboard");
         return;
       }
 
@@ -48,15 +48,15 @@ export default function LoginPage() {
   };
 
   const handleDemoLogin = () => {
-    setError('');
+    setError("");
     setLoading(true);
 
     setTimeout(() => {
-      const result = login('admin', 'admin123', true);
+      const result = login("admin", "admin123", true);
       setLoading(false);
 
       if (result.success) {
-        navigate('/dashboard');
+        navigate("/dashboard");
         return;
       }
 
@@ -72,7 +72,11 @@ export default function LoginPage() {
         <div className="login-card-inner">
           <div className="login-header">
             <h1>Đăng nhập</h1>
-            <button type="button" className="login-language" aria-label="Ngôn ngữ tiếng Việt">
+            <button
+              type="button"
+              className="login-language"
+              aria-label="Ngôn ngữ tiếng Việt"
+            >
               <LuGlobe />
               <span>Vi</span>
             </button>
@@ -97,7 +101,7 @@ export default function LoginPage() {
                 <LuLock />
               </span>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="Mật khẩu"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
@@ -124,16 +128,23 @@ export default function LoginPage() {
             {error && <div className="login-error">{error}</div>}
 
             <button type="submit" className="login-submit" disabled={loading}>
-              {loading ? 'Đang đăng nhập' : 'Đăng nhập'}
+              {loading ? "Đang đăng nhập" : "Đăng nhập"}
             </button>
 
             <div className="login-links">
-              <button type="button" onClick={() => window.alert('Chưa cấu hình đăng ký tài khoản.')}>
+              <button
+                type="button"
+                onClick={() => window.alert("Chưa cấu hình đăng ký tài khoản.")}
+              >
                 Đăng ký tài khoản
               </button>
               <button
                 type="button"
-                onClick={() => window.alert('Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.')}
+                onClick={() =>
+                  window.alert(
+                    "Vui lòng liên hệ quản trị viên để được cấp lại mật khẩu.",
+                  )
+                }
               >
                 Quên mật khẩu
               </button>

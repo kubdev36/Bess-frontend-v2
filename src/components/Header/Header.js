@@ -1,20 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { LuBell, LuClock3, LuFactory, LuLogOut, LuMenu } from 'react-icons/lu';
-import { useAuth } from '../../contexts/AuthContext';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { LuBell, LuLogOut } from 'react-icons/lu';
+import { useAuth } from '../contexts/AuthContext';
 import './Header.scss';
 
-const pageTitles = {
-  '/dashboard': 'Dashboard Overview',
-  '/battery': 'Battery Detail',
-  '/pcs': 'PCS Detail',
-  '/alarms': 'Alarm Management',
-  '/energy-report': 'Energy Report',
-  '/users': 'User Management',
-  '/settings': 'System Settings',
-};
-
-export default function Header({ onMenuToggle }) {
+export default function Header() {
   const { currentUser, logout } = useAuth();
 
   const navigate = useNavigate();
@@ -28,8 +18,6 @@ export default function Header({ onMenuToggle }) {
     <header className="header">
       <div className="header-left">
         <h1 className="header-title">Hệ thống lưu trữ toàn diện</h1>
-      </div>
-      <div className="header-center">
       </div>
       <div className="header-right">
         <button className="header-notification" onClick={() => navigate('/alarms')} aria-label="Open alarms">

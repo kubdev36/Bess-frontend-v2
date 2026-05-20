@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -10,21 +10,28 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts';
-import { mockEnergyReport } from '../../data/mockData';
-import './EnergyReportPage.scss';
+} from "recharts";
+import { mockEnergyReport } from "../../data/mockData";
+import "./EnergyReportPage.scss";
 
-const presets = ['Today', 'Yesterday', 'Last 7 days', 'This month', 'This year', 'Custom range'];
+const presets = [
+  "Today",
+  "Yesterday",
+  "Last 7 days",
+  "This month",
+  "This year",
+  "Custom range",
+];
 
 export default function EnergyReportPage() {
-  const [preset, setPreset] = useState('Last 7 days');
+  const [preset, setPreset] = useState("Last 7 days");
 
   const rows = useMemo(() => {
-    if (preset === 'Today') return mockEnergyReport.slice(0, 1);
-    if (preset === 'Yesterday') return mockEnergyReport.slice(1, 2);
-    if (preset === 'Last 7 days') return mockEnergyReport.slice(0, 7);
-    if (preset === 'This month') return mockEnergyReport.slice(0, 30);
-    if (preset === 'This year') return mockEnergyReport;
+    if (preset === "Today") return mockEnergyReport.slice(0, 1);
+    if (preset === "Yesterday") return mockEnergyReport.slice(1, 2);
+    if (preset === "Last 7 days") return mockEnergyReport.slice(0, 7);
+    if (preset === "This month") return mockEnergyReport.slice(0, 30);
+    if (preset === "This year") return mockEnergyReport;
     return mockEnergyReport.slice(0, 14);
   }, [preset]);
 
@@ -39,10 +46,21 @@ export default function EnergyReportPage() {
       efficiency: acc.efficiency + row.efficiency,
       cycles: acc.cycles + row.cycles,
     }),
-    { charge: 0, discharge: 0, pv: 0, gridImport: 0, gridExport: 0, load: 0, efficiency: 0, cycles: 0 }
+    {
+      charge: 0,
+      discharge: 0,
+      pv: 0,
+      gridImport: 0,
+      gridExport: 0,
+      load: 0,
+      efficiency: 0,
+      cycles: 0,
+    },
   );
 
-  const avgEfficiency = rows.length ? (summary.efficiency / rows.length).toFixed(1) : 0;
+  const avgEfficiency = rows.length
+    ? (summary.efficiency / rows.length).toFixed(1)
+    : 0;
   const costSaving = Math.round(summary.discharge * 0.12);
   const revenue = Math.round(summary.gridExport * 0.08);
 
@@ -52,14 +70,16 @@ export default function EnergyReportPage() {
         <div className="page-toolbar">
           <div>
             <div className="card-title">Energy Report</div>
-            <div className="card-subtitle">Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.</div>
+            <div className="card-subtitle">
+              Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
+            </div>
           </div>
           <div className="page-toolbar-actions">
             <div className="chip">
-              {presets.map(item => (
+              {presets.map((item) => (
                 <button
                   key={item}
-                  className={`chip-btn ${preset === item ? 'active' : ''}`}
+                  className={`chip-btn ${preset === item ? "active" : ""}`}
                   onClick={() => setPreset(item)}
                 >
                   {item}
@@ -73,21 +93,53 @@ export default function EnergyReportPage() {
       </div>
 
       <div className="stats-grid-auto">
-        <div className="mini-stat"><span className="mini-stat-label">Total Charge Energy</span><span className="mini-stat-value">{summary.charge} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Total Discharge Energy</span><span className="mini-stat-value">{summary.discharge} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Round-trip Efficiency</span><span className="mini-stat-value">{avgEfficiency}%</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">PV Energy</span><span className="mini-stat-value">{summary.pv} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Grid Import</span><span className="mini-stat-value">{summary.gridImport} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Grid Export</span><span className="mini-stat-value">{summary.gridExport} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Load Consumption</span><span className="mini-stat-value">{summary.load} kWh</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Cycle Count</span><span className="mini-stat-value">{summary.cycles}</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Cost Saving</span><span className="mini-stat-value">${costSaving}</span></div>
-        <div className="mini-stat"><span className="mini-stat-label">Revenue</span><span className="mini-stat-value">${revenue}</span></div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Total Charge Energy</span>
+          <span className="mini-stat-value">{summary.charge} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Total Discharge Energy</span>
+          <span className="mini-stat-value">{summary.discharge} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Round-trip Efficiency</span>
+          <span className="mini-stat-value">{avgEfficiency}%</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">PV Energy</span>
+          <span className="mini-stat-value">{summary.pv} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Grid Import</span>
+          <span className="mini-stat-value">{summary.gridImport} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Grid Export</span>
+          <span className="mini-stat-value">{summary.gridExport} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Load Consumption</span>
+          <span className="mini-stat-value">{summary.load} kWh</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Cycle Count</span>
+          <span className="mini-stat-value">{summary.cycles}</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Cost Saving</span>
+          <span className="mini-stat-value">${costSaving}</span>
+        </div>
+        <div className="mini-stat">
+          <span className="mini-stat-label">Revenue</span>
+          <span className="mini-stat-value">${revenue}</span>
+        </div>
       </div>
 
       <div className="split-panel">
         <div className="card">
-          <div className="card-header"><span className="card-title">Charge / Discharge / PV</span></div>
+          <div className="card-header">
+            <span className="card-title">Charge / Discharge / PV</span>
+          </div>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={rows.slice().reverse()}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
@@ -103,7 +155,9 @@ export default function EnergyReportPage() {
         </div>
 
         <div className="card">
-          <div className="card-header"><span className="card-title">Efficiency / Load Trend</span></div>
+          <div className="card-header">
+            <span className="card-title">Efficiency / Load Trend</span>
+          </div>
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={rows.slice().reverse()}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
@@ -111,8 +165,18 @@ export default function EnergyReportPage() {
               <YAxis tick={{ fontSize: 11 }} />
               <Tooltip />
               <Legend />
-              <Area type="monotone" dataKey="efficiency" stroke="#1677FF" fill="rgba(22,119,255,0.12)" />
-              <Area type="monotone" dataKey="load" stroke="#14B8A6" fill="rgba(20,184,166,0.12)" />
+              <Area
+                type="monotone"
+                dataKey="efficiency"
+                stroke="#1677FF"
+                fill="rgba(22,119,255,0.12)"
+              />
+              <Area
+                type="monotone"
+                dataKey="load"
+                stroke="#14B8A6"
+                fill="rgba(20,184,166,0.12)"
+              />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -141,7 +205,7 @@ export default function EnergyReportPage() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map(row => (
+                {rows.map((row) => (
                   <tr key={row.date}>
                     <td>{row.date}</td>
                     <td>{row.charge} kWh</td>

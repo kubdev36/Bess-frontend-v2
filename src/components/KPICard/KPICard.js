@@ -1,7 +1,7 @@
-import React from 'react';
-import { LuTrendingDown, LuTrendingUp } from 'react-icons/lu';
-import './KPICard.scss';
-import StatusBadge from './StatusBadge';
+import React from "react";
+import { LuTrendingDown, LuTrendingUp } from "react-icons/lu";
+import "./KPICard.scss";
+import StatusBadge from "../Modal/StatusBadge";
 
 export default function KPICard({
   icon,
@@ -10,13 +10,16 @@ export default function KPICard({
   unit,
   status,
   progress,
-  progressColor = 'green',
+  progressColor = "green",
   trend,
   onClick,
   clickable,
 }) {
   return (
-    <div className={`kpi-card ${clickable ? 'kpi-card-clickable' : ''}`} onClick={clickable ? onClick : undefined}>
+    <div
+      className={`kpi-card ${clickable ? "kpi-card-clickable" : ""}`}
+      onClick={clickable ? onClick : undefined}
+    >
       <div className="kpi-card-top">
         <span className="kpi-card-icon">{icon}</span>
         <span className="kpi-card-title">{title}</span>
@@ -41,8 +44,11 @@ export default function KPICard({
         </div>
       )}
       {trend && (
-        <div className={`kpi-card-trend ${trend.direction === 'up' ? 'trend-up' : 'trend-down'}`}>
-          {trend.direction === 'up' ? <LuTrendingUp /> : <LuTrendingDown />} {trend.value}
+        <div
+          className={`kpi-card-trend ${trend.direction === "up" ? "trend-up" : "trend-down"}`}
+        >
+          {trend.direction === "up" ? <LuTrendingUp /> : <LuTrendingDown />}{" "}
+          {trend.value}
         </div>
       )}
     </div>

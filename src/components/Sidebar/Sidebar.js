@@ -11,7 +11,7 @@ import {
 } from 'react-icons/lu';
 import { FaUserEdit } from "react-icons/fa";
 import { RiFolderSettingsFill } from "react-icons/ri";
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import './Sidebar.scss';
 
 const menuGroups = [

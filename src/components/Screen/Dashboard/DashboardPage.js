@@ -20,7 +20,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import KPICard from "../../components/shared/KPICard";
+import KPICard from "../../KPICard/KPICard";
 import {
   mockEnergyReport,
   mockHourlyData,
@@ -54,7 +54,9 @@ function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
   }, [mode]);
 
   const modeSubtitle =
-    mode === "day" ? `${subtitle} Theo dữ liệu trong ngày.` : `${subtitle} Theo dữ liệu theo tháng.`;
+    mode === "day"
+      ? `${subtitle} Theo dữ liệu trong ngày.`
+      : `${subtitle} Theo dữ liệu theo tháng.`;
 
   return (
     <div className="card">
@@ -127,7 +129,7 @@ export default function DashboardPage() {
   return (
     <div className="dashboard animate-fadeIn">
       <section className="dashboard-section">
-        <div className="kpi-grid kpi-grid-compact">
+        <div className="kpi-grid">
           <KPICard
             icon={<LuGauge />}
             title="SOC"
@@ -173,7 +175,6 @@ export default function DashboardPage() {
 
       <section className="dashboard-section mt-base">
         <div className="card dashboard-visual-card">
-
           <div className="visual-layout">
             <div className="visual-layout-main">
               <div className="visual-scene">

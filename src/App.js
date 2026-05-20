@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -6,21 +6,20 @@ import {
   Route,
   Routes,
   useLocation,
-} from 'react-router-dom';
-import './styles/global.css';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import MainLayout from './components/Layout/MainLayout';
-import LoginPage from './pages/Login/LoginPage';
-import DashboardPage from './pages/Dashboard/DashboardPage';
-import BatteryPage from './pages/Battery/BatteryPage';
-import PCSPage from './pages/PCS/PCSPage';
-import AlarmPage from './pages/Alarm/AlarmPage';
-import EnergyReportPage from './pages/EnergyReport/EnergyReportPage';
-import UserManagementPage from './pages/UserManagement/UserManagementPage';
-import SystemSettingsPage from './pages/SystemSettings/SystemSettingsPage';
-import { VietnameseLocalization } from './utils/localizeVi';
-import RolePage from './pages/Role/Role';
-import UserInfoPage from './pages/UserInfo/UserInfo';
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./components/contexts/AuthContext";
+import MainLayout from "./components/Layout/MainLayout";
+import LoginPage from "./components/Screen/Login/LoginPage";
+import DashboardPage from "./components/Screen/Dashboard/DashboardPage";
+import BatteryPage from "./components/Screen/Battery/BatteryPage";
+import PCSPage from "./components/Screen/PCS/PCSPage";
+import AlarmPage from "./components/Screen/Alarm/AlarmPage";
+import EnergyReportPage from "./components/Screen/EnergyReport/EnergyReportPage";
+import UserManagementPage from "./components/Screen/UserManagement/UserManagementPage";
+import SystemSettingsPage from "./components/Screen/SystemSettings/SystemSettingsPage";
+import { VietnameseLocalization } from "./components/utils/localizeVi";
+import RolePage from "./components/Screen/Role/Role";
+import UserInfoPage from "./components/Screen/UserInfo/UserInfo";
 
 function ProtectedRoute({ permission }) {
   const { isAuthenticated, hasPermission } = useAuth();
@@ -82,8 +81,6 @@ function AppRoutes() {
           </Route>
         </Route>
       </Route>
-
-      
     </Routes>
   );
 }
