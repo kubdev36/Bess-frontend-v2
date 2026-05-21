@@ -122,6 +122,80 @@
   }
 }
 
+.kpi-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-base);
+  animation: fadeIn 0.3s ease-out;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  &-clickable {
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--primary);
+    }
+  }
+
+  &-top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 5px;
+  }
+
+  &-icon {
+    font-size: 15px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-title {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  &-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+    margin-bottom: 4px;
+  }
+
+  &-value {
+    font-size: 16px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    line-height: 1.2;
+  }
+
+  &-unit {
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+  }
+
+  &-status {
+    margin-top: 2px;
+  }
+
+  &-progress {
+    margin-top: 3px;
+  }
+}
+
 // ─────────────────────────────────────────────
 // Power Cards (Sạc / Xả)
 // ─────────────────────────────────────────────
@@ -142,7 +216,7 @@
   width: 38px;
   min-height: 100%;
   text-transform: uppercase;
-  font-size: 0.62rem;
+  font-size: 12px;
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.08em;
   color: #fff;
@@ -209,6 +283,7 @@
 
 .dashboard-metric-card-body {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 22px 28px 1fr;
   align-content: start;
   padding: 8px 8px;
@@ -296,9 +371,9 @@
   grid-template-columns: 58px 1fr;
 
   .dashboard-power-card-label {
-    width: 58px;
+    width: 38px;
     padding: 6px 6px;
-    font-size: 0.58rem;
+    font-size: 12px;
     letter-spacing: 0.04em;
     white-space: nowrap;
   }

@@ -34,7 +34,7 @@ export default function Header() {
         <button
           className="header-notification"
           onClick={() => setShowLanMenu(!showLanMenu)}
-          aria-label={lang.formatMessage({ id: "common.select_language" })}
+          aria-label={lang.formatMessage({ id: "common_select_language" })}
         >
           <FaEarthAsia />
 
@@ -44,13 +44,13 @@ export default function Header() {
                 className="header-user-menu-item"
                 onClick={() => handleChangeLanguage("vi")}
               >
-                {lang.formatMessage({ id: "language.vi" })}
+                {lang.formatMessage({ id: "language_vi" })}
               </div>
               <div
                 className="header-user-menu-item"
                 onClick={() => handleChangeLanguage("en")}
               >
-                {lang.formatMessage({ id: "language.en" })}
+                {lang.formatMessage({ id: "language_en" })}
               </div>
             </div>
           )}
@@ -59,7 +59,7 @@ export default function Header() {
         <button
           className="header-notification"
           onClick={() => navigate("/alarms")}
-          aria-label={lang.formatMessage({ id: "common.open_alarms" })}
+          aria-label={lang.formatMessage({ id: "common_open_alarms" })}
         >
           <LuBell />
           <span className="header-notification-badge">3</span>
@@ -74,7 +74,7 @@ export default function Header() {
             <div className="header-user-menu">
               <div className="header-user-menu-item" onClick={handleLogout}>
                 <LuLogOut />
-                {lang.formatMessage({ id: "common.logout" })}
+                {lang.formatMessage({ id: "common_logout" })}
               </div>
             </div>
           )}

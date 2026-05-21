@@ -17,32 +17,32 @@ import './Sidebar.scss';
 
 const menuGroups = [
   {
-    labelId: 'sidebar.group.overview',
+    labelId: "sidebar_group_overview",
     items: [
-      { path: '/dashboard', icon: <LuLayoutDashboard />, labelId: 'sidebar.item.dashboard_overview', perm: 'view_dashboard' },
+      { path: '/dashboard', icon: <LuLayoutDashboard />, labelId: "sidebar_item_dashboard_overview", perm: 'view_dashboard' },
     ],
   },
   {
-    labelId: 'sidebar.group.monitoring',
+    labelId: "sidebar_group_monitoring",
     items: [
-      { path: '/pcs', icon: <LuCpu />, labelId: 'sidebar.item.pcs_detail', perm: 'view_pcs' },
-      { path: '/battery', icon: <LuBatteryCharging />, labelId: 'sidebar.item.battery_detail', perm: 'view_battery' },
+      { path: '/pcs', icon: <LuCpu />, labelId: "sidebar_item_pcs_detail", perm: 'view_pcs' },
+      { path: '/battery', icon: <LuBatteryCharging />, labelId: "sidebar_item_battery_detail", perm: 'view_battery' },
     ],
   },
   {
-    labelId: 'sidebar.group.operation',
+    labelId: "sidebar_group_operation",
     items: [
-      { path: '/energy-report', icon: <LuChartNoAxesCombined />, labelId: 'sidebar.item.energy_report', perm: 'view_report' },
-      { path: '/alarms', icon: <LuBell />, labelId: 'sidebar.item.alarm_management', perm: 'view_alarm' },
+      { path: '/energy-report', icon: <LuChartNoAxesCombined />, labelId: "sidebar_item_energy_report", perm: 'view_report' },
+      { path: '/alarms', icon: <LuBell />, labelId: "sidebar_item_alarm_management", perm: 'view_alarm' },
     ],
   },
   {
-    labelId: 'sidebar.group.management',
+    labelId: "sidebar_group_management",
     items: [
-      { path: '/users', icon: <LuUsers />, labelId: 'sidebar.item.user_management', perm: 'manage_users' },
-      { path: '/settings', icon: <LuSettings />, labelId: 'sidebar.item.system_settings', perm: 'system_settings' },
-      { path: '/roles', icon: <RiFolderSettingsFill />, labelId: 'sidebar.item.role_management', perm: 'manage_roles' },
-      { path: '/user-info', icon: <FaUserEdit />, labelId: 'sidebar.item.user_info', perm: 'view_user_info' }
+      { path: '/users', icon: <LuUsers />, labelId: "sidebar_item_user_management", perm: 'manage_users' },
+      { path: '/settings', icon: <LuSettings />, labelId: "sidebar_item_system_settings", perm: 'system_settings' },
+      { path: '/roles', icon: <RiFolderSettingsFill />, labelId: "sidebar_item_role_management", perm: 'manage_roles' },
+      { path: '/user-info', icon: <FaUserEdit />, labelId: "sidebar_item_user_info", perm: 'view_user_info' }
 
     ],
   },
