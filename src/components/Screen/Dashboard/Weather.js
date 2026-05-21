@@ -7,6 +7,7 @@ import {
   LuSun,
 } from "react-icons/lu";
 import { useIntl } from "react-intl";
+import "./Weather.scss";
 
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER;
 const WEATHER_CITY = "Ho Chi Minh City";
@@ -52,12 +53,12 @@ export default function WeatherWidget() {
   }, [weatherLang]);
 
   if (loading) {
-    return <div className="weather-widget weather-widget--loading" />;
+    return <div className="DAT_Weather_Card_Loading" />;
   }
 
   if (!weather) {
     return (
-      <div className="weather-widget weather-widget--error">
+      <div className="DAT_Weather_Card_Error">
         <LuCloudSun />
         <span>{intl.formatMessage({ id: "dashboard_weather_error" })}</span>
       </div>
@@ -70,25 +71,25 @@ export default function WeatherWidget() {
 
   return (
     <div
-      className="weather-widget"
+      className="DAT_Weather_Card"
       style={{ background: getWeatherBg(code, isDay) }}
     >
-      <div className="weather-widget__orb weather-widget__orb--1" />
-      <div className="weather-widget__orb weather-widget__orb--2" />
+      <div className="DAT_Weather_Card_Orb DAT_Weather_Card_Orb_1" />
+      <div className="DAT_Weather_Card_Orb DAT_Weather_Card_Orb_2" />
 
-      <div className="weather-widget__top">
+      <div className="DAT_Weather_Card_Top">
         <div>
-          <div className="weather-widget__city">{location.name}</div>
-          <div className="weather-widget__condition">{current.condition.text}</div>
+          <div className="DAT_Weather_Card_Top_City">{location.name}</div>
+          <div className="DAT_Weather_Card_Top_Condition">{current.condition.text}</div>
         </div>
-        <div className="weather-widget__icon-wrap">
+        <div className="DAT_Weather_Card_Top_Icon">
           {getWeatherIcon(code, isDay)}
         </div>
       </div>
 
-      <div className="weather-widget__temp">
+      <div className="DAT_Weather_Card_Temperature">
         {Math.round(current.temp_c)}
-        <span className="weather-widget__temp-unit">Â°C</span>
+        <span className="DAT_Weather_Card_Temperature_Unit">{"\u00B0"}C</span>
       </div>
     </div>
   );

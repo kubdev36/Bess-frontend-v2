@@ -1,0 +1,126 @@
+.DAT_Weather_Card {
+    position: relative;
+    border-radius: var(--dashboard-radius);
+    overflow: hidden;
+    padding: 12px 14px;
+    min-height: 92px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s;
+
+    &:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    }
+
+    &_Orb {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.15;
+        pointer-events: none;
+
+        &_1 {
+            width: 130px;
+            height: 130px;
+            background: rgba(255, 255, 255, 0.7);
+            top: -35px;
+            right: -25px;
+        }
+
+        &_2 {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.4);
+            bottom: -15px;
+            left: 15px;
+        }
+    }
+
+    &_Top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+
+        &_City {
+            font-size: 14px;
+            font-weight: var(--font-weight-semibold);
+            opacity: 0.95;
+        }
+
+        &_Condition {
+            font-size: 11px;
+            opacity: 0.72;
+            margin-top: 1px;
+        }
+
+        &_Icon {
+            font-size: 28px;
+            opacity: 0.9;
+            line-height: 1;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+        }
+    }
+
+    &_Temperature {
+        font-size: 30px;
+        font-weight: 800;
+        line-height: 1;
+        position: relative;
+        z-index: 1;
+        letter-spacing: -2px;
+
+        &_Unit {
+            font-size: 16px;
+            font-weight: 400;
+            opacity: 0.8;
+            vertical-align: super;
+        }
+    }
+}
+
+.DAT_Weather_Card_Loading {
+    position: relative;
+    border-radius: var(--dashboard-radius);
+    overflow: hidden;
+    padding: 12px 14px;
+    min-height: 92px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s;
+    background: var(--gray-100);
+    animation: pulse 1.5s infinite;
+
+    &:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    }
+}
+
+.DAT_Weather_Card_Error {
+    position: relative;
+    border-radius: var(--dashboard-radius);
+    overflow: hidden;
+    padding: 12px 14px;
+    min-height: 92px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: var(--text-secondary);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    transition: box-shadow 0.2s;
+    background: var(--gray-50);
+    border: 1px dashed var(--border);
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+
+    &:hover {
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18);
+    }
+}
