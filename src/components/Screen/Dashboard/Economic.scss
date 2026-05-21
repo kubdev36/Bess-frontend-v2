@@ -1,0 +1,78 @@
+.DAT_Economic_Card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+
+    &_Header {
+        &_Subtitle {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+            margin-top: 2px;
+            display: block;
+        }
+    }
+
+    &_Grid {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        &_Item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 8px;
+            border-radius: var(--dashboard-radius);
+            background: var(--gray-50);
+            transition: background 0.15s;
+
+            &:hover {
+                background: var(--gray-100);
+            }
+
+            &_Icon {
+                width: 30px;
+                height: 30px;
+                border-radius: var(--dashboard-radius);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 15px;
+                flex-shrink: 0;
+            }
+
+            &_Body {
+                flex: 1;
+                min-width: 0;
+
+                &_Label {
+                    font-size: 10px;
+                    color: var(--text-secondary);
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+
+                &_Value {
+                    font-size: 15px;
+                    font-weight: 800;
+                    line-height: 1.2;
+                    display: flex;
+                    align-items: baseline;
+                    gap: 3px;
+
+                    &_Val {
+                        line-height: 1;
+                    }
+
+                    &_Unit {
+                        font-size: 10px;
+                        font-weight: 500;
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}

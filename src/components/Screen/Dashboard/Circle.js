@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import { mockSystemSummary as sys } from "../../data/mockData";
+import "./Circle.scss"
 
 const DONUT_COLORS = {
   grid: "#ef4444",
@@ -16,7 +17,7 @@ const DONUT_COLORS = {
 
 const RADIAN = Math.PI / 180;
 
-function DonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent }) {
+const DonutLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
   if (percent < 0.06) return null;
   const r = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + r * Math.cos(-midAngle * RADIAN);
@@ -36,21 +37,21 @@ function DonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent }) {
   );
 }
 
-function DonutTooltip({ active, payload }) {
+const DonutTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const d = payload[0];
   return (
-    <div className="donut-tooltip">
+    <div className="DAT_Donut_Tooltip">
       <div style={{ fontWeight: 700, color: d.payload.color }}>{d.name}</div>
-      <div className="donut-tooltip-value">
-        <div className="donut-tooltip-value-val">{d.value}</div>
-        <div className="donut-tooltip-value-unit">kW</div>
+      <div className="DAT_Donut_Tooltip-Value">
+        <div className="DAT_Donut_Tooltip_Value_Val">{d.value}</div>
+        <div className="DAT_Donut_Tooltip_Value_Unit">kW</div>
       </div>
     </div>
   );
 }
 
-export default function Circle() {
+const Circle = () => {
   const intl = useIntl();
   const data = useMemo(
     () =>
@@ -80,16 +81,16 @@ export default function Circle() {
   );
 
   return (
-    <div className="power-donut-card card">
-      <div className="card-header">
+    <div className="DAT_Power_Donut_Card card">
+      <div className="DAT_Power_Donut_Card_Header">
         <div>
-          <span className="card-title">
+          <span className="DAT_Power_Donut_Card_Header_Title">
             {intl.formatMessage({ id: "dashboard_donut_title" })}
           </span>
         </div>
       </div>
 
-      <div className="power-donut-chart-wrap">
+      <div className="DAT_Power_Donut_Chart_Wrap">
         <ResponsiveContainer width="100%" height={200}>
           <PieChart>
             <Pie
@@ -111,28 +112,28 @@ export default function Circle() {
           </PieChart>
         </ResponsiveContainer>
 
-        <div className="power-donut-center">
-          <div className="power-donut-center-value">
-            <div className="power-donut-center-value-val">{total}</div>
-            <div className="power-donut-center-value-unit">kW</div>
+        <div className="DAT_Power_Donut_Center">
+          <div className="DAT_Power_Donut_Center_Value">
+            <div className="DAT_Power_Donut_Center_Value_Val">{total}</div>
+            <div className="DAT_Power_Donut_Center_Value_Unit">kW</div>
           </div>
-          <div className="power-donut-center-label">
+          <div className="DAT_Power_Donut_Center_Label">
             {intl.formatMessage({ id: "dashboard_donut_total_load" })}
           </div>
         </div>
       </div>
 
-      <div className="power-donut-legend">
+      <div className="DAT_Power_Donut_Legend">
         {data.map((d, index) => (
-          <div className="power-donut-legend-item" key={index}>
+          <div className="DAT_Power_Donut_Legend_Item" key={index}>
             <span
-              className="power-donut-legend-dot"
+              className="DAT_Power_Donut_Legend_Item_Dot"
               style={{ background: d.color }}
             />
-            <span className="power-donut-legend-name">{d.name}</span>
-            <div className="power-donut-legend-value">
-              <div className="power-donut-legend-value-val">{d.value}</div>
-              <div className="power-donut-legend-value-unit">kW</div>
+            <span className="DAT_Power_Donut_Legend_Name">{d.name}</span>
+            <div className="DAT_Power_Donut_Legend_Value">
+              <div className="DAT_Power_Donut_Legend_Value-Val">{d.value}</div>
+              <div className="DAT_Power_Donut_Legend_Value_Unit">kW</div>
             </div>
           </div>
         ))}
@@ -140,3 +141,5 @@ export default function Circle() {
     </div>
   );
 }
+
+export default Circle;

@@ -2,18 +2,18 @@ import React, { useMemo } from "react";
 import { LuCircleDollarSign, LuLeaf } from "react-icons/lu";
 import { useIntl } from "react-intl";
 import { mockEnergyReport } from "../../data/mockData";
-
+import "./Economic.scss"
 const GRID_PRICE = 2500;
 const FIT_PRICE = 1943;
 const CO2_FACTOR = 0.52;
 
-function formatMoney(value, locale) {
+const formatMoney = (value, locale) => {
   return new Intl.NumberFormat(locale, {
     maximumFractionDigits: 0,
   }).format(Math.round(value));
 }
 
-export default function EconomicBenefitCard() {
+const EconomicBenefitCard = () => {
   const intl = useIntl();
   const stats = useMemo(() => {
     const totalDischarge = mockEnergyReport.reduce((s, r) => s + r.discharge, 0);
@@ -43,34 +43,34 @@ export default function EconomicBenefitCard() {
   ];
 
   return (
-    <div className="economic-card card">
-      <div className="card-header">
+    <div className="DAT_Economic_Card card">
+      <div className="DAT_Economic_Card_Header">
         <div>
-          <span className="card-title">
+          <span className="DAT_Economic_Card_Header_Title">
             {intl.formatMessage({ id: "dashboard_economic_title" })}
           </span>
-          <div className="card-subtitle">
+          <div className="DAT_Economic_Card_Header_Subtitle">
             {intl.formatMessage({ id: "dashboard_economic_last_30_days" })}
           </div>
         </div>
       </div>
-      <div className="economic-grid">
+      <div className="DAT_Economic_Card_Grid">
         {items.map((item, index) => (
-          <div className="economic-item" key={index}>
+          <div className="DAT_Economic_Card_Grid_Item" key={index}>
             <div
-              className="economic-item-icon"
+              className="DAT_Economic_Card_Grid_Item_Icon"
               style={{ background: item.bg, color: item.color }}
             >
               {item.icon}
             </div>
-            <div className="economic-item-body">
-              <div className="economic-item-label">{item.label}</div>
+            <div className="DAT_Economic_Card_Grid_Item_Body">
+              <div className="DAT_Economic_Card_Grid_Item_Body_Label">{item.label}</div>
               <div
-                className="economic-item-value"
+                className="DAT_Economic_Card_Grid_Item_Body_Value"
                 style={{ color: item.color }}
               >
-                <div className="economic-item-value-val">{item.value}</div>
-                <div className="economic-item-value-unit">{item.unit}</div>
+                <div className="DAT_Economic_Card_Grid_Item_Body_Value_Val">{item.value}</div>
+                <div className="DAT_Economic_Card_Grid_Item_Body_Value_Unit">{item.unit}</div>
               </div>
             </div>
           </div>
@@ -79,3 +79,5 @@ export default function EconomicBenefitCard() {
     </div>
   );
 }
+
+export default EconomicBenefitCard;
