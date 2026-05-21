@@ -40,6 +40,10 @@ function formatMonthLabel(dateValue) {
   return `${month}/${year}`;
 }
 
+function formatValue(value) {
+  return Number(value).toFixed(2).replace(/\.00$/, "");
+}
+
 function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
   const [mode, setMode] = useState(defaultMode);
   const [selectedDate, setSelectedDate] = useState(defaultChartDate);
@@ -64,8 +68,7 @@ function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
     return mockHourlyData.map((item, index) => ({
       ...item,
       batteryPower:
-        item.batteryPower +
-        Math.round(Math.sin((index + selectedDay) / 4) * 8),
+        item.batteryPower + Math.round(Math.sin((index + selectedDay) / 4) * 8),
       gridPower:
         item.gridPower + Math.round(Math.cos((index + selectedDay) / 5) * 6),
       pvPower: Math.max(
@@ -191,19 +194,46 @@ export default function DashboardPage() {
             clickable
             onClick={() => navigate("/battery")}
           />
-          <KPICard
-            icon={<LuSun />}
-            title="PV Power"
-            value={sys.pvPower}
-            unit="kW"
-          />
-          <KPICard
-            icon={<LuCable />}
-            title="Grid Power"
-            value={sys.gridPower}
-            unit="kW"
-            status={sys.gridStatus}
-          />
+          <div className="dashboard-power-card charge-card">
+            <div className="dashboard-power-card-label">Sạc</div>
+            <div className="dashboard-power-card-body">
+              <div className="dashboard-power-card-item">
+                <span className="dashboard-power-card-item-label">Hôm nay</span>
+                <div className="dashboard-power-card-item-value">
+                  <span>{formatValue(Math.max(0, -sys.batteryPower))}</span>
+                  <small>kW</small>
+                </div>
+              </div>
+              <div className="dashboard-power-card-divider" />
+              <div className="dashboard-power-card-item">
+                <span className="dashboard-power-card-item-label">Tổng</span>
+                <div className="dashboard-power-card-item-value">
+                  <span>{formatValue(sys.todayCharge)}</span>
+                  <small>kWh</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="dashboard-power-card discharge-card">
+            <div className="dashboard-power-card-label">Xả</div>
+            <div className="dashboard-power-card-body">
+              <div className="dashboard-power-card-item">
+                <span className="dashboard-power-card-item-label">Hôm nay</span>
+                <div className="dashboard-power-card-item-value">
+                  <span>{formatValue(Math.max(0, sys.batteryPower))}</span>
+                  <small>kW</small>
+                </div>
+              </div>
+              <div className="dashboard-power-card-divider" />
+              <div className="dashboard-power-card-item">
+                <span className="dashboard-power-card-item-label">Tổng</span>
+                <div className="dashboard-power-card-item-value">
+                  <span>{formatValue(sys.todayDischarge)}</span>
+                  <small>kWh</small>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

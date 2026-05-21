@@ -16,15 +16,14 @@
 
   &-visual-card {
     overflow: hidden;
+    width: 70%;
+    max-width: 100%;
   }
 
 }
 
 .visual-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-  gap: var(--space-base);
-  align-items: stretch;
+  display: block;
 }
 
 .visual-layout-main,
@@ -33,7 +32,7 @@
 }
 
 .visual-layout-side {
-  min-height: 560px;
+  display: none;
 }
 
 
@@ -103,6 +102,90 @@
     gap: var(--space-base);
   }
 
+}
+
+.dashboard-power-card {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  min-height: 138px;
+  background: var(--card-bg);
+}
+
+.dashboard-power-card-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  min-height: 100%;
+  text-transform: uppercase;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  color: #fff;
+  padding: 12px 0;
+}
+
+.dashboard-power-card-body {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 18px 16px;
+  gap: 16px;
+}
+
+.dashboard-power-card-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dashboard-power-card-item-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.dashboard-power-card-item-value {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.dashboard-power-card-item-value span {
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.dashboard-power-card-item-value small {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.dashboard-power-card-divider {
+  width: 1px;
+  background: var(--border-light);
+  height: 100%;
+}
+
+.charge-card .dashboard-power-card-label {
+  background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
+}
+
+.discharge-card .dashboard-power-card-label {
+  background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+.discharge-card .dashboard-power-card-item-value span {
+  color: #312e81;
 }
 
 .visual {
@@ -451,6 +534,10 @@
 
 
 @media (max-width: 1100px) {
+  .dashboard-visual-card {
+    width: 100%;
+  }
+
   .dashboard-grid {
     grid-template-columns: 1fr;
   }
