@@ -7,13 +7,13 @@ const GRID_PRICE = 2500;
 const FIT_PRICE = 1943;
 const CO2_FACTOR = 0.52;
 
-function formatMoney(value, locale) {
+const formatMoney = (value, locale) => {
   return new Intl.NumberFormat(locale, {
     maximumFractionDigits: 0,
   }).format(Math.round(value));
 }
 
-export default function EconomicBenefitCard() {
+const EconomicBenefitCard = () => {
   const intl = useIntl();
   const stats = useMemo(() => {
     const totalDischarge = mockEnergyReport.reduce((s, r) => s + r.discharge, 0);
@@ -79,3 +79,5 @@ export default function EconomicBenefitCard() {
     </div>
   );
 }
+
+export default EconomicBenefitCard;

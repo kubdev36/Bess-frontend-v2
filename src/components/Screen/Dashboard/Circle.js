@@ -17,7 +17,7 @@ const DONUT_COLORS = {
 
 const RADIAN = Math.PI / 180;
 
-function DonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent }) {
+const DonutLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
   if (percent < 0.06) return null;
   const r = innerRadius + (outerRadius - innerRadius) * 0.5;
   const x = cx + r * Math.cos(-midAngle * RADIAN);
@@ -37,7 +37,7 @@ function DonutLabel({ cx, cy, midAngle, innerRadius, outerRadius, percent }) {
   );
 }
 
-function DonutTooltip({ active, payload }) {
+const DonutTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const d = payload[0];
   return (
@@ -51,7 +51,7 @@ function DonutTooltip({ active, payload }) {
   );
 }
 
-export default function Circle() {
+const Circle = () => {
   const intl = useIntl();
   const data = useMemo(
     () =>
@@ -141,3 +141,5 @@ export default function Circle() {
     </div>
   );
 }
+
+export default Circle;
