@@ -26,7 +26,7 @@
 // ─────────────────────────────────────────────
 .visual-layout {
   display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
   gap: 12px;
   align-items: stretch;
 }
@@ -115,6 +115,10 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
+
+  > .kpi-card {
+    display: none;
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -155,17 +159,23 @@
 .dashboard-power-card-item {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex: 1;
-  gap: 3px;
+  gap: 8px;
   min-width: 0;
 }
 
 .dashboard-power-card-item-label {
-  font-size: 0.58rem;
+  font-size: 0.68rem;
+  font-weight: var(--font-weight-semibold);
   color: var(--text-secondary);
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  min-height: 26px;
+  display: flex;
+  align-items: flex-start;
 }
 
 .dashboard-power-card-item-value {
@@ -190,6 +200,80 @@
   width: 1px;
   background: var(--border-light);
   height: 100%;
+}
+
+.dashboard-metric-card-body {
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 8px;
+}
+
+.dashboard-metric-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 26px;
+}
+
+.dashboard-metric-card-title {
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+}
+
+.dashboard-metric-card-status {
+  flex-shrink: 0;
+}
+
+.dashboard-metric-card-value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 8px;
+
+  span {
+    font-size: 16px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+  }
+
+  small {
+    font-size: 0.62rem;
+    color: var(--text-secondary);
+  }
+}
+
+.dashboard-metric-card-progress {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.soc-card .dashboard-power-card-label {
+  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+}
+
+.soh-card .dashboard-power-card-label {
+  background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
+}
+
+.power-output-card .dashboard-power-card-label {
+  background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
+}
+
+.soc-card .dashboard-metric-card-value span {
+  color: #15803d;
+}
+
+.soh-card .dashboard-metric-card-value span {
+  color: #1d4ed8;
+}
+
+.power-output-card .dashboard-metric-card-value span {
+  color: #c2410c;
 }
 
 .charge-card .dashboard-power-card-label {
@@ -290,37 +374,6 @@
     vertical-align: super;
   }
 
-  &__stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
-    position: relative;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.12);
-    border-radius: var(--dashboard-radius);
-    padding: 8px 6px;
-  }
-
-  &__stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
-    font-size: 12px;
-    font-weight: 600;
-
-    svg {
-      font-size: 14px;
-      opacity: 0.75;
-    }
-
-    small {
-      font-size: 9px;
-      opacity: 0.65;
-      font-weight: 400;
-    }
-  }
-
   &--loading {
     background: var(--gray-100);
     min-height: 116px;
@@ -348,13 +401,6 @@
   display: flex;
   flex-direction: column;
   padding: 18px;
-
-  .card-subtitle {
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-    margin-top: 2px;
-    display: block;
-  }
 }
 
 .power-donut-card .card-header,

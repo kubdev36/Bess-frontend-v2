@@ -18,7 +18,7 @@ import {
 import { LuSend } from "react-icons/lu";
 import { displayText } from "../utils/displayText";
 
-const badgeMap = {
+const badgeMap = {  
   Online: "badge-success",
   Offline: "badge-gray",
   Fault: "badge-danger",

@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LuBell, LuLogOut } from 'react-icons/lu';
 import { useAuth } from '../contexts/AuthContext';
+import { FaEarthAsia } from "react-icons/fa6";
+
+
 import './Header.scss';
+import { useIntl } from 'react-intl';
+import { langConfig } from '../Lang/LanguageProvider';
 
 export default function Header() {
+  const lang = useIntl();
   const { currentUser, logout } = useAuth();
 
+
+  
   const navigate = useNavigate();
+  const [showLanMenu, setShowLanMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const handleLogout = () => {
     logout();
@@ -17,9 +26,24 @@ export default function Header() {
   return (
     <header className="header">
       <div className="header-left">
-        <h1 className="header-title">Hệ thống lưu trữ toàn diện</h1>
+        <h1 className="header-title">{lang.formatMessage({ id: 'bess' })}</h1>
       </div>
       <div className="header-right">
+        <button className="header-notification" onClick={() => setShowLanMenu(!showLanMenu)} aria-label="Open alarms">
+          <FaEarthAsia />
+
+          {showLanMenu && (
+            <div className="header-user-menu">
+              <div className="header-user-menu-item" onClick={() => langConfig.value = 'vi'}>
+                Tiếng Việt
+              </div>
+              <div className="header-user-menu-item" onClick={() => langConfig.value = 'en'}>
+                English
+              </div>
+            </div>
+          )}
+        </button>
+
         <button className="header-notification" onClick={() => navigate('/alarms')} aria-label="Open alarms">
           <LuBell />
           <span className="header-notification-badge">3</span>

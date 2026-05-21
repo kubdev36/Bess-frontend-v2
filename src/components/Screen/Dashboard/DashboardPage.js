@@ -32,6 +32,7 @@ import {
   YAxis,
 } from "recharts";
 import KPICard from "../../KPICard/KPICard";
+import StatusBadge from "../../Modal/StatusBadge";
 import {
   mockEnergyReport,
   mockHourlyData,
@@ -114,6 +115,45 @@ const PowerCard = ({ label, className, todayValue, totalValue }) => (
           <small>kWh</small>
         </div>
       </div>
+    </div>
+  </div>
+);
+
+const MetricRibbonCard = ({
+  label,
+  title,
+  value,
+  unit,
+  className,
+  progress,
+  progressColor,
+  status,
+}) => (
+  <div className={`dashboard-power-card dashboard-metric-card ${className}`}>
+    <div className="dashboard-power-card-label">{label}</div>
+    <div className="dashboard-power-card-body dashboard-metric-card-body">
+      <div className="dashboard-metric-card-header">
+        <span className="dashboard-metric-card-title">{title}</span>
+        {status ? (
+          <div className="dashboard-metric-card-status">
+            <StatusBadge status={status} size="small" />
+          </div>
+        ) : null}
+      </div>
+      <div className="dashboard-metric-card-value">
+        <span>{value}</span>
+        {unit ? <small>{unit}</small> : null}
+      </div>
+      {progress !== undefined ? (
+        <div className="dashboard-metric-card-progress">
+          <div className="progress-bar">
+            <div
+              className={`progress-bar-fill ${progressColor}`}
+              style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+            />
+          </div>
+        </div>
+      ) : null}
     </div>
   </div>
 );
@@ -295,7 +335,7 @@ function PowerDonutChart() {
 
         <div className="power-donut-center">
           <div className="power-donut-center-value">{total}</div>
-          <div className="power-donut-center-label">kW tong tai</div>
+          <div className="power-donut-center-label">kW tổng tải</div>
         </div>
       </div>
 
@@ -488,9 +528,9 @@ function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
   );
 }
 
-// ─────────────────────────────────────────────
+// ------------------------------------------------------------
 // DashboardPage (main export)
-// ─────────────────────────────────────────────
+// ------------------------------------------------------------
 export default function DashboardPage() {
   const navigate = useNavigate();
 
@@ -499,6 +539,30 @@ export default function DashboardPage() {
       {/* KPI Row */}
       <section className="dashboard-section">
         <div className="kpi-grid">
+          <MetricRibbonCard
+            label="SOC"
+            title="Trạng thái pin"
+            value={`${sys.soc}%`}
+            progress={sys.soc}
+            progressColor="green"
+            className="soc-card"
+            status={sys.batteryPower < 0 ? "Charging" : "Discharging"}
+          />
+          <MetricRibbonCard
+            label="SOH"
+            title="Tình trạng pin"
+            value={`${sys.soh}%`}
+            progress={sys.soh}
+            progressColor="blue"
+            className="soh-card"
+          />
+          <MetricRibbonCard
+            label="P"
+            title="Công suất"
+            value={sys.batteryPower}
+            unit="kW"
+            className="power-output-card"
+          />
           <KPICard
             icon={<LuGauge />}
             title="Trạng thái pin"
@@ -545,7 +609,7 @@ export default function DashboardPage() {
       <section className="dashboard-section mt-base">
         <div className="card dashboard-visual-card">
           <div className="visual-layout">
-            {/* Main visual scene — SVG model từ file 1 */}
+            {/* Main visual scene - SVG model từ file 1 */}
             <div className="visual-layout-main">
               <div className="visual-scene">
                 <svg
