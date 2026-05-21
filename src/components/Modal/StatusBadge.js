@@ -16,9 +16,9 @@ import {
   FaXmark,
 } from "react-icons/fa6";
 import { LuSend } from "react-icons/lu";
-import { displayText } from "../utils/displayText";
+import { useIntl } from "react-intl";
 
-const badgeMap = {  
+const badgeMap = {
   Online: "badge-success",
   Offline: "badge-gray",
   Fault: "badge-danger",
@@ -93,20 +93,66 @@ const iconMap = {
   Idle: FaClock,
 };
 
+const statusMessageIds = {
+  Online: "status.online",
+  Offline: "status.offline",
+  Fault: "status.fault",
+  Normal: "status.normal",
+  Running: "status.running",
+  Charging: "status.charging",
+  Discharging: "status.discharging",
+  Warning: "status.warning",
+  Critical: "status.critical",
+  Standby: "status.standby",
+  Connected: "status.connected",
+  Disconnected: "status.disconnected",
+  Active: "status.active",
+  Acknowledged: "status.acknowledged",
+  Cleared: "status.cleared",
+  Pending: "status.pending",
+  Sent: "status.sent",
+  Accepted: "status.accepted",
+  Rejected: "status.rejected",
+  Failed: "status.failed",
+  Timeout: "status.timeout",
+  Completed: "status.completed",
+  Inactive: "status.inactive",
+  Locked: "status.locked",
+  Enabled: "status.enabled",
+  Disabled: "status.disabled",
+  Info: "status.info",
+  Success: "status.success",
+  Auto: "status.auto",
+  Manual: "status.manual",
+  Charge: "status.charge",
+  Discharge: "status.discharge",
+  Backup: "status.backup",
+  Maintenance: "status.maintenance",
+  "Peak Shaving": "status.peak_shaving",
+  High: "status.high",
+  Low: "status.low",
+  Supplied: "status.supplied",
+  Generating: "status.generating",
+  Idle: "status.idle",
+};
+
 export default function StatusBadge({
   status,
   showIcon = true,
   size = "normal",
 }) {
+  const intl = useIntl();
   const className = badgeMap[status] || "badge-gray";
   const Icon = iconMap[status];
+  const messageId = statusMessageIds[status];
+  const label = messageId
+    ? intl.formatMessage({ id: messageId, defaultMessage: status })
+    : status;
 
   return (
-    <span
-      className={`badge ${className} ${size === "small" ? "badge-sm" : ""}`}
-    >
+    <span className={`badge ${className} ${size === "small" ? "badge-sm" : ""}`}>
       {showIcon && Icon ? <Icon size={12} /> : null}
-      {displayText(status)}
+      {label}
     </span>
   );
 }

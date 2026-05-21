@@ -17,7 +17,6 @@ import AlarmPage from "./components/Screen/Alarm/AlarmPage";
 import EnergyReportPage from "./components/Screen/EnergyReport/EnergyReportPage";
 import UserManagementPage from "./components/Screen/UserManagement/UserManagementPage";
 import SystemSettingsPage from "./components/Screen/SystemSettings/SystemSettingsPage";
-import { VietnameseLocalization } from "./components/utils/localizeVi";
 import RolePage from "./components/Screen/Role/Role";
 import UserInfoPage from "./components/Screen/UserInfo/UserInfo";
 
@@ -80,7 +79,6 @@ function AppRoutes() {
 export default function App() {
   return (
     <AuthProvider>
-      <VietnameseLocalization />
       <BrowserRouter>
         <AppRoutes />
       </BrowserRouter>

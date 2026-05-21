@@ -146,6 +146,8 @@
   letter-spacing: 0.08em;
   color: #fff;
   padding: 6px 0;
+  text-align: center;
+  line-height: 1.15;
 }
 
 .dashboard-power-card-body {
@@ -282,6 +284,19 @@
 
 .discharge-card .dashboard-power-card-label {
   background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
+}
+
+.charge-card,
+.discharge-card {
+  grid-template-columns: 58px 1fr;
+
+  .dashboard-power-card-label {
+    width: 58px;
+    padding: 6px 6px;
+    font-size: 0.58rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
 }
 
 .discharge-card .dashboard-power-card-item-value span {
