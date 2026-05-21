@@ -57,7 +57,7 @@
     margin-bottom: 8px;
 
     &-label {
-      font-size: var(--font-size-xs);
+      font-size: 0.68rem;
       font-weight: var(--font-weight-semibold);
       color: var(--text-muted);
       text-transform: uppercase;
@@ -73,7 +73,7 @@
     padding: 10px 12px;
     border-radius: var(--radius-md);
     color: var(--text-body);
-    font-size: var(--font-size-base);
+    font-size: 0.88rem;
     font-weight: var(--font-weight-medium);
     text-decoration: none;
     transition: all var(--transition-fast);
@@ -91,7 +91,7 @@
     }
 
     &-icon {
-      font-size: 18px;
+      font-size: 16px;
       min-width: 24px;
       text-align: center;
       line-height: 1;

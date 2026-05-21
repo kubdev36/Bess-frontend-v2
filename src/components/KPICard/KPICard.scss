@@ -1,8 +1,8 @@
 .kpi-card {
   background: var(--card-bg);
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
-  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
   box-shadow: var(--shadow-card);
   transition: all var(--transition-base);
   animation: fadeIn 0.3s ease-out;
@@ -23,12 +23,12 @@
   &-top {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    gap: 6px;
+    margin-bottom: 5px;
   }
 
   &-icon {
-    font-size: 20px;
+    font-size: 15px;
     line-height: 1;
     display: inline-flex;
     align-items: center;
@@ -36,7 +36,7 @@
   }
 
   &-title {
-    font-size: var(--font-size-sm);
+    font-size: 0.68rem;
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
     text-transform: uppercase;
@@ -46,38 +46,38 @@
   &-value-row {
     display: flex;
     align-items: baseline;
-    gap: 4px;
-    margin-bottom: 6px;
+    gap: 3px;
+    margin-bottom: 4px;
   }
 
   &-value {
-    font-size: 26px;
+    font-size: 16px;
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     line-height: 1.2;
   }
 
   &-unit {
-    font-size: var(--font-size-sm);
+    font-size: 0.62rem;
     color: var(--text-secondary);
     font-weight: var(--font-weight-medium);
   }
 
   &-status {
-    margin-top: 4px;
+    margin-top: 2px;
   }
 
   &-progress {
-    margin-top: 8px;
+    margin-top: 3px;
   }
 
   &-trend {
-    font-size: var(--font-size-xs);
+    font-size: 0.68rem;
     font-weight: var(--font-weight-semibold);
-    margin-top: 6px;
+    margin-top: 3px;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
   }
 }
 

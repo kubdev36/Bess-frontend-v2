@@ -8,8 +8,6 @@ import {
   LuCloudRain,
   LuCloudSnow,
   LuCloudSun,
-  LuDroplets,
-  LuEye,
   LuFactory,
   LuGauge,
   LuLeaf,
@@ -17,9 +15,7 @@ import {
   LuSettings2,
   LuShield,
   LuSun,
-  LuThermometer,
   LuTrendingUp,
-  LuWind,
   LuZap,
 } from "react-icons/lu";
 import {
@@ -50,7 +46,7 @@ const FIT_PRICE = 1943;
 const CO2_FACTOR = 0.52;
 
 const DONUT_COLORS = {
-  grid: "#1677FF",
+  grid: "#ef4444",
   pv: "#F59E0B",
   battery: "#22C55E",
   load: "#f43f5e",
@@ -178,6 +174,7 @@ function WeatherWidget() {
         <span className="weather-widget__temp-unit">°C</span>
       </div>
 
+      {/*
       <div className="weather-widget__stats">
         {[
           { icon: <LuDroplets />, val: `${current.humidity}%`, label: "Độ ẩm" },
@@ -200,6 +197,7 @@ function WeatherWidget() {
           </div>
         ))}
       </div>
+      */}
     </div>
   );
 }
@@ -246,7 +244,6 @@ function PowerDonutChart() {
           value: Math.abs(sys.gridPower),
           color: DONUT_COLORS.grid,
         },
-        { name: "PV", value: Math.abs(sys.pvPower), color: DONUT_COLORS.pv },
         {
           name: "Pin",
           value: Math.abs(sys.batteryPower),
@@ -256,14 +253,21 @@ function PowerDonutChart() {
     [],
   );
 
-  const total = data.reduce((s, d) => s + d.value, 0);
+  const total = useMemo(
+    () =>
+      [
+        Math.abs(sys.gridPower),
+        Math.abs(sys.pvPower),
+        Math.abs(sys.batteryPower),
+      ].reduce((s, value) => s + value, 0),
+    [],
+  );
 
   return (
     <div className="power-donut-card card">
       <div className="card-header">
         <div>
           <span className="card-title">Tỷ trọng công suất</span>
-          <div className="card-subtitle">Lưới · PV · Pin (kW)</div>
         </div>
       </div>
 
@@ -291,19 +295,12 @@ function PowerDonutChart() {
 
         <div className="power-donut-center">
           <div className="power-donut-center-value">{total}</div>
-          <div className="power-donut-center-label">kW tổng</div>
+          <div className="power-donut-center-label">kW tong tai</div>
         </div>
       </div>
 
       <div className="power-donut-legend">
-        {[
-          ...data,
-          {
-            name: "Tải tiêu thụ",
-            value: sys.loadPower,
-            color: DONUT_COLORS.load,
-          },
-        ].map((d, i) => (
+        {data.map((d, i) => (
           <div className="power-donut-legend-item" key={i}>
             <span
               className="power-donut-legend-dot"
@@ -479,14 +476,6 @@ function PowerTrendCard({ title, subtitle, defaultMode = "day" }) {
           />
           <Line
             type="monotone"
-            dataKey="pvPower"
-            name="PV"
-            stroke="#F59E0B"
-            strokeWidth={2}
-            dot={false}
-          />
-          <Line
-            type="monotone"
             dataKey="loadPower"
             name="Load"
             stroke="#22C55E"
@@ -512,7 +501,7 @@ export default function DashboardPage() {
         <div className="kpi-grid">
           <KPICard
             icon={<LuGauge />}
-            title="SOC"
+            title="Trạng thái pin"
             value={`${sys.soc}%`}
             progress={sys.soc}
             progressColor="green"
@@ -521,7 +510,7 @@ export default function DashboardPage() {
           />
           <KPICard
             icon={<LuShield />}
-            title="SOH"
+            title="Tình trạng pin"
             value={`${sys.soh}%`}
             progress={sys.soh}
             progressColor="green"
@@ -559,9 +548,22 @@ export default function DashboardPage() {
             {/* Main visual scene — SVG model từ file 1 */}
             <div className="visual-layout-main">
               <div className="visual-scene">
-                <svg viewBox="0 0 815 560" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <svg
+                  viewBox="0 0 815 560"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="100%"
+                  height="100%"
+                >
                   <defs>
-                    <linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="650" y2="0" spreadMethod="repeat">
+                    <linearGradient
+                      id="gradient"
+                      gradientUnits="userSpaceOnUse"
+                      x1="0"
+                      y1="0"
+                      x2="650"
+                      y2="0"
+                      spreadMethod="repeat"
+                    >
                       <stop offset="0%" stopColor="white" stopOpacity="0" />
                       <stop offset="5%" stopColor="white" stopOpacity="1" />
                       <stop offset="10%" stopColor="white" stopOpacity="0" />
@@ -573,15 +575,43 @@ export default function DashboardPage() {
                       <stop offset="70%" stopColor="white" stopOpacity="0" />
                       <stop offset="90%" stopColor="white" stopOpacity="1" />
                       <stop offset="95%" stopColor="white" stopOpacity="0" />
-                      <animate attributeName="x1" attributeType="XML" values="-650; 650" dur="5s" begin="0s" repeatCount="indefinite" />
-                      <animate attributeName="x2" attributeType="XML" values="0; 1300" dur="5s" begin="0s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="x1"
+                        attributeType="XML"
+                        values="-650; 650"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="x2"
+                        attributeType="XML"
+                        values="0; 1300"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
                     </linearGradient>
 
                     <mask id="gradient-mask" maskUnits="userSpaceOnUse">
-                      <rect x="-2000" y="-2000" width="4000" height="4000" fill="url(#gradient)" />
+                      <rect
+                        x="-2000"
+                        y="-2000"
+                        width="4000"
+                        height="4000"
+                        fill="url(#gradient)"
+                      />
                     </mask>
 
-                    <linearGradient id="gradient-reverse" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="650" y2="0" spreadMethod="repeat">
+                    <linearGradient
+                      id="gradient-reverse"
+                      gradientUnits="userSpaceOnUse"
+                      x1="0"
+                      y1="0"
+                      x2="650"
+                      y2="0"
+                      spreadMethod="repeat"
+                    >
                       <stop offset="0%" stopColor="white" stopOpacity="0" />
                       <stop offset="5%" stopColor="white" stopOpacity="1" />
                       <stop offset="10%" stopColor="white" stopOpacity="0" />
@@ -593,15 +623,43 @@ export default function DashboardPage() {
                       <stop offset="70%" stopColor="white" stopOpacity="0" />
                       <stop offset="90%" stopColor="white" stopOpacity="1" />
                       <stop offset="95%" stopColor="white" stopOpacity="0" />
-                      <animate attributeName="x1" attributeType="XML" values="650; -650" dur="5s" begin="0s" repeatCount="indefinite" />
-                      <animate attributeName="x2" attributeType="XML" values="1300; 0" dur="5s" begin="0s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="x1"
+                        attributeType="XML"
+                        values="650; -650"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="x2"
+                        attributeType="XML"
+                        values="1300; 0"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
                     </linearGradient>
 
                     <mask id="gradient-mask-reverse" maskUnits="userSpaceOnUse">
-                      <rect x="-2000" y="-2000" width="4000" height="4000" fill="url(#gradient-reverse)" />
+                      <rect
+                        x="-2000"
+                        y="-2000"
+                        width="4000"
+                        height="4000"
+                        fill="url(#gradient-reverse)"
+                      />
                     </mask>
 
-                    <linearGradient id="gradient-vertical" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="300" spreadMethod="repeat">
+                    <linearGradient
+                      id="gradient-vertical"
+                      gradientUnits="userSpaceOnUse"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="300"
+                      spreadMethod="repeat"
+                    >
                       <stop offset="0%" stopColor="white" stopOpacity="0" />
                       <stop offset="5%" stopColor="white" stopOpacity="1" />
                       <stop offset="10%" stopColor="white" stopOpacity="0" />
@@ -613,33 +671,89 @@ export default function DashboardPage() {
                       <stop offset="70%" stopColor="white" stopOpacity="0" />
                       <stop offset="90%" stopColor="white" stopOpacity="1" />
                       <stop offset="95%" stopColor="white" stopOpacity="0" />
-                      <animate attributeName="y1" attributeType="XML" values="-200; 200" dur="5s" begin="0s" repeatCount="indefinite" />
-                      <animate attributeName="y2" attributeType="XML" values="100; 500" dur="5s" begin="0s" repeatCount="indefinite" />
+                      <animate
+                        attributeName="y1"
+                        attributeType="XML"
+                        values="-200; 200"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
+                      <animate
+                        attributeName="y2"
+                        attributeType="XML"
+                        values="100; 500"
+                        dur="5s"
+                        begin="0s"
+                        repeatCount="indefinite"
+                      />
                     </linearGradient>
 
-                    <mask id="gradient-mask-vertical" maskUnits="userSpaceOnUse">
-                      <rect x="-2000" y="-2000" width="4000" height="4000" fill="url(#gradient-vertical)" />
+                    <mask
+                      id="gradient-mask-vertical"
+                      maskUnits="userSpaceOnUse"
+                    >
+                      <rect
+                        x="-2000"
+                        y="-2000"
+                        width="4000"
+                        height="4000"
+                        fill="url(#gradient-vertical)"
+                      />
                     </mask>
                   </defs>
 
                   {/* Background */}
                   <>
-                    <rect x="-347.19" y="167.022" width="395.836" height="253.584" style={{ fill: 'rgb(216, 216, 216)', stroke: 'rgb(0, 0, 0)', transformBox: 'fill-box', transformOrigin: '50% 50%', strokeWidth: '0px' }} transform="matrix(0.896181, -0.443689, 1.126672, 0.558043, 542.66611, 70.966677)"></rect>
-                    <foreignObject x={'250'} y={'110'} width={"450"} height={"250"}>
-                      <img src={'/pictures/tree_day.png'} alt='' width={"100%"} height={"100%"} />
+                    <rect
+                      x="-347.19"
+                      y="167.022"
+                      width="395.836"
+                      height="253.584"
+                      style={{
+                        fill: "rgb(216, 216, 216)",
+                        stroke: "rgb(0, 0, 0)",
+                        transformBox: "fill-box",
+                        transformOrigin: "50% 50%",
+                        strokeWidth: "0px",
+                      }}
+                      transform="matrix(0.896181, -0.443689, 1.126672, 0.558043, 542.66611, 70.966677)"
+                    ></rect>
+                    <foreignObject
+                      x={"250"}
+                      y={"110"}
+                      width={"450"}
+                      height={"250"}
+                    >
+                      <img
+                        src={"/pictures/tree_day.png"}
+                        alt=""
+                        width={"100%"}
+                        height={"100%"}
+                      />
                     </foreignObject>
-                    <foreignObject x='145' y='100' width={"100"} height={"250"}>
-                      <img src={'/pictures/Grid.png'} alt='' width={"100%"} height={"100%"} />
+                    <foreignObject x="145" y="100" width={"100"} height={"250"}>
+                      <img
+                        src={"/pictures/Grid.png"}
+                        alt=""
+                        width={"100%"}
+                        height={"100%"}
+                      />
                     </foreignObject>
-                    <foreignObject x='150' y='180' width={"500"} height={"300"}>
-                      <img src={'/pictures/Factory.png'} alt='' width={"100%"} height={"100%"} />
+                    <foreignObject x="150" y="180" width={"500"} height={"300"}>
+                      <img
+                        src={"/pictures/Factory.png"}
+                        alt=""
+                        width={"100%"}
+                        height={"100%"}
+                      />
                     </foreignObject>
                   </>
 
                   <path
-                    id='LineA'
-                    className='path'
-                    d='M 119.941 149.954 L 160.13 150.076'
+                    id="LineA"
+                    className="path"
+                    d="M 119.941 149.954 L 160.13 150.076"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -649,13 +763,13 @@ export default function DashboardPage() {
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       strokeDasharray: "3",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineA1'
-                    className='path'
-                    d='M 155.125 210.84 C 157.373 280.604 169.304 304.053 224.993 313.377 C 224.993 313.377 305.421 370.525 314.872 379.42 L 323.997 375.566 L 324.426 428.75'
+                    id="LineA1"
+                    className="path"
+                    d="M 155.125 210.84 C 157.373 280.604 169.304 304.053 224.993 313.377 C 224.993 313.377 305.421 370.525 314.872 379.42 L 323.997 375.566 L 324.426 428.75"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -664,39 +778,44 @@ export default function DashboardPage() {
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineA2'
-                    className='path'
-                    d='M 155.125 210.84 C 157.373 280.604 169.304 304.053 224.993 313.377 C 224.993 313.377 305.421 370.525 314.872 379.42 L 323.997 375.566 L 324.426 428.75'
+                    id="LineA2"
+                    className="path"
+                    d="M 155.125 210.84 C 157.373 280.604 169.304 304.053 224.993 313.377 C 224.993 313.377 305.421 370.525 314.872 379.42 L 323.997 375.566 L 324.426 428.75"
                     style={{
                       width: "100%",
                       height: "100%",
                       fill: "none",
-                      stroke: 'rgba(255, 48, 29, 1)',
+                      stroke: "rgba(255, 48, 29, 1)",
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       overflow: "hidden",
-                      mask: "url(#gradient-mask)"
+                      mask: "url(#gradient-mask)",
                     }}
                   />
-                  <foreignObject x='20' y='100' width="100" height="80">
-                    <div className='DAT_DataText' style={{ border: `1px solid rgba(255, 48, 29, 1)` }}>
-                      <div className='DAT_DataText_Data'>
-                        <div className='DAT_DataText_Data_Val'>1.90</div>
-                        <div className='DAT_DataText_Data_Unit'>kW</div>
+                  <foreignObject x="20" y="100" width="100" height="80">
+                    <div
+                      className="DAT_DataText"
+                      style={{ border: `1px solid rgba(255, 48, 29, 1)` }}
+                    >
+                      <div className="DAT_DataText_Data">
+                        <div className="DAT_DataText_Data_Val">1.90</div>
+                        <div className="DAT_DataText_Data_Unit">kW</div>
                       </div>
-                      <span style={{ color: 'rgba(255, 48, 29, 1)' }}>Điện lưới</span>
+                      <span style={{ color: "rgba(255, 48, 29, 1)" }}>
+                        Điện lưới
+                      </span>
                     </div>
                   </foreignObject>
 
                   <path
-                    id='LineB'
-                    className='path'
-                    d='M 272.337 478.882 L 272.575 426.829'
+                    id="LineB"
+                    className="path"
+                    d="M 272.337 478.882 L 272.575 426.829"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -706,13 +825,13 @@ export default function DashboardPage() {
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       strokeDasharray: "3",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineB1'
-                    className='path'
-                    d='M 270.899 422.274 L 319.268 446.595'
+                    id="LineB1"
+                    className="path"
+                    d="M 270.899 422.274 L 319.268 446.595"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -721,42 +840,53 @@ export default function DashboardPage() {
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineB2'
-                    className='path'
-                    d='M 270.899 422.274 L 319.268 446.595'
+                    id="LineB2"
+                    className="path"
+                    d="M 270.899 422.274 L 319.268 446.595"
                     style={{
                       width: "100%",
                       height: "100%",
                       fill: "none",
-                      stroke: '#E4B322',
+                      stroke: "#E4B322",
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       overflow: "hidden",
-                      mask: "url(#gradient-mask-reverse)"
+                      mask: "url(#gradient-mask-reverse)",
                     }}
                   />
-                  <foreignObject x='265' y='415' width="20" height="20">
-                    <div style={{ backgroundColor: 'rgba(255, 255, 255, 1)', width: '15px', height: '15px', borderRadius: '50%', border: 'solid 2px #E4B322' }}></div>
+                  <foreignObject x="265" y="415" width="20" height="20">
+                    <div
+                      style={{
+                        backgroundColor: "rgba(255, 255, 255, 1)",
+                        width: "15px",
+                        height: "15px",
+                        borderRadius: "50%",
+                        border: "solid 2px #E4B322",
+                      }}
+                    ></div>
                   </foreignObject>
-                  <foreignObject x='200' y='480' width="100" height="80">
-                    <div className='DAT_DataText' style={{ border: `1px solid #E4B322` }}>
-                      <div className='DAT_DataText_Data'>
-                        <div className='DAT_DataText_Data_Val'>2.50</div>
-                        <div className='DAT_DataText_Data_Unit'>kW</div>
+                  <foreignObject x="200" y="480" width="100" height="80">
+                    <div
+                      className="DAT_DataText"
+                      style={{ border: `1px solid #E4B322` }}
+                    >
+                      <div className="DAT_DataText_Data">
+                        <div className="DAT_DataText_Data_Val">2.50</div>
+                        <div className="DAT_DataText_Data_Unit">kW</div>
                       </div>
-                      <span style={{ color: '#E4B322' }}>Tải tiêu thụ</span>
+                      <span style={{ color: "#E4B322" }}>Tải tiêu thụ</span>
                     </div>
                   </foreignObject>
 
                   <path
-                    id='LineC'
-                    className='path'
-                    d='M 488.186 424.065 L 559.386 423.993'
+                    id="LineC"
+                    className="path"
+                    d="M 488.186 424.065 L 559.386 423.993"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -766,13 +896,13 @@ export default function DashboardPage() {
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       strokeDasharray: "3",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineC1'
-                    className='path'
-                    d='M 343.43 439.664 L 381.893 421.39'
+                    id="LineC1"
+                    className="path"
+                    d="M 343.43 439.664 L 381.893 421.39"
                     style={{
                       width: "100%",
                       height: "100%",
@@ -781,40 +911,76 @@ export default function DashboardPage() {
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
-                      overflow: "hidden"
+                      overflow: "hidden",
                     }}
                   />
                   <path
-                    id='LineC2'
-                    className='path'
-                    d='M 343.43 439.664 L 381.893 421.39'
+                    id="LineC2"
+                    className="path"
+                    d="M 343.43 439.664 L 381.893 421.39"
                     style={{
                       width: "100%",
                       height: "100%",
                       fill: "none",
-                      stroke: 'rgba(32, 128, 245, 1)',
+                      stroke: "rgba(32, 128, 245, 1)",
                       strokeWidth: "3",
                       strokeLinecap: "round",
                       strokeLinejoin: "round",
                       overflow: "hidden",
-                      mask: "url(#gradient-mask-reverse)"
+                      mask: "url(#gradient-mask-reverse)",
                     }}
                   />
-                  <foreignObject x='560' y='410' width="100" height="80">
-                    <div className='DAT_DataText' style={{ border: `1px solid rgba(32, 128, 245, 1)` }}>
-                      <div className='DAT_DataText_Data'>
-                        <div className='DAT_DataText_Data_Val'>1.87</div>
-                        <div className='DAT_DataText_Data_Unit'>kW</div>
+                  <foreignObject x="560" y="410" width="100" height="80">
+                    <div
+                      className="DAT_DataText"
+                      style={{ border: `1px solid rgba(32, 128, 245, 1)` }}
+                    >
+                      <div className="DAT_DataText_Data">
+                        <div className="DAT_DataText_Data_Val">1.87</div>
+                        <div className="DAT_DataText_Data_Unit">kW</div>
                       </div>
-                      <span style={{ color: 'rgba(32, 128, 245, 1)' }}>Lưu trữ</span>
+                      <span style={{ color: "rgba(32, 128, 245, 1)" }}>
+                        Lưu trữ
+                      </span>
                     </div>
                   </foreignObject>
 
-                  <foreignObject x='375' y='375' width={"115"} height={"90"} style={{ transformBox: 'fill-box', transformOrigin: '50% 50%' }} transform="matrix(0.935735, -0.056624, 0.023937, 0.9478, -0.92938, -9.527987)">
-                    <img src={'/pictures/bess.png'} alt='' width={"100%"} height={"100%"} />
+                  <foreignObject
+                    x="375"
+                    y="375"
+                    width={"115"}
+                    height={"90"}
+                    style={{
+                      transformBox: "fill-box",
+                      transformOrigin: "50% 50%",
+                    }}
+                    transform="matrix(0.935735, -0.056624, 0.023937, 0.9478, -0.92938, -9.527987)"
+                  >
+                    <img
+                      src={"/pictures/bess.png"}
+                      alt=""
+                      width={"100%"}
+                      height={"100%"}
+                    />
                   </foreignObject>
-                  <foreignObject x='338.009' y='220' width={"35"} height={"50"} style={{ transformBox: 'fill-box', transformOrigin: '50% 50%' }} transform="matrix(0.868623, -0.019845, 0.026762, 1.021506, -21.485769, 204.175858)">
-                    <img src={'/pictures/Bat.png'} alt='' width={"100%"} height={"100%"} style={{ transform: 'scaleX(-1)' }} />
+                  <foreignObject
+                    x="338.009"
+                    y="220"
+                    width={"35"}
+                    height={"50"}
+                    style={{
+                      transformBox: "fill-box",
+                      transformOrigin: "50% 50%",
+                    }}
+                    transform="matrix(0.868623, -0.019845, 0.026762, 1.021506, -21.485769, 204.175858)"
+                  >
+                    <img
+                      src={"/pictures/Bat.png"}
+                      alt=""
+                      width={"100%"}
+                      height={"100%"}
+                      style={{ transform: "scaleX(-1)" }}
+                    />
                   </foreignObject>
                 </svg>
               </div>
@@ -834,7 +1000,7 @@ export default function DashboardPage() {
       <section className="dashboard-grid mt-base">
         <PowerTrendCard
           title="Power Trend"
-          subtitle="Xu hướng công suất của Battery, Grid, PV và Load."
+          subtitle="Xu hướng công suất của Battery, Grid và Load."
           defaultMode="day"
         />
         <PowerTrendCard

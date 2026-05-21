@@ -1,6 +1,7 @@
 .dashboard {
   display: flex;
   flex-direction: column;
+  --dashboard-radius: var(--radius-md);
 
   &-section {
     display: flex;
@@ -25,20 +26,25 @@
 // ─────────────────────────────────────────────
 .visual-layout {
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: var(--space-base);
-  align-items: start;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 4fr);
+  gap: 12px;
+  align-items: stretch;
 }
 
 .visual-layout-main,
 .visual-layout-side {
   min-width: 0;
+  height: 100%;
+}
+
+.visual-layout-main {
+  display: flex;
 }
 
 .visual-layout-side {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-base);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 12px;
 }
 
 // ─────────────────────────────────────────────
@@ -108,7 +114,7 @@
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--space-base);
+  gap: 10px;
 }
 
 // ─────────────────────────────────────────────
@@ -116,11 +122,11 @@
 // ─────────────────────────────────────────────
 .dashboard-power-card {
   display: grid;
-  grid-template-columns: 52px 1fr;
+  grid-template-columns: 38px 1fr;
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-xl);
+  border-radius: var(--dashboard-radius);
   overflow: hidden;
-  min-height: 138px;
+  min-height: 88px;
   background: var(--card-bg);
 }
 
@@ -128,22 +134,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
+  width: 38px;
   min-height: 100%;
   text-transform: uppercase;
-  font-size: var(--font-size-sm);
+  font-size: 0.62rem;
   font-weight: var(--font-weight-semibold);
   letter-spacing: 0.08em;
   color: #fff;
-  padding: 12px 0;
+  padding: 6px 0;
 }
 
 .dashboard-power-card-body {
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  padding: 18px 16px;
-  gap: 16px;
+  padding: 10px 8px;
+  gap: 8px;
 }
 
 .dashboard-power-card-item {
@@ -152,12 +158,12 @@
   justify-content: center;
   align-items: center;
   flex: 1;
-  gap: 8px;
+  gap: 3px;
   min-width: 0;
 }
 
 .dashboard-power-card-item-label {
-  font-size: var(--font-size-xs);
+  font-size: 0.58rem;
   color: var(--text-secondary);
   text-transform: uppercase;
 }
@@ -165,17 +171,17 @@
 .dashboard-power-card-item-value {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
 
   span {
-    font-size: 28px;
+    font-size: 16px;
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     line-height: 1;
   }
 
   small {
-    font-size: var(--font-size-sm);
+    font-size: 0.62rem;
     color: var(--text-secondary);
   }
 }
@@ -203,13 +209,13 @@
 // ─────────────────────────────────────────────
 .weather-widget {
   position: relative;
-  border-radius: var(--radius-xl);
+  border-radius: var(--dashboard-radius);
   overflow: hidden;
-  padding: 18px;
-  min-height: 150px;
+  padding: 14px 16px;
+  min-height: 116px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   color: #fff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   transition: box-shadow 0.2s;
@@ -250,26 +256,26 @@
   }
 
   &__city {
-    font-size: var(--font-size-sm);
+    font-size: 0.95rem;
     font-weight: var(--font-weight-semibold);
     opacity: 0.95;
   }
 
   &__condition {
-    font-size: var(--font-size-xs);
+    font-size: 0.72rem;
     opacity: 0.72;
-    margin-top: 2px;
+    margin-top: 1px;
   }
 
   &__icon-wrap {
-    font-size: 30px;
+    font-size: 28px;
     opacity: 0.9;
     line-height: 1;
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
   }
 
   &__temp {
-    font-size: 44px;
+    font-size: 34px;
     font-weight: 800;
     line-height: 1;
     position: relative;
@@ -278,7 +284,7 @@
   }
 
   &__temp-unit {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     opacity: 0.8;
     vertical-align: super;
@@ -291,7 +297,7 @@
     position: relative;
     z-index: 1;
     background: rgba(0, 0, 0, 0.12);
-    border-radius: var(--radius-lg);
+    border-radius: var(--dashboard-radius);
     padding: 8px 6px;
   }
 
@@ -317,7 +323,7 @@
 
   &--loading {
     background: var(--gray-100);
-    min-height: 150px;
+    min-height: 116px;
     animation: pulse 1.5s infinite;
   }
 
@@ -338,6 +344,11 @@
 // Power Donut Chart
 // ─────────────────────────────────────────────
 .power-donut-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+
   .card-subtitle {
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
@@ -346,8 +357,20 @@
   }
 }
 
+.power-donut-card .card-header,
+.economic-card .card-header {
+  margin-bottom: 12px;
+}
+
+.power-donut-card .card-title,
+.economic-card .card-title {
+  font-size: 1rem;
+}
+
 .power-donut-chart-wrap {
   position: relative;
+  flex: 1;
+  min-height: 168px;
 }
 
 .power-donut-center {
@@ -359,14 +382,14 @@
   pointer-events: none;
 
   &-value {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     color: var(--text-primary);
     line-height: 1;
   }
 
   &-label {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--text-secondary);
     margin-top: 3px;
   }
@@ -375,19 +398,19 @@
 .power-donut-legend {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 0 4px 4px;
+  gap: 4px;
+  padding: 0 2px 2px;
 
   &-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: var(--font-size-xs);
+    gap: 6px;
+    font-size: 0.78rem;
   }
 
   &-dot {
-    width: 9px;
-    height: 9px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     flex-shrink: 0;
   }
@@ -406,7 +429,7 @@
 .donut-tooltip {
   background: #fff;
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
+  border-radius: var(--dashboard-radius);
   padding: 8px 12px;
   font-size: 13px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
@@ -416,6 +439,11 @@
 // Economic Benefit Card
 // ─────────────────────────────────────────────
 .economic-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px;
+
   .card-subtitle {
     font-size: var(--font-size-xs);
     color: var(--text-secondary);
@@ -427,15 +455,15 @@
 .economic-grid {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .economic-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: var(--radius-lg);
+  gap: 8px;
+  padding: 8px;
+  border-radius: var(--dashboard-radius);
   background: var(--gray-50);
   transition: background 0.15s;
 
@@ -444,13 +472,13 @@
   }
 
   &-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: var(--radius-md);
+    width: 30px;
+    height: 30px;
+    border-radius: var(--dashboard-radius);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 17px;
+    font-size: 15px;
     flex-shrink: 0;
   }
 
@@ -468,7 +496,7 @@
   }
 
   &-value {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 800;
     line-height: 1.2;
     display: flex;
@@ -488,8 +516,10 @@
 // ─────────────────────────────────────────────
 .visual-scene {
   position: relative;
-  min-height: 560px;
-  border-radius: 14px;
+  flex: 1;
+  height: 100%;
+  min-height: 500px;
+  border-radius: var(--dashboard-radius);
   overflow: hidden;
   border: 1px solid #d6e4ee;
   background: linear-gradient(180deg, #a5d0ea 0%, #dce9f1 50%, #80b95d 50.2%, #75a74f 100%);
@@ -502,7 +532,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  border-radius: 5px;
+  border-radius: var(--dashboard-radius);
   padding: 4px;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.8);
