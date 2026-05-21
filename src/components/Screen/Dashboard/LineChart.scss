@@ -1,0 +1,82 @@
+.DAT_LineChart_Card {
+    padding: 14px;
+
+    &_Header {
+        gap: 12px;
+        align-items: flex-start;
+
+        &_Controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+            &_DateInput {
+                min-width: 148px;
+                height: 36px;
+                padding: 0 12px;
+                border: 1px solid var(--border);
+                border-radius: 8px;
+                background: #fff;
+                color: var(--text-body);
+                font-size: 14px;
+                outline: none;
+                transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+                &:focus {
+                    border-color: var(--primary);
+                    box-shadow: var(--shadow-focus);
+                }
+            }
+
+            &_Switcher {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                padding: 4px;
+                background: var(--gray-100);
+                border-radius: 999px;
+
+                &_Button {
+                    border: none;
+                    background: transparent;
+                    color: var(--text-secondary);
+                    border-radius: 999px;
+                    padding: 6px 14px;
+                    font-size: 14px;
+                    font-weight: var(--font-weight-medium);
+                    cursor: pointer;
+                    transition: all var(--transition-fast);
+
+                    &.Active {
+                        background: var(--primary);
+                        color: #fff;
+                        box-shadow: var(--shadow-sm);
+                    }
+                }
+            }
+        }
+    }
+
+    &_Body {
+        width: 100%;
+        min-height: 280px;
+    }
+}
+
+@media (max-width: 768px) {
+    .DAT_LineChart_Card {
+        &_Header {
+            align-items: stretch;
+
+            &_Controls {
+                justify-content: flex-start;
+
+                &_Switcher {
+                    align-self: flex-start;
+                }
+            }
+        }
+    }
+}

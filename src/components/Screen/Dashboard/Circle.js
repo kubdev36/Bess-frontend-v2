@@ -52,22 +52,22 @@ const DonutTooltip = ({ active, payload }) => {
 }
 
 const Circle = () => {
-  const intl = useIntl();
+  const lang = useIntl();
   const data = useMemo(
     () =>
       [
         {
-          name: intl.formatMessage({ id: "dashboard_energy_grid" }),
+          name: lang.formatMessage({ id: "dashboard_energy_grid" }),
           value: Math.abs(sys.gridPower),
           color: DONUT_COLORS.grid,
         },
         {
-          name: intl.formatMessage({ id: "dashboard_energy_battery" }),
+          name: lang.formatMessage({ id: "dashboard_energy_battery" }),
           value: Math.abs(sys.batteryPower),
           color: DONUT_COLORS.battery,
         },
       ].filter((d) => d.value > 0),
-    [intl],
+    [lang],
   );
 
   const total = useMemo(
@@ -85,7 +85,7 @@ const Circle = () => {
       <div className="DAT_Power_Donut_Card_Header">
         <div>
           <span className="DAT_Power_Donut_Card_Header_Title">
-            {intl.formatMessage({ id: "dashboard_donut_title" })}
+            {lang.formatMessage({ id: "dashboard_donut_title" })}
           </span>
         </div>
       </div>
@@ -118,7 +118,7 @@ const Circle = () => {
             <div className="DAT_Power_Donut_Center_Value_Unit">kW</div>
           </div>
           <div className="DAT_Power_Donut_Center_Label">
-            {intl.formatMessage({ id: "dashboard_donut_total_load" })}
+            {lang.formatMessage({ id: "dashboard_donut_total_load" })}
           </div>
         </div>
       </div>

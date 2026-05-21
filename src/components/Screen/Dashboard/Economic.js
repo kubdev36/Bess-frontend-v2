@@ -14,7 +14,7 @@ const formatMoney = (value, locale) => {
 }
 
 const EconomicBenefitCard = () => {
-  const intl = useIntl();
+  const lang = useIntl();
   const stats = useMemo(() => {
     const totalDischarge = mockEnergyReport.reduce((s, r) => s + r.discharge, 0);
     const totalPV = mockEnergyReport.reduce((s, r) => s + r.pv, 0);
@@ -26,17 +26,17 @@ const EconomicBenefitCard = () => {
   const items = [
     {
       icon: <LuCircleDollarSign />,
-      label: intl.formatMessage({ id: "dashboard_economic_revenue" }),
-      value: formatMoney(stats.revenue, intl.locale),
+      label: lang.formatMessage({ id: "dashboard_economic_revenue" }),
+      value: formatMoney(stats.revenue, lang.locale),
       unit: "VND",
       color: "#16a34a",
       bg: "#dcfce7",
     },
     {
       icon: <LuLeaf />,
-      label: intl.formatMessage({ id: "dashboard_economic_co2" }),
+      label: lang.formatMessage({ id: "dashboard_economic_co2" }),
       value: (stats.co2 / 1000).toFixed(1),
-      unit: intl.formatMessage({ id: "dashboard_economic_tons" }),
+      unit: lang.formatMessage({ id: "dashboard_economic_tons" }),
       color: "#059669",
       bg: "#d1fae5",
     },
@@ -47,10 +47,10 @@ const EconomicBenefitCard = () => {
       <div className="DAT_Economic_Card_Header">
         <div>
           <span className="DAT_Economic_Card_Header_Title">
-            {intl.formatMessage({ id: "dashboard_economic_title" })}
+            {lang.formatMessage({ id: "dashboard_economic_title" })}
           </span>
           <div className="DAT_Economic_Card_Header_Subtitle">
-            {intl.formatMessage({ id: "dashboard_economic_last_30_days" })}
+            {lang.formatMessage({ id: "dashboard_economic_last_30_days" })}
           </div>
         </div>
       </div>

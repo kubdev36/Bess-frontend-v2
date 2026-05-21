@@ -2,7 +2,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 export default function Flow() {
-  const intl = useIntl();
+  const lang = useIntl();
 
   return (
     <svg
@@ -192,7 +192,7 @@ export default function Flow() {
             <div className="DAT_DataText_Data_Unit">kW</div>
           </div>
           <span style={{ color: "rgba(255, 48, 29, 1)" }}>
-            {intl.formatMessage({ id: "dashboard_energy_grid" })}
+            {lang.formatMessage({ id: "dashboard_energy_grid" })}
           </span>
         </div>
       </foreignObject>
@@ -262,7 +262,7 @@ export default function Flow() {
             <div className="DAT_DataText_Data_Unit">kW</div>
           </div>
           <span style={{ color: "#E4B322" }}>
-            {intl.formatMessage({ id: "dashboard_energy_load_consumption" })}
+            {lang.formatMessage({ id: "dashboard_energy_load_consumption" })}
           </span>
         </div>
       </foreignObject>
@@ -324,7 +324,7 @@ export default function Flow() {
             <div className="DAT_DataText_Data_Unit">kW</div>
           </div>
           <span style={{ color: "rgba(32, 128, 245, 1)" }}>
-            {intl.formatMessage({ id: "dashboard_energy_storage" })}
+            {lang.formatMessage({ id: "dashboard_energy_storage" })}
           </span>
         </div>
       </foreignObject>

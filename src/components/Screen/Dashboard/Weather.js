@@ -36,10 +36,10 @@ function getWeatherBg(code, isDay) {
 }
 
 export default function WeatherWidget() {
-  const intl = useIntl();
+  const lang = useIntl();
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(true);
-  const weatherLang = intl.locale.startsWith("vi") ? "vi" : "en";
+  const weatherLang = lang.locale.startsWith("vi") ? "vi" : "en";
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +60,7 @@ export default function WeatherWidget() {
     return (
       <div className="DAT_Weather_Card_Error">
         <LuCloudSun />
-        <span>{intl.formatMessage({ id: "dashboard_weather_error" })}</span>
+        <span>{lang.formatMessage({ id: "dashboard_weather_error" })}</span>
       </div>
     );
   }
