@@ -69,8 +69,8 @@ export default function EconomicBenefitCard() {
                 className="economic-item-value"
                 style={{ color: item.color }}
               >
-                {item.value}
-                <small>{item.unit}</small>
+                <div className="economic-item-value-val">{item.value}</div>
+                <div className="economic-item-value-unit">{item.unit}</div>
               </div>
             </div>
           </div>

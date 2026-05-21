@@ -16,8 +16,10 @@ function PowerCard({ intl, label, className, todayValue, totalValue }) {
             {intl.formatMessage({ id: "dashboard_common_today" })}
           </span>
           <div className="dashboard-power-card-item-value">
-            <span>{formatValue(todayValue)}</span>
-            <small>kW</small>
+            <div className="dashboard-power-card-item-value-val">
+              {formatValue(todayValue)}
+            </div>
+            <div className="dashboard-power-card-item-value-unit">kW</div>
           </div>
         </div>
         <div className="dashboard-power-card-divider" />
@@ -26,8 +28,10 @@ function PowerCard({ intl, label, className, todayValue, totalValue }) {
             {intl.formatMessage({ id: "dashboard_common_total" })}
           </span>
           <div className="dashboard-power-card-item-value">
-            <span>{formatValue(totalValue)}</span>
-            <small>kWh</small>
+            <div className="dashboard-power-card-item-value-val">
+              {formatValue(totalValue)}
+            </div>
+            <div className="dashboard-power-card-item-value-unit">kWh</div>
           </div>
         </div>
       </div>

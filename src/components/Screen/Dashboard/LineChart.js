@@ -14,31 +14,6 @@ import { mockEnergyReport, mockHourlyData } from "../../data/mockData";
 
 const defaultChartDate = mockEnergyReport[0]?.date ?? "2026-05-19";
 
-function createDateFromIso(dateValue) {
-  const [year, month, day = "01"] = dateValue.split("-");
-  return new Date(Number(year), Number(month) - 1, Number(day));
-}
-
-function formatDateLabel(dateValue, locale) {
-  const date = createDateFromIso(dateValue);
-  if (Number.isNaN(date.getTime())) return dateValue;
-
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  }).format(date);
-}
-
-function formatMonthLabel(dateValue, locale) {
-  const date = createDateFromIso(dateValue);
-  if (Number.isNaN(date.getTime())) return dateValue;
-
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "2-digit",
-  }).format(date);
-}
 
 export default function PowerTrendChart({
   titleId,
@@ -91,23 +66,6 @@ export default function PowerTrendChart({
     }));
   }, [mode, selectedDate]);
 
-  const modeSubtitle =
-    mode === "day"
-      ? intl.formatMessage(
-          { id: "dashboard_chart_subtitle_day" },
-          {
-            subtitle: intl.formatMessage({ id: subtitleId }),
-            date: formatDateLabel(selectedDate, intl.locale),
-          },
-        )
-      : intl.formatMessage(
-          { id: "dashboard_chart_subtitle_month" },
-          {
-            subtitle: intl.formatMessage({ id: subtitleId }),
-            month: formatMonthLabel(selectedDate, intl.locale),
-          },
-        );
-
   return (
     <div className="card">
       <div className="card-header dashboard-chart-header">
@@ -115,7 +73,6 @@ export default function PowerTrendChart({
           <span className="card-title">
             {intl.formatMessage({ id: titleId })}
           </span>
-          <div className="card-subtitle">{modeSubtitle}</div>
         </div>
         <div className="dashboard-chart-controls">
           <input

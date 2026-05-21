@@ -42,7 +42,10 @@ function DonutTooltip({ active, payload }) {
   return (
     <div className="donut-tooltip">
       <div style={{ fontWeight: 700, color: d.payload.color }}>{d.name}</div>
-      <div>{d.value} kW</div>
+      <div className="donut-tooltip-value">
+        <div className="donut-tooltip-value-val">{d.value}</div>
+        <div className="donut-tooltip-value-unit">kW</div>
+      </div>
     </div>
   );
 }
@@ -109,7 +112,10 @@ export default function Circle() {
         </ResponsiveContainer>
 
         <div className="power-donut-center">
-          <div className="power-donut-center-value">{total}</div>
+          <div className="power-donut-center-value">
+            <div className="power-donut-center-value-val">{total}</div>
+            <div className="power-donut-center-value-unit">kW</div>
+          </div>
           <div className="power-donut-center-label">
             {intl.formatMessage({ id: "dashboard_donut_total_load" })}
           </div>
@@ -124,7 +130,10 @@ export default function Circle() {
               style={{ background: d.color }}
             />
             <span className="power-donut-legend-name">{d.name}</span>
-            <span className="power-donut-legend-val">{d.value} kW</span>
+            <div className="power-donut-legend-value">
+              <div className="power-donut-legend-value-val">{d.value}</div>
+              <div className="power-donut-legend-value-unit">kW</div>
+            </div>
           </div>
         ))}
       </div>

@@ -23,7 +23,7 @@ export default function Infor() {
             </div>
           </div>
           <div className="dashboard-metric-card-value">
-            <span>{sys.soc}%</span>
+            <div className="dashboard-metric-card-value-val">{sys.soc}%</div>
           </div>
           <div className="dashboard-metric-card-progress">
             <div className="progress-bar">
@@ -45,7 +45,7 @@ export default function Infor() {
             </span>
           </div>
           <div className="dashboard-metric-card-value">
-            <span>{sys.soh}%</span>
+            <div className="dashboard-metric-card-value-val">{sys.soh}%</div>
           </div>
           <div className="dashboard-metric-card-progress">
             <div className="progress-bar">
@@ -67,8 +67,8 @@ export default function Infor() {
             </span>
           </div>
           <div className="dashboard-metric-card-value">
-            <span>{sys.batteryPower}</span>
-            <small>kW</small>
+            <div className="dashboard-metric-card-value-val">{sys.batteryPower}</div>
+            <div className="dashboard-metric-card-value-unit">kW</div>
           </div>
         </div>
       </div>

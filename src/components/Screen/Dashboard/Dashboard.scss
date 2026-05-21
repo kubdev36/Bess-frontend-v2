@@ -262,14 +262,14 @@
   gap: 6px;
   min-height: 28px;
 
-  span {
+  &-val {
     font-size: 16px;
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     line-height: 1;
   }
 
-  small {
+  &-unit {
     font-size: 0.62rem;
     color: var(--text-secondary);
   }
@@ -317,13 +317,13 @@
   min-height: 28px;
   margin-top: 0;
 
-  span {
+  &-val {
     font-size: 16px;
     font-weight: var(--font-weight-bold);
     line-height: 1;
   }
 
-  small {
+  &-unit {
     font-size: 0.62rem;
     color: var(--text-secondary);
   }
@@ -346,15 +346,15 @@
   background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
 }
 
-.soc-card .dashboard-metric-card-value span {
+.soc-card .dashboard-metric-card-value-val {
   color: #15803d;
 }
 
-.soh-card .dashboard-metric-card-value span {
+.soh-card .dashboard-metric-card-value-val {
   color: #1d4ed8;
 }
 
-.power-output-card .dashboard-metric-card-value span {
+.power-output-card .dashboard-metric-card-value-val {
   color: #c2410c;
 }
 
@@ -379,7 +379,7 @@
   }
 }
 
-.discharge-card .dashboard-power-card-item-value span {
+.discharge-card .dashboard-power-card-item-value-val {
   color: #312e81;
 }
 
@@ -523,10 +523,22 @@
   pointer-events: none;
 
   &-value {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+
+  &-value-val {
     font-size: 18px;
     font-weight: 800;
     color: var(--text-primary);
     line-height: 1;
+  }
+
+  &-value-unit {
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-secondary);
   }
 
   &-label {
@@ -561,6 +573,23 @@
     color: var(--text-secondary);
   }
 
+  &-value {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+  }
+
+  &-value-val {
+    line-height: 1;
+  }
+
+  &-value-unit {
+    font-size: 10px;
+    color: var(--text-secondary);
+  }
+
   &-val {
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
@@ -574,6 +603,23 @@
   padding: 8px 12px;
   font-size: 13px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+
+  &-value {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  &-value-val {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+  }
+
+  &-value-unit {
+    font-size: 10px;
+    color: var(--text-secondary);
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -644,7 +690,11 @@
     align-items: baseline;
     gap: 3px;
 
-    small {
+    &-val {
+      line-height: 1;
+    }
+
+    &-unit {
       font-size: 10px;
       font-weight: 500;
       opacity: 0.7;
