@@ -1,0 +1,125 @@
+.DAT_Power_Donut_Card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+
+    &_Header {
+        margin-bottom: 8px;
+
+        &_Title {
+            font-size: 0.95rem;
+        }
+    }
+}
+
+.DAT_Power_Donut_Chart_Wrap {
+    position: relative;
+    flex: 1;
+    min-height: 144px;
+}
+
+.DAT_Power_Donut_Center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+
+    &_Value {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+
+        &_Val {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1;
+        }
+
+        &_Unit {
+            font-size: 10px;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-secondary);
+        }
+    }
+
+    &_Label {
+        font-size: 9px;
+        color: var(--text-secondary);
+        margin-top: 3px;
+    }
+}
+
+.DAT_Power_Donut_Legend {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 2px 2px;
+
+    &_Item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.78rem;
+
+        &_Dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+    }
+
+    &_Name {
+        flex: 1;
+        color: var(--text-secondary);
+    }
+
+    &_Value {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+
+        &_Val {
+            line-height: 1;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+        }
+
+        &_Unit {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+    }
+}
+
+.DAT_Donut_Tooltip {
+    background: #fff;
+    border: 1px solid var(--border-light);
+    border-radius: var(--dashboard-radius);
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
+
+    &_Value {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+        margin-top: 4px;
+
+        &_Val {
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+        }
+
+        &_Unit {
+            font-size: 10px;
+            color: var(--text-secondary);
+        }
+    }
+}
