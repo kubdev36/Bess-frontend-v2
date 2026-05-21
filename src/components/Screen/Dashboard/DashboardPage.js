@@ -43,9 +43,7 @@ const CO2_FACTOR = 0.52;
 
 const DONUT_COLORS = {
   grid: "#ef4444",
-  pv: "#F59E0B",
   battery: "#22C55E",
-  load: "#f43f5e",
 };
 
 const defaultChartDate = mockEnergyReport[0]?.date ?? "2026-05-19";
@@ -708,33 +706,6 @@ export default function DashboardPage() {
                       <rect x="-2000" y="-2000" width="4000" height="4000" fill="url(#gradient-reverse)" />
                     </mask>
 
-                    <linearGradient
-                      id="gradient-vertical"
-                      gradientUnits="userSpaceOnUse"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="300"
-                      spreadMethod="repeat"
-                    >
-                      <stop offset="0%" stopColor="white" stopOpacity="0" />
-                      <stop offset="5%" stopColor="white" stopOpacity="1" />
-                      <stop offset="10%" stopColor="white" stopOpacity="0" />
-                      <stop offset="30%" stopColor="white" stopOpacity="0" />
-                      <stop offset="35%" stopColor="white" stopOpacity="1" />
-                      <stop offset="40%" stopColor="white" stopOpacity="0" />
-                      <stop offset="60%" stopColor="white" stopOpacity="0" />
-                      <stop offset="65%" stopColor="white" stopOpacity="1" />
-                      <stop offset="70%" stopColor="white" stopOpacity="0" />
-                      <stop offset="90%" stopColor="white" stopOpacity="1" />
-                      <stop offset="95%" stopColor="white" stopOpacity="0" />
-                      <animate attributeName="y1" attributeType="XML" values="-200; 200" dur="5s" begin="0s" repeatCount="indefinite" />
-                      <animate attributeName="y2" attributeType="XML" values="100; 500" dur="5s" begin="0s" repeatCount="indefinite" />
-                    </linearGradient>
-
-                    <mask id="gradient-mask-vertical" maskUnits="userSpaceOnUse">
-                      <rect x="-2000" y="-2000" width="4000" height="4000" fill="url(#gradient-vertical)" />
-                    </mask>
                   </defs>
 
                   <>

@@ -18,6 +18,7 @@
   &-visual-card {
     overflow: hidden;
     max-width: 100%;
+    padding: 12px;
   }
 }
 
@@ -27,7 +28,7 @@
 .visual-layout {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-  gap: 12px;
+  gap: 10px;
   align-items: stretch;
 }
 
@@ -44,7 +45,7 @@
 .visual-layout-side {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 12px;
+  gap: 10px;
 }
 
 // ─────────────────────────────────────────────
@@ -130,7 +131,7 @@
   border: 1px solid var(--border-light);
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  min-height: 88px;
+  min-height: 74px;
   background: var(--card-bg);
 }
 
@@ -154,7 +155,7 @@
   display: flex;
   align-items: stretch;
   justify-content: space-between;
-  padding: 10px 8px;
+  padding: 8px 8px;
   gap: 8px;
 }
 
@@ -164,7 +165,7 @@
   justify-content: flex-start;
   align-items: center;
   flex: 1;
-  gap: 8px;
+  gap: 6px;
   min-width: 0;
 }
 
@@ -175,7 +176,7 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   line-height: 1.3;
-  min-height: 26px;
+  min-height: 22px;
   display: flex;
   align-items: flex-start;
 }
@@ -183,7 +184,9 @@
 .dashboard-power-card-item-value {
   display: flex;
   align-items: baseline;
+  justify-content: center;
   gap: 6px;
+  min-height: 28px;
 
   span {
     font-size: 16px;
@@ -205,9 +208,10 @@
 }
 
 .dashboard-metric-card-body {
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 10px 8px;
+  display: grid;
+  grid-template-rows: 22px 28px 1fr;
+  align-content: start;
+  padding: 8px 8px;
 }
 
 .dashboard-metric-card-header {
@@ -215,7 +219,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 6px;
-  min-height: 26px;
+  min-height: 22px;
 }
 
 .dashboard-metric-card-title {
@@ -235,7 +239,8 @@
   display: flex;
   align-items: baseline;
   gap: 4px;
-  margin-top: 8px;
+  min-height: 28px;
+  margin-top: 0;
 
   span {
     font-size: 16px;
@@ -250,8 +255,8 @@
 }
 
 .dashboard-metric-card-progress {
-  margin-top: auto;
-  padding-top: 10px;
+  align-self: end;
+  padding-top: 6px;
 }
 
 .soc-card .dashboard-power-card-label {
@@ -310,11 +315,11 @@
   position: relative;
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  padding: 14px 16px;
-  min-height: 116px;
+  padding: 12px 14px;
+  min-height: 92px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   color: #fff;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   transition: box-shadow 0.2s;
@@ -355,13 +360,13 @@
   }
 
   &__city {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: var(--font-weight-semibold);
     opacity: 0.95;
   }
 
   &__condition {
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     opacity: 0.72;
     margin-top: 1px;
   }
@@ -374,7 +379,7 @@
   }
 
   &__temp {
-    font-size: 34px;
+    font-size: 30px;
     font-weight: 800;
     line-height: 1;
     position: relative;
@@ -383,7 +388,7 @@
   }
 
   &__temp-unit {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     opacity: 0.8;
     vertical-align: super;
@@ -391,7 +396,7 @@
 
   &--loading {
     background: var(--gray-100);
-    min-height: 116px;
+    min-height: 92px;
     animation: pulse 1.5s infinite;
   }
 
@@ -415,23 +420,23 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 18px;
+  padding: 14px;
 }
 
 .power-donut-card .card-header,
 .economic-card .card-header {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .power-donut-card .card-title,
 .economic-card .card-title {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .power-donut-chart-wrap {
   position: relative;
   flex: 1;
-  min-height: 168px;
+  min-height: 144px;
 }
 
 .power-donut-center {
@@ -459,7 +464,7 @@
 .power-donut-legend {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   padding: 0 2px 2px;
 
   &-item {
@@ -503,7 +508,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 18px;
+  padding: 14px;
 
   .card-subtitle {
     font-size: var(--font-size-xs);
@@ -516,14 +521,14 @@
 .economic-grid {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .economic-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px;
+  padding: 7px 8px;
   border-radius: var(--dashboard-radius);
   background: var(--gray-50);
   transition: background 0.15s;
@@ -579,7 +584,7 @@
   position: relative;
   flex: 1;
   height: 100%;
-  min-height: 500px;
+  min-height: 300px;
   border-radius: var(--dashboard-radius);
   overflow: hidden;
   border: 1px solid #d6e4ee;
@@ -627,7 +632,7 @@
   .kpi-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .visual-scene { min-height: 600px; }
+  .visual-scene { min-height: 460px; }
 }
 
 @media (max-width: 1200px) {
@@ -635,15 +640,13 @@
     grid-template-columns: 1fr;
   }
   .visual-layout-side {
-    display: grid !important;
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 1100px) {
-  .dashboard-visual-card { width: 100%; }
   .dashboard-grid { grid-template-columns: 1fr; }
-  .visual-scene { min-height: 900px; }
+  .visual-scene { min-height: 520px; }
 }
 
 @media (max-width: 768px) {
@@ -651,6 +654,6 @@
   .dashboard-chart-controls { justify-content: flex-start; }
   .dashboard-chart-switcher { align-self: flex-start; }
   .kpi-grid { grid-template-columns: 1fr; }
-  .visual-layout-side { grid-template-columns: 1fr !important; }
-  .visual-scene { min-height: 900px; }
+  .visual-layout-side { grid-template-columns: 1fr; }
+  .visual-scene { min-height: 440px; }
 }
