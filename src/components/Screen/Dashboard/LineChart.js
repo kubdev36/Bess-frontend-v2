@@ -11,15 +11,14 @@ import {
   YAxis,
 } from "recharts";
 import { mockEnergyReport, mockHourlyData } from "../../data/mockData";
-import "./LineChart.scss";
 
 const defaultChartDate = mockEnergyReport[0]?.date ?? "2026-05-19";
 
-export default function PowerTrendChart({
+const PowerTrendChart = ({
   titleId,
   subtitleId,
   defaultMode = "day",
-}) {
+}) => {
   const lang = useIntl();
   const [mode, setMode] = useState(defaultMode);
   const [selectedDate, setSelectedDate] = useState(defaultChartDate);
@@ -67,10 +66,10 @@ export default function PowerTrendChart({
   }, [mode, selectedDate]);
 
   return (
-    <div className="DAT_LineChart_Card card">
-      <div className="DAT_LineChart_Card_Header card-header">
-        <div>
-          <span className="card-title">
+    <div className="DAT_LineChart_Card">
+      <div className="DAT_LineChart_Card_Header">
+        <div className="DAT_LineChart_Card_Header_Content">
+          <span className="DAT_LineChart_Card_Header_Content_Title">
             {lang.formatMessage({ id: titleId })}
           </span>
         </div>
@@ -88,7 +87,8 @@ export default function PowerTrendChart({
               <button
                 key={item.key}
                 type="button"
-                className={`DAT_LineChart_Card_Header_Controls_Switcher_Button ${mode === item.key ? "Active" : ""}`}
+                className="DAT_LineChart_Card_Header_Controls_Switcher_Button"
+                aria-pressed={mode === item.key}
                 onClick={() => setMode(item.key)}
               >
                 {item.label}
@@ -100,7 +100,7 @@ export default function PowerTrendChart({
       <div className="DAT_LineChart_Card_Body">
         <ResponsiveContainer width="100%" height={280}>
           <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(229, 234, 242, 1)" />
             <XAxis dataKey="time" tick={{ fontSize: 11 }} />
             <YAxis tick={{ fontSize: 11 }} />
             <Tooltip />
@@ -113,7 +113,7 @@ export default function PowerTrendChart({
                   ? lang.formatMessage({ id: "dashboard_chart_series_battery" })
                   : lang.formatMessage({ id: "dashboard_chart_series_discharge" })
               }
-              stroke="#0EA5E9"
+              stroke="rgba(14, 165, 233, 1)"
               strokeWidth={2}
               dot={false}
             />
@@ -125,7 +125,7 @@ export default function PowerTrendChart({
                   ? lang.formatMessage({ id: "dashboard_chart_series_grid" })
                   : lang.formatMessage({ id: "dashboard_chart_series_grid_import" })
               }
-              stroke="#1677FF"
+              stroke="rgba(22, 119, 255, 1)"
               strokeWidth={2}
               dot={false}
             />
@@ -133,7 +133,7 @@ export default function PowerTrendChart({
               type="monotone"
               dataKey="loadPower"
               name={lang.formatMessage({ id: "dashboard_chart_series_load" })}
-              stroke="#22C55E"
+              stroke="rgba(34, 197, 94, 1)"
               strokeWidth={2}
               dot={false}
             />
@@ -142,4 +142,6 @@ export default function PowerTrendChart({
       </div>
     </div>
   );
-}
+};
+
+export default PowerTrendChart;

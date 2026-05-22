@@ -7,12 +7,24 @@ import {
   LuSun,
 } from "react-icons/lu";
 import { useIntl } from "react-intl";
-import "./Weather.scss";
 
 const WEATHER_API_KEY = process.env.REACT_APP_WEATHER;
 const WEATHER_CITY = "Ho Chi Minh City";
+const DEFAULT_WEATHER = {
+  location: {
+    name: WEATHER_CITY,
+  },
+  current: {
+    temp_c: 0,
+    is_day: 1,
+    condition: {
+      code: 1000,
+      text: "",
+    },
+  },
+};
 
-function getWeatherIcon(code, isDay, size = 32) {
+const getWeatherIcon = (code, isDay, size = 32) => {
   const style = { fontSize: size };
   if (code === 1000) {
     return isDay ? <LuSun style={style} /> : <LuCloud style={style} />;
@@ -22,48 +34,32 @@ function getWeatherIcon(code, isDay, size = 32) {
   if (code <= 1201) return <LuCloudRain style={style} />;
   if (code <= 1282) return <LuCloudSnow style={style} />;
   return <LuCloudSun style={style} />;
-}
+};
 
-function getWeatherBg(code, isDay) {
-  if (!isDay) return "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)";
+const getWeatherBg = (code, isDay) => {
+  if (!isDay) return "linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(30, 58, 95, 1) 100%)";
   if (code === 1000) {
-    return "linear-gradient(135deg, #0ea5e9 0%, #38bdf8 60%, #bae6fd 100%)";
+    return "linear-gradient(135deg, rgba(14, 165, 233, 1) 0%, rgba(56, 189, 248, 1) 60%, rgba(186, 230, 253, 1) 100%)";
   }
-  if (code <= 1009) return "linear-gradient(135deg, #0284c7 0%, #7dd3fc 100%)";
-  if (code <= 1030) return "linear-gradient(135deg, #64748b 0%, #94a3b8 100%)";
-  if (code <= 1201) return "linear-gradient(135deg, #334155 0%, #475569 100%)";
-  return "linear-gradient(135deg, #0ea5e9 0%, #7dd3fc 100%)";
-}
+  if (code <= 1009) return "linear-gradient(135deg, rgba(2, 132, 199, 1) 0%, rgba(125, 211, 252, 1) 100%)";
+  if (code <= 1030) return "linear-gradient(135deg, rgba(100, 116, 139, 1) 0%, rgba(148, 163, 184, 1) 100%)";
+  if (code <= 1201) return "linear-gradient(135deg, rgba(51, 65, 85, 1) 0%, rgba(71, 85, 105, 1) 100%)";
+  return "linear-gradient(135deg, rgba(14, 165, 233, 1) 0%, rgba(125, 211, 252, 1) 100%)";
+};
 
-export default function WeatherWidget() {
+const WeatherWidget = () => {
   const lang = useIntl();
-  const [weather, setWeather] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [weather, setWeather] = useState(DEFAULT_WEATHER);
   const weatherLang = lang.locale.startsWith("vi") ? "vi" : "en";
 
   useEffect(() => {
-    setLoading(true);
     fetch(
       `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${encodeURIComponent(WEATHER_CITY)}&lang=${weatherLang}`,
     )
       .then((r) => r.json())
       .then(setWeather)
-      .catch(() => setWeather(null))
-      .finally(() => setLoading(false));
+      .catch(() => {});
   }, [weatherLang]);
-
-  if (loading) {
-    return <div className="DAT_Weather_Card_Loading" />;
-  }
-
-  if (!weather) {
-    return (
-      <div className="DAT_Weather_Card_Error">
-        <LuCloudSun />
-        <span>{lang.formatMessage({ id: "dashboard_weather_error" })}</span>
-      </div>
-    );
-  }
 
   const { current, location } = weather;
   const code = current.condition.code;
@@ -72,15 +68,15 @@ export default function WeatherWidget() {
   return (
     <div
       className="DAT_Weather_Card"
+      data-state="ready"
       style={{ background: getWeatherBg(code, isDay) }}
     >
-      <div className="DAT_Weather_Card_Orb DAT_Weather_Card_Orb_1" />
-      <div className="DAT_Weather_Card_Orb DAT_Weather_Card_Orb_2" />
-
+      <div className="DAT_Weather_Card_Orb_1" />
+      <div className="DAT_Weather_Card_Orb_2" />
       <div className="DAT_Weather_Card_Top">
-        <div>
-          <div className="DAT_Weather_Card_Top_City">{location.name}</div>
-          <div className="DAT_Weather_Card_Top_Condition">{current.condition.text}</div>
+        <div className="DAT_Weather_Card_Top_Content">
+          <div className="DAT_Weather_Card_Top_Content_City">{location.name}</div>
+          <div className="DAT_Weather_Card_Top_Content_Condition">{current.condition.text}</div>
         </div>
         <div className="DAT_Weather_Card_Top_Icon">
           {getWeatherIcon(code, isDay)}
@@ -93,4 +89,6 @@ export default function WeatherWidget() {
       </div>
     </div>
   );
-}
+};
+
+export default WeatherWidget;

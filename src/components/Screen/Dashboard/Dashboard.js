@@ -10,7 +10,7 @@ import "./Dashboard.scss";
 
 export default function DashboardPage() {
   return (
-    <div className="DAT_Dashboard_Page animate-fadeIn">
+    <div className="DAT_Dashboard_Page">
       <section className="DAT_Dashboard_Page_Section">
         <div className="DAT_Dashboard_Page_Section_KpiGrid">
           <Infor />
@@ -18,8 +18,8 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="DAT_Dashboard_Page_Section mt-base">
-        <div className="DAT_Dashboard_Page_Section_VisualCard card">
+      <section className="DAT_Dashboard_Page_Section">
+        <div className="DAT_Dashboard_Page_Section_VisualCard">
           <div className="DAT_Dashboard_Page_Section_VisualCard_Layout">
             <div className="DAT_Dashboard_Page_Section_VisualCard_Layout_Main">
               <div className="DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene">
@@ -36,16 +36,12 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <section className="DAT_Dashboard_Page_Section DAT_Dashboard_Page_Section_Grid mt-base">
+      <section className="DAT_Dashboard_Page_Section_Grid">
         <PowerTrendChart
           titleId="dashboard_chart_title"
-          subtitleId="dashboard_chart_main_subtitle"
-          defaultMode="day"
         />
         <PowerTrendChart
           titleId="dashboard_chart_title"
-          subtitleId="dashboard_chart_secondary_subtitle"
-          defaultMode="month"
         />
       </section>
     </div>

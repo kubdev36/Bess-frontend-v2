@@ -10,7 +10,7 @@ import {
 import { AuthProvider, useAuth } from "./components/contexts/AuthContext";
 import MainLayout from "./components/Layout/MainLayout";
 import LoginPage from "./components/Screen/Login/LoginPage";
-import DashboardPage from "./components/Screen/Dashboard/DashboardPage";
+import DashboardPage from "./components/Screen/Dashboard/Dashboard";
 import BatteryPage from "./components/Screen/Battery/BatteryPage";
 import PCSPage from "./components/Screen/PCS/PCSPage";
 import AlarmPage from "./components/Screen/Alarm/AlarmPage";

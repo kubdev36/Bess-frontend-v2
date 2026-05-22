@@ -1,6 +1,7 @@
 .DAT_Dashboard_Page {
   display: flex;
   flex-direction: column;
+  gap: var(--space-base);
   --dashboard-radius: var(--radius-md);
 
   &_Section {
@@ -26,539 +27,722 @@
   }
 
   &_Section_VisualCard {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
     overflow: hidden;
     max-width: 100%;
     padding: 12px;
-  }
-}
-
-// ─────────────────────────────────────────────
-// Visual layout: main scene + sidebar
-// ─────────────────────────────────────────────
-.DAT_Dashboard_Page_Section_VisualCard_Layout {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-  gap: 10px;
-  align-items: stretch;
-}
-
-.DAT_Dashboard_Page_Section_VisualCard_Layout_Main,
-.DAT_Dashboard_Page_Section_VisualCard_Layout_Side {
-  min-width: 0;
-  height: 100%;
-}
-
-.DAT_Dashboard_Page_Section_VisualCard_Layout_Main {
-  display: flex;
-}
-
-.DAT_Dashboard_Page_Section_VisualCard_Layout_Side {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
-  gap: 10px;
-}
-
-// ─────────────────────────────────────────────
-// Chart controls
-// ─────────────────────────────────────────────
-// ─────────────────────────────────────────────
-// KPI Grid
-// ─────────────────────────────────────────────
-.kpi-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-md);
-  padding: 10px 12px;
-  box-shadow: var(--shadow-card);
-  transition: all var(--transition-base);
-  animation: fadeIn 0.3s ease-out;
-
-  &:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
-  }
-
-  &-clickable {
-    cursor: pointer;
+    transition: box-shadow var(--transition-base);
 
     &:hover {
-      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    &_Layout {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+      gap: 10px;
+      align-items: stretch;
+
+      &_Main,
+      &_Side {
+        min-width: 0;
+        height: 100%;
+      }
+
+      &_Main {
+        display: flex;
+
+        &_Scene {
+          position: relative;
+          flex: 1;
+          height: 100%;
+          min-height: 200px;
+          border-radius: var(--dashboard-radius);
+          overflow: hidden;
+          border: 1px solid rgba(214, 228, 238, 1);
+          background: linear-gradient(
+            180deg,
+            rgba(165, 208, 234, 1) 0%,
+            rgba(220, 233, 241, 1) 50%,
+            rgba(128, 185, 93, 1) 50.2%,
+            rgba(117, 167, 79, 1) 100%
+          );
+        }
+      }
+
+      &_Side {
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr) auto;
+        gap: 10px;
+      }
     }
   }
-
-  &-top {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 5px;
-  }
-
-  &-icon {
-    font-size: 15px;
-    line-height: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &-title {
-    font-size: 0.68rem;
-    color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-  }
-
-  &-value-row {
-    display: flex;
-    align-items: baseline;
-    gap: 3px;
-    margin-bottom: 4px;
-  }
-
-  &-value {
-    font-size: 16px;
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    line-height: 1.2;
-  }
-
-  &-unit {
-    font-size: 0.62rem;
-    color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
-  }
-
-  &-status {
-    margin-top: 2px;
-  }
-
-  &-progress {
-    margin-top: 3px;
-  }
 }
 
-// ─────────────────────────────────────────────
-// Power Cards (Sạc / Xả)
-// ─────────────────────────────────────────────
-.dashboard-power-card {
-  display: grid;
-  grid-template-columns: 38px 1fr;
-  border: 1px solid var(--border-light);
-  border-radius: var(--dashboard-radius);
-  overflow: hidden;
-  min-height: 74px;
-  background: var(--card-bg);
-}
+.DAT_Infor {
+  display: contents;
 
-.dashboard-power-card-label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  min-height: 100%;
-  text-transform: uppercase;
-  font-size: 12px;
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: 0.08em;
-  color: #fff;
-  padding: 6px 0;
-  text-align: center;
-  line-height: 1.15;
-}
-
-.dashboard-power-card-body {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  padding: 8px 8px;
-  gap: 8px;
-}
-
-.dashboard-power-card-item {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  flex: 1;
-  gap: 6px;
-  min-width: 0;
-}
-
-.dashboard-power-card-item-label {
-  font-size: 0.68rem;
-  font-weight: var(--font-weight-semibold);
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1.3;
-  min-height: 22px;
-  display: flex;
-  align-items: flex-start;
-}
-
-.dashboard-power-card-item-value {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 6px;
-  min-height: 28px;
-
-  &-val {
-    font-size: 16px;
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    line-height: 1;
-  }
-
-  &-unit {
-    font-size: 0.62rem;
-    color: var(--text-secondary);
-  }
-}
-
-.dashboard-power-card-divider {
-  width: 1px;
-  background: var(--border-light);
-  height: 100%;
-}
-
-.dashboard-metric-card-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: 22px 28px 1fr;
-  align-content: start;
-  padding: 8px 8px;
-}
-
-.dashboard-metric-card-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 6px;
-  min-height: 22px;
-}
-
-.dashboard-metric-card-title {
-  color: var(--text-secondary);
-  font-size: 0.68rem;
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1.3;
-}
-
-.dashboard-metric-card-status {
-  flex-shrink: 0;
-}
-
-.dashboard-metric-card-value {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-  min-height: 28px;
-  margin-top: 0;
-
-  &-val {
-    font-size: 16px;
-    font-weight: var(--font-weight-bold);
-    line-height: 1;
-  }
-
-  &-unit {
-    font-size: 0.62rem;
-    color: var(--text-secondary);
-  }
-}
-
-.dashboard-metric-card-progress {
-  align-self: end;
-  padding-top: 6px;
-}
-
-.soc-card .dashboard-power-card-label {
-  background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
-}
-
-.soh-card .dashboard-power-card-label {
-  background: linear-gradient(180deg, #60a5fa 0%, #2563eb 100%);
-}
-
-.power-output-card .dashboard-power-card-label {
-  background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
-}
-
-.soc-card .dashboard-metric-card-value-val {
-  color: #15803d;
-}
-
-.soh-card .dashboard-metric-card-value-val {
-  color: #1d4ed8;
-}
-
-.power-output-card .dashboard-metric-card-value-val {
-  color: #c2410c;
-}
-
-.charge-card .dashboard-power-card-label {
-  background: linear-gradient(180deg, #fb923c 0%, #f97316 100%);
-}
-
-.discharge-card .dashboard-power-card-label {
-  background: linear-gradient(180deg, #a78bfa 0%, #7c3aed 100%);
-}
-
-.charge-card,
-.discharge-card {
-  grid-template-columns: 58px 1fr;
-
-  .dashboard-power-card-label {
-    width: 38px;
-    padding: 6px 6px;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
-}
-
-.discharge-card .dashboard-power-card-item-value-val {
-  color: #312e81;
-}
-
-// ─────────────────────────────────────────────
-// Weather Widget
-// ─────────────────────────────────────────────
-// ─────────────────────────────────────────────
-// Power Donut Chart
-// ─────────────────────────────────────────────
-.power-donut-card {
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 14px;
-}
-
-.power-donut-card .card-header,
-.economic-card .card-header {
-  margin-bottom: 8px;
-}
-
-.power-donut-card .card-title,
-.economic-card .card-title {
-  font-size: 0.95rem;
-}
-
-.power-donut-chart-wrap {
-  position: relative;
-  flex: 1;
-  min-height: 144px;
-}
-
-.power-donut-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  pointer-events: none;
-
-  &-value {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 4px;
-  }
-
-  &-value-val {
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--text-primary);
-    line-height: 1;
-  }
-
-  &-value-unit {
-    font-size: 10px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-secondary);
-  }
-
-  &-label {
-    font-size: 9px;
-    color: var(--text-secondary);
-    margin-top: 3px;
-  }
-}
-
-.power-donut-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 0 2px 2px;
-
-  &-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
-  }
-
-  &-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  &-name {
-    flex: 1;
-    color: var(--text-secondary);
-  }
-
-  &-value {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 4px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-  }
-
-  &-value-val {
-    line-height: 1;
-  }
-
-  &-value-unit {
-    font-size: 10px;
-    color: var(--text-secondary);
-  }
-
-  &-val {
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-  }
-}
-
-.donut-tooltip {
-  background: #fff;
-  border: 1px solid var(--border-light);
-  border-radius: var(--dashboard-radius);
-  padding: 8px 12px;
-  font-size: 13px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
-
-  &-value {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 4px;
-    margin-top: 4px;
-  }
-
-  &-value-val {
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-  }
-
-  &-value-unit {
-    font-size: 10px;
-    color: var(--text-secondary);
-  }
-}
-
-// ─────────────────────────────────────────────
-// Economic Benefit Card
-// ─────────────────────────────────────────────
-.economic-card {
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  padding: 14px;
-
-  .card-subtitle {
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
-    margin-top: 2px;
-    display: block;
-  }
-}
-
-.economic-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.economic-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 8px;
-  border-radius: var(--dashboard-radius);
-  background: var(--gray-50);
-  transition: background 0.15s;
-
-  &:hover {
-    background: var(--gray-100);
-  }
-
-  &-icon {
-    width: 30px;
-    height: 30px;
+  &_Card_SOC,
+  &_Card_SOH,
+  &_Card_PowerOutput {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    border: 1px solid var(--border-light);
     border-radius: var(--dashboard-radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 15px;
-    flex-shrink: 0;
-  }
-
-  &-body {
-    flex: 1;
-    min-width: 0;
-  }
-
-  &-label {
-    font-size: 10px;
-    color: var(--text-secondary);
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    min-height: 74px;
+    background: var(--card-bg);
 
-  &-value {
-    font-size: 15px;
-    font-weight: 800;
-    line-height: 1.2;
-    display: flex;
-    align-items: baseline;
-    gap: 3px;
-
-    &-val {
-      line-height: 1;
+    &_Label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      min-height: 100%;
+      padding: 6px 0;
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 1px;
+      line-height: 14px;
     }
 
-    &-unit {
-      font-size: 10px;
-      font-weight: 500;
-      opacity: 0.7;
+    &_Body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 22px 28px 1fr;
+      align-content: start;
+      padding: 8px 8px;
+
+      &_Header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 6px;
+        min-height: 22px;
+
+        &_Title {
+          color: var(--text-secondary);
+          font-size: 11px;
+          font-weight: var(--font-weight-semibold);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          line-height: 14px;
+        }
+      }
+
+      &_Value {
+        display: flex;
+        align-items: baseline;
+        gap: 4px;
+        min-height: 28px;
+        margin-top: 0;
+
+        &_Val {
+          font-size: 16px;
+          font-weight: var(--font-weight-bold);
+          line-height: 16px;
+        }
+
+        &_Unit {
+          font-size: 10px;
+          color: var(--text-secondary);
+        }
+      }
+    }
+  }
+
+  &_Card_SOC {
+    &_Label {
+      background: linear-gradient(180deg, rgba(34, 197, 94, 1) 0%, rgba(22, 163, 74, 1) 100%);
+    }
+
+    &_Body {
+      &_Header {
+        &_Status {
+          flex-shrink: 0;
+        }
+      }
+
+      &_Value {
+        &_Val {
+          color: rgba(21, 128, 61, 1);
+        }
+      }
+
+      &_Progress {
+        align-self: end;
+        padding-top: 6px;
+
+        &_Bar {
+          width: 100%;
+          height: 8px;
+          overflow: hidden;
+          border-radius: var(--radius-full);
+          background: var(--gray-200);
+
+          &_Fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+            background: linear-gradient(90deg, var(--success-indicator), var(--success));
+          }
+        }
+      }
+    }
+  }
+
+  &_Card_SOH {
+    &_Label {
+      background: linear-gradient(180deg, rgba(96, 165, 250, 1) 0%, rgba(37, 99, 235, 1) 100%);
+    }
+
+    &_Body {
+      &_Value {
+        &_Val {
+          color: rgba(29, 78, 216, 1);
+        }
+      }
+
+      &_Progress {
+        align-self: end;
+        padding-top: 6px;
+
+        &_Bar {
+          width: 100%;
+          height: 8px;
+          overflow: hidden;
+          border-radius: var(--radius-full);
+          background: var(--gray-200);
+
+          &_Fill {
+            height: 100%;
+            border-radius: var(--radius-full);
+            transition: width var(--transition-slow);
+            background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+          }
+        }
+      }
+    }
+  }
+
+  &_Card_PowerOutput {
+    &_Label {
+      background: linear-gradient(180deg, rgba(194, 65, 12, 1) 0%, rgba(194, 65, 12, 1) 100%);
+    }
+
+    &_Body {
+      &_Value {
+        &_Val {
+          color: rgba(194, 65, 12, 1);
+        }
+      }
     }
   }
 }
 
-// ─────────────────────────────────────────────
-// Visual Scene (SVG model)
-// ─────────────────────────────────────────────
-.DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene {
+.DAT_Infor2 {
+  display: contents;
+
+  &_Card_Charge,
+  &_Card_Discharge {
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    border: 1px solid var(--border-light);
+    border-radius: var(--dashboard-radius);
+    overflow: hidden;
+    min-height: 74px;
+    background: var(--card-bg);
+
+    &_Label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      min-height: 100%;
+      padding: 6px 6px;
+      color: rgba(255, 255, 255, 1);
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.5px;
+      line-height: 14px;
+      white-space: nowrap;
+    }
+
+    &_Body {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      padding: 8px 8px;
+      gap: 8px;
+
+      &_Item {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        min-width: 0;
+
+        &_Label {
+          display: flex;
+          align-items: flex-start;
+          min-height: 22px;
+          color: var(--text-secondary);
+          font-size: 11px;
+          font-weight: var(--font-weight-semibold);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          line-height: 14px;
+        }
+
+        &_Value {
+          display: flex;
+          align-items: baseline;
+          justify-content: center;
+          gap: 6px;
+          min-height: 28px;
+
+          &_Val {
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: var(--font-weight-bold);
+            line-height: 16px;
+          }
+
+          &_Unit {
+            font-size: 10px;
+            color: var(--text-secondary);
+          }
+        }
+      }
+
+      &_Divider {
+        width: 1px;
+        height: 100%;
+        background: var(--border-light);
+      }
+    }
+  }
+
+  &_Card_Charge {
+    &_Label {
+      background: linear-gradient(180deg, rgba(251, 146, 60, 1) 0%, rgba(249, 115, 22, 1) 100%);
+    }
+  }
+
+  &_Card_Discharge {
+    &_Label {
+      background: linear-gradient(180deg, rgba(167, 139, 250, 1) 0%, rgba(124, 58, 237, 1) 100%);
+    }
+
+    &_Body {
+      &_Item {
+        &_Value {
+          &_Val {
+            color: rgba(49, 46, 129, 1);
+          }
+        }
+      }
+    }
+  }
+}
+
+.DAT_Weather_Card {
   position: relative;
-  flex: 1;
-  height: 100%;
-  min-height: 300px;
   border-radius: var(--dashboard-radius);
   overflow: hidden;
-  border: 1px solid #d6e4ee;
-  background: linear-gradient(180deg, #a5d0ea 0%, #dce9f1 50%, #80b95d 50.2%, #75a74f 100%);
+  padding: 12px 14px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.2s;
+
+  &_Orb_1,
+  &_Orb_2 {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  &_Orb_1 {
+    width: 130px;
+    height: 130px;
+    background: rgba(255, 255, 255, 0.7);
+    top: -35px;
+    right: -25px;
+  }
+
+  &_Orb_2 {
+    width: 80px;
+    height: 80px;
+    background: rgba(255, 255, 255, 0.4);
+    bottom: -15px;
+    left: 15px;
+  }
+
+  &_Top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+
+    &_Content {
+      display: flex;
+      flex-direction: column;
+
+      &_City {
+        font-size: 14px;
+        font-weight: var(--font-weight-semibold);
+        opacity: 0.95;
+      }
+
+      &_Condition {
+        font-size: 11px;
+        opacity: 0.72;
+        margin-top: 1px;
+      }
+    }
+
+    &_Icon {
+      font-size: 28px;
+      opacity: 0.9;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+    }
+  }
+
+  &_Temperature {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+    letter-spacing: -2px;
+
+    &_Unit {
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.8;
+      vertical-align: super;
+    }
+  }
 }
 
-// ─────────────────────────────────────────────
-// DAT DataText — label boxes rendered inside SVG foreignObject
-// ─────────────────────────────────────────────
+.DAT_Power_Donut {
+  &_Card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+
+    &_Header {
+      margin-bottom: 8px;
+
+      &_Title {
+        font-size: 15.2px;
+      }
+    }
+  }
+
+  &_Chart_Wrap {
+    position: relative;
+    flex: 1;
+    min-height: 100px;
+  }
+
+  &_Center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-17px);
+    gap: 6px;
+    text-align: center;
+    pointer-events: none;
+
+    &_Value {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      &_Val {
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1;
+      }
+    }
+
+    &_Label {
+      font-size: 9px;
+      color: var(--text-secondary);
+      line-height: 12px;
+    }
+  }
+
+  &_Legend {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 2px 2px;
+
+    &_Item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.48px;
+
+      &_Dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+    }
+
+    &_Name {
+      flex: 1;
+      color: var(--text-secondary);
+    }
+
+    &_Value {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-primary);
+
+      &_Val {
+        line-height: 1;
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+      }
+
+      &_Unit {
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+
+  &_Tooltip {
+    background: rgba(255, 255, 255, 1);
+    border: 1px solid var(--border-light);
+    border-radius: var(--dashboard-radius);
+    padding: 8px 12px;
+    font-size: 13px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+    &_Value {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-top: 4px;
+
+      &_Val {
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+      }
+
+      &_Unit {
+        font-size: 10px;
+        color: var(--text-secondary);
+      }
+    }
+  }
+}
+
+.DAT_Economic_Card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+
+  &_Header {
+    &_Subtitle {
+      font-size: var(--font-size-xs);
+      color: var(--text-secondary);
+      margin-top: 2px;
+      display: block;
+    }
+  }
+
+  &_Grid {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &_Item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 8px;
+      border-radius: var(--dashboard-radius);
+      background: var(--gray-50);
+      transition: background 0.15s;
+
+      &:hover {
+        background: var(--gray-100);
+      }
+
+      &_Icon {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--dashboard-radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+
+      &_Body {
+        flex: 1;
+        min-width: 0;
+
+        &_Label {
+          font-size: 10px;
+          color: var(--text-secondary);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        &_Value {
+          font-size: 15px;
+          font-weight: 800;
+          line-height: 1.2;
+          display: flex;
+          align-items: baseline;
+          gap: 3px;
+
+          &_Val {
+            line-height: 1;
+          }
+
+          &_Unit {
+            font-size: 10px;
+            font-weight: 500;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+  }
+}
+
+.DAT_LineChart_Card {
+  padding: 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+
+  &_Header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: var(--space-base);
+
+    &_Content {
+      min-width: 0;
+
+      &_Title {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+        color: var(--text-primary);
+      }
+    }
+
+    &_Controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      &_DateInput {
+        min-width: 148px;
+        height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 1);
+        color: var(--text-body);
+        font-size: 14px;
+        outline: none;
+        transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+
+        &:focus {
+          border-color: var(--primary);
+          box-shadow: var(--shadow-focus);
+        }
+      }
+
+      &_Switcher {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px;
+        background: var(--gray-100);
+        border-radius: 999px;
+
+        &_Button {
+          border: none;
+          background: transparent;
+          color: var(--text-secondary);
+          border-radius: 999px;
+          padding: 6px 14px;
+          font-size: 14px;
+          font-weight: var(--font-weight-medium);
+          cursor: pointer;
+          transition: all var(--transition-fast);
+
+          &[aria-pressed="true"] {
+            background: var(--primary);
+            color: rgba(255, 255, 255, 1);
+            box-shadow: var(--shadow-sm);
+          }
+        }
+      }
+    }
+  }
+
+  &_Body {
+    width: 100%;
+    min-height: 280px;
+  }
+}
+
 .DAT_DataText {
   display: flex;
   flex-direction: column;
@@ -579,7 +763,7 @@
     gap: 4px;
 
     &_Val {
-      color: white;
+      color: rgba(255, 255, 255, 1);
       font-size: 18px;
     }
 
@@ -588,34 +772,4 @@
       font-size: 12px;
     }
   }
-}
-
-// ─────────────────────────────────────────────
-// Responsive
-// ─────────────────────────────────────────────
-@media (max-width: 1400px) {
-  .DAT_Dashboard_Page_Section_KpiGrid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene { min-height: 460px; }
-}
-
-@media (max-width: 1200px) {
-  .DAT_Dashboard_Page_Section_VisualCard_Layout {
-    grid-template-columns: 1fr;
-  }
-  .DAT_Dashboard_Page_Section_VisualCard_Layout_Side {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 1100px) {
-  .DAT_Dashboard_Page_Section_Grid { grid-template-columns: 1fr; }
-  .DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene { min-height: 520px; }
-}
-
-@media (max-width: 768px) {
-  .DAT_Dashboard_Page_Section_KpiGrid { grid-template-columns: 1fr; }
-  .DAT_Dashboard_Page_Section_VisualCard_Layout_Side { grid-template-columns: 1fr; }
-  .DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene { min-height: 440px; }
 }

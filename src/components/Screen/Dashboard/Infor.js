@@ -3,32 +3,34 @@ import { useIntl } from "react-intl";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockSystemSummary as sys } from "../../data/mockData";
 
-export default function Infor() {
-  const intl = useIntl();
+const Infor = () => {
+  const lang = useIntl();
 
   return (
-    <>
-      <div className="dashboard-power-card dashboard-metric-card soc-card">
-        <div className="dashboard-power-card-label">SOC</div>
-        <div className="dashboard-power-card-body dashboard-metric-card-body">
-          <div className="dashboard-metric-card-header">
-            <span className="dashboard-metric-card-title">
-              {intl.formatMessage({ id: "dashboard_kpi_battery_status" })}
-            </span>
-            <div className="dashboard-metric-card-status">
+    <div className="DAT_Infor">
+      <div className="DAT_Infor_Card_SOC">
+        <div className="DAT_Infor_Card_SOC_Label">
+          {lang.formatMessage({ id: "dashboard_kpi_soc_short", defaultMessage: "SOC" })}
+        </div>
+        <div className="DAT_Infor_Card_SOC_Body">
+          <div className="DAT_Infor_Card_SOC_Body_Header">
+            <div className="DAT_Infor_Card_SOC_Body_Header_Title">
+              {lang.formatMessage({ id: "dashboard_kpi_battery_status" })}
+            </div>
+            <div className="DAT_Infor_Card_SOC_Body_Header_Status">
               <StatusBadge
                 status={sys.batteryPower < 0 ? "Charging" : "Discharging"}
                 size="small"
               />
             </div>
           </div>
-          <div className="dashboard-metric-card-value">
-            <div className="dashboard-metric-card-value-val">{sys.soc}%</div>
+          <div className="DAT_Infor_Card_SOC_Body_Value">
+            <div className="DAT_Infor_Card_SOC_Body_Value_Val">{sys.soc}%</div>
           </div>
-          <div className="dashboard-metric-card-progress">
-            <div className="progress-bar">
+          <div className="DAT_Infor_Card_SOC_Body_Progress">
+            <div className="DAT_Infor_Card_SOC_Body_Progress_Bar">
               <div
-                className="progress-bar-fill green"
+                className="DAT_Infor_Card_SOC_Body_Progress_Bar_Fill"
                 style={{ width: `${Math.min(100, Math.max(0, sys.soc))}%` }}
               />
             </div>
@@ -36,21 +38,23 @@ export default function Infor() {
         </div>
       </div>
 
-      <div className="dashboard-power-card dashboard-metric-card soh-card">
-        <div className="dashboard-power-card-label">SOH</div>
-        <div className="dashboard-power-card-body dashboard-metric-card-body">
-          <div className="dashboard-metric-card-header">
-            <span className="dashboard-metric-card-title">
-              {intl.formatMessage({ id: "dashboard_kpi_battery_health" })}
-            </span>
+      <div className="DAT_Infor_Card_SOH">
+        <div className="DAT_Infor_Card_SOH_Label">
+          {lang.formatMessage({ id: "dashboard_kpi_soh_short", defaultMessage: "SOH" })}
+        </div>
+        <div className="DAT_Infor_Card_SOH_Body">
+          <div className="DAT_Infor_Card_SOH_Body_Header">
+            <div className="DAT_Infor_Card_SOH_Body_Header_Title">
+              {lang.formatMessage({ id: "dashboard_kpi_battery_health" })}
+            </div>
           </div>
-          <div className="dashboard-metric-card-value">
-            <div className="dashboard-metric-card-value-val">{sys.soh}%</div>
+          <div className="DAT_Infor_Card_SOH_Body_Value">
+            <div className="DAT_Infor_Card_SOH_Body_Value_Val">{sys.soh}%</div>
           </div>
-          <div className="dashboard-metric-card-progress">
-            <div className="progress-bar">
+          <div className="DAT_Infor_Card_SOH_Body_Progress">
+            <div className="DAT_Infor_Card_SOH_Body_Progress_Bar">
               <div
-                className="progress-bar-fill blue"
+                className="DAT_Infor_Card_SOH_Body_Progress_Bar_Fill"
                 style={{ width: `${Math.min(100, Math.max(0, sys.soh))}%` }}
               />
             </div>
@@ -58,20 +62,24 @@ export default function Infor() {
         </div>
       </div>
 
-      <div className="dashboard-power-card dashboard-metric-card power-output-card">
-        <div className="dashboard-power-card-label">P</div>
-        <div className="dashboard-power-card-body dashboard-metric-card-body">
-          <div className="dashboard-metric-card-header">
-            <span className="dashboard-metric-card-title">
-              {intl.formatMessage({ id: "dashboard_kpi_power" })}
-            </span>
+      <div className="DAT_Infor_Card_PowerOutput">
+        <div className="DAT_Infor_Card_PowerOutput_Label">
+          {lang.formatMessage({ id: "dashboard_kpi_power_short", defaultMessage: "P" })}
+        </div>
+        <div className="DAT_Infor_Card_PowerOutput_Body">
+          <div className="DAT_Infor_Card_PowerOutput_Body_Header">
+            <div className="DAT_Infor_Card_PowerOutput_Body_Header_Title">
+              {lang.formatMessage({ id: "dashboard_kpi_power" })}
+            </div>
           </div>
-          <div className="dashboard-metric-card-value">
-            <div className="dashboard-metric-card-value-val">{sys.batteryPower}</div>
-            <div className="dashboard-metric-card-value-unit">kW</div>
+          <div className="DAT_Infor_Card_PowerOutput_Body_Value">
+            <div className="DAT_Infor_Card_PowerOutput_Body_Value_Val">{sys.batteryPower}</div>
+            <div className="DAT_Infor_Card_PowerOutput_Body_Value_Unit">kW</div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-}
+};
+
+export default Infor;

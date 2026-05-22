@@ -8,7 +8,6 @@ import {
   Tooltip,
 } from "recharts";
 import { mockSystemSummary as sys } from "../../data/mockData";
-import "./Circle.scss"
 
 const DONUT_COLORS = {
   grid: "#ef4444",
@@ -41,11 +40,11 @@ const DonutTooltip = ({ active, payload }) => {
   if (!active || !payload?.length) return null;
   const d = payload[0];
   return (
-    <div className="DAT_Donut_Tooltip">
+    <div className="DAT_Power_Donut_Tooltip">
       <div style={{ fontWeight: 700, color: d.payload.color }}>{d.name}</div>
-      <div className="DAT_Donut_Tooltip-Value">
-        <div className="DAT_Donut_Tooltip_Value_Val">{d.value}</div>
-        <div className="DAT_Donut_Tooltip_Value_Unit">kW</div>
+      <div className="DAT_Power_Donut_Tooltip_Value">
+        <div className="DAT_Power_Donut_Tooltip_Value_Val">{d.value}</div>
+        <div className="DAT_Power_Donut_Tooltip_Value_Unit">kW</div>
       </div>
     </div>
   );
@@ -81,7 +80,7 @@ const Circle = () => {
   );
 
   return (
-    <div className="DAT_Power_Donut_Card card">
+    <div className="DAT_Power_Donut_Card">
       <div className="DAT_Power_Donut_Card_Header">
         <div>
           <span className="DAT_Power_Donut_Card_Header_Title">
@@ -115,7 +114,6 @@ const Circle = () => {
         <div className="DAT_Power_Donut_Center">
           <div className="DAT_Power_Donut_Center_Value">
             <div className="DAT_Power_Donut_Center_Value_Val">{total}</div>
-            <div className="DAT_Power_Donut_Center_Value_Unit">kW</div>
           </div>
           <div className="DAT_Power_Donut_Center_Label">
             {lang.formatMessage({ id: "dashboard_donut_total_load" })}
@@ -132,7 +130,7 @@ const Circle = () => {
             />
             <span className="DAT_Power_Donut_Legend_Name">{d.name}</span>
             <div className="DAT_Power_Donut_Legend_Value">
-              <div className="DAT_Power_Donut_Legend_Value-Val">{d.value}</div>
+              <div className="DAT_Power_Donut_Legend_Value_Val">{d.value}</div>
               <div className="DAT_Power_Donut_Legend_Value_Unit">kW</div>
             </div>
           </div>
