@@ -57,7 +57,7 @@ export default function Sidebar({ collapsed, onToggle }) {
       <div className="sidebar-logo" onClick={onToggle}>
         <img
           className={`sidebar-logo-image ${collapsed ? 'sidebar-logo-image-small' : 'sidebar-logo-image-large'}`}
-          src={collapsed ? '/logoNho.png' : '/logoTo.png'}
+          src={collapsed ? '/img/logoNho.png' : '/img/logoTo.png'}
           alt="BESS Monitor"
         />
       </div>
