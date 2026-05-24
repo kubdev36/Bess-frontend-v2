@@ -89,25 +89,25 @@ export default function UserManagementPage() {
   };
 
   return (
-    <div className="page animate-fadeIn">
-      <div className="card">
-        <div className="page-toolbar">
+    <div className="DAT_UserManagement">
+      <div className="DAT_UserManagement_Card">
+        <div className="DAT_UserManagement_Card_Header">
           <div>
-            <div className="card-title">User Management</div>
-            <div className="card-subtitle">
-              Quản lý tài khoản, role, trạng thái và hành động reset password.
+            <div className="DAT_UserManagement_Card_Header_Title">User Management</div>
+            <div className="DAT_UserManagement_Card_Header_Subtitle">
+              Quan ly tai khoan, role, trang thai va hanh dong reset password.
             </div>
           </div>
-          <div className="page-toolbar-actions">
+          <div className="DAT_UserManagement_Card_Header_Actions">
             <input
-              className="form-input"
+              className="DAT_UserManagement_Card_Header_Actions_FilterInput"
               style={{ width: 220 }}
               placeholder="Search name or email"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
             <select
-              className="form-select"
+              className="DAT_UserManagement_Card_Header_Actions_FilterSelect"
               style={{ width: 140 }}
               value={role}
               onChange={(e) => setRole(e.target.value)}
@@ -119,7 +119,7 @@ export default function UserManagementPage() {
               <option value="Engineer">Engineer</option>
             </select>
             <select
-              className="form-select"
+              className="DAT_UserManagement_Card_Header_Actions_FilterSelect"
               style={{ width: 140 }}
               value={status}
               onChange={(e) => setStatus(e.target.value)}
@@ -129,16 +129,19 @@ export default function UserManagementPage() {
               <option value="Inactive">Inactive</option>
               <option value="Locked">Locked</option>
             </select>
-            <button className="btn btn-primary" onClick={openNew}>
+            <button
+              className="DAT_UserManagement_Card_Header_Actions_Button_Primary"
+              onClick={openNew}
+            >
               Add User
             </button>
           </div>
         </div>
       </div>
 
-      <div className="card">
-        <div className="table-container">
-          <table className="table">
+      <div className="DAT_UserManagement_Card">
+        <div className="DAT_UserManagement_Card_Table">
+          <table className="DAT_UserManagement_Card_Table_Main">
             <thead>
               <tr>
                 <th>User ID</th>
@@ -151,28 +154,32 @@ export default function UserManagementPage() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="DAT_UserManagement_Card_Table_Main_Body">
               {filtered.map((user) => (
-                <tr key={user.id}>
-                  <td>USR-{String(user.id).padStart(3, "0")}</td>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
-                  <td>{user.role}</td>
-                  <td>
+                <tr key={user.id} className="DAT_UserManagement_Card_Table_Main_Row">
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                    USR-{String(user.id).padStart(3, "0")}
+                  </td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.name}</td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.email}</td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.role}</td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
                     <StatusBadge status={user.status} />
                   </td>
-                  <td>{user.lastLogin || "-"}</td>
-                  <td>{user.created}</td>
-                  <td>
-                    <div className="table-actions">
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                    {user.lastLogin || "-"}
+                  </td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.created}</td>
+                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                    <div className="DAT_UserManagement_Card_Table_Actions">
                       <button
-                        className="btn btn-ghost btn-sm"
+                        className="DAT_UserManagement_Card_Table_Actions_Button_GhostSm"
                         onClick={() => openEdit(user)}
                       >
                         Edit
                       </button>
                       <button
-                        className="btn btn-secondary btn-sm"
+                        className="DAT_UserManagement_Card_Table_Actions_Button_SecondarySm"
                         onClick={() =>
                           setUsers((prev) =>
                             prev.map((item) =>
@@ -180,9 +187,7 @@ export default function UserManagementPage() {
                                 ? {
                                     ...item,
                                     status:
-                                      item.status === "Locked"
-                                        ? "Active"
-                                        : "Locked",
+                                      item.status === "Locked" ? "Active" : "Locked",
                                   }
                                 : item,
                             ),
@@ -207,47 +212,50 @@ export default function UserManagementPage() {
         footer={
           <>
             <button
-              className="btn btn-secondary"
+              className="DAT_UserManagement_Modal_Footer_Button_Secondary"
               onClick={() => setShowModal(false)}
             >
               Cancel
             </button>
-            <button className="btn btn-primary" onClick={saveUser}>
+            <button
+              className="DAT_UserManagement_Modal_Footer_Button_Primary"
+              onClick={saveUser}
+            >
               Save User
             </button>
           </>
         }
       >
-        <div className="form-grid-2">
-          <div className="form-group">
-            <label className="form-label">Full Name</label>
+        <div className="DAT_UserManagement_Form_Grid">
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Full Name</label>
             <input
-              className="form-input"
+              className="DAT_UserManagement_Form_Grid_Group_Input"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Email</label>
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Email</label>
             <input
-              className="form-input"
+              className="DAT_UserManagement_Form_Grid_Group_Input"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Password</label>
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Password</label>
             <input
-              className="form-input"
+              className="DAT_UserManagement_Form_Grid_Group_Input"
               type="password"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Confirm Password</label>
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Confirm Password</label>
             <input
-              className="form-input"
+              className="DAT_UserManagement_Form_Grid_Group_Input"
               type="password"
               value={form.confirmPassword}
               onChange={(e) =>
@@ -255,10 +263,10 @@ export default function UserManagementPage() {
               }
             />
           </div>
-          <div className="form-group">
-            <label className="form-label">Role</label>
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Role</label>
             <select
-              className="form-select"
+              className="DAT_UserManagement_Form_Grid_Group_Select"
               value={form.role}
               onChange={(e) => setForm({ ...form, role: e.target.value })}
             >
@@ -268,10 +276,10 @@ export default function UserManagementPage() {
               <option>Engineer</option>
             </select>
           </div>
-          <div className="form-group">
-            <label className="form-label">Status</label>
+          <div className="DAT_UserManagement_Form_Grid_Group">
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">Status</label>
             <select
-              className="form-select"
+              className="DAT_UserManagement_Form_Grid_Group_Select"
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
             >

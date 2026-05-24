@@ -15,6 +15,13 @@ import { RiFolderSettingsFill } from "react-icons/ri";
 import { useAuth } from '../contexts/AuthContext';
 import './Sidebar.scss';
 
+const SIDEBAR_CLASS = 'DAT_Sidebar';
+const SIDEBAR_LOGO_CLASS = `${SIDEBAR_CLASS}_Logo`;
+const SIDEBAR_LOGO_IMAGE_CLASS = `${SIDEBAR_LOGO_CLASS}_Image`;
+const SIDEBAR_NAV_CLASS = `${SIDEBAR_CLASS}_Nav`;
+const SIDEBAR_GROUP_CLASS = `${SIDEBAR_NAV_CLASS}_Group`;
+const SIDEBAR_ITEM_CLASS = `${SIDEBAR_GROUP_CLASS}_Item`;
+
 const menuGroups = [
   {
     labelId: "sidebar_group_overview",
@@ -53,30 +60,57 @@ export default function Sidebar({ collapsed, onToggle }) {
   const { hasPermission } = useAuth();
 
   return (
-    <aside className={`sidebar ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      <div className="sidebar-logo" onClick={onToggle}>
+    <aside className={collapsed ? `${SIDEBAR_CLASS}_Collapsed` : SIDEBAR_CLASS}>
+      <div
+        className={
+          collapsed
+            ? `${SIDEBAR_LOGO_CLASS} ${SIDEBAR_LOGO_CLASS}_Collapsed`
+            : SIDEBAR_LOGO_CLASS
+        }
+        onClick={onToggle}
+      >
         <img
-          className={`sidebar-logo-image ${collapsed ? 'sidebar-logo-image-small' : 'sidebar-logo-image-large'}`}
-          src={collapsed ? '/img/logoNho.png' : '/img/logoTo.png'}
+          className={
+            collapsed
+              ? `${SIDEBAR_LOGO_IMAGE_CLASS}_Small`
+              : `${SIDEBAR_LOGO_IMAGE_CLASS}_Large`
+          }
+          src={collapsed ? "/img/logoNho.png" : "/img/logoTo.png"}
           alt="BESS Monitor"
         />
       </div>
-      <nav className="sidebar-nav">
+      <nav className={SIDEBAR_NAV_CLASS}>
         {menuGroups.map((group) => {
           const visibleItems = group.items.filter((item) => hasPermission(item.perm));
           if (visibleItems.length === 0) return null;
           return (
-            <div key={group.labelId} className="sidebar-group">
-              {!collapsed && <div className="sidebar-group-label">{lang.formatMessage({ id: group.labelId })}</div>}
+            <div key={group.labelId} className={SIDEBAR_GROUP_CLASS}>
+              {!collapsed && (
+                <div className={`${SIDEBAR_GROUP_CLASS}_Label`}>
+                  {lang.formatMessage({ id: group.labelId })}
+                </div>
+              )}
               {visibleItems.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  className={({ isActive }) => `sidebar-item ${isActive ? 'sidebar-item-active' : ''}`}
+                  className={({ isActive }) =>
+                    collapsed
+                      ? isActive
+                        ? `${SIDEBAR_ITEM_CLASS}_Collapsed_Active`
+                        : `${SIDEBAR_ITEM_CLASS}_Collapsed`
+                      : isActive
+                        ? `${SIDEBAR_ITEM_CLASS}_Active`
+                        : SIDEBAR_ITEM_CLASS
+                  }
                   title={collapsed ? lang.formatMessage({ id: item.labelId }) : undefined}
                 >
-                  <span className="sidebar-item-icon">{item.icon}</span>
-                  {!collapsed && <span className="sidebar-item-label">{lang.formatMessage({ id: item.labelId })}</span>}
+                  <span className={`${SIDEBAR_ITEM_CLASS}_Icon`}>{item.icon}</span>
+                  {!collapsed && (
+                    <span className={`${SIDEBAR_ITEM_CLASS}_Label`}>
+                      {lang.formatMessage({ id: item.labelId })}
+                    </span>
+                  )}
                 </NavLink>
               ))}
             </div>

@@ -1,34 +1,183 @@
-.page {
+.DAT_SystemSettings {
   display: flex;
   flex-direction: column;
   gap: var(--space-base);
+  animation: systemSettingsFadeIn 0.3s ease-out;
 
-  &toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-base);
-    flex-wrap: wrap;
+  &_Card {
+    padding: var(--space-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-base);
 
-    &-actions {
+    &:hover {
+      box-shadow: var(--shadow-md);
+    }
+
+    &_Header {
       display: flex;
       align-items: center;
-      gap: var(--space-sm);
+      justify-content: space-between;
+      gap: var(--space-base);
       flex-wrap: wrap;
+
+      &_Title {
+        color: var(--text-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+      }
+
+      &_Subtitle {
+        margin-top: 2px;
+        color: var(--text-secondary);
+        font-size: var(--font-size-sm);
+      }
+
+      &_Actions {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        flex-wrap: wrap;
+
+        &_Button,
+        &_Button_Primary,
+        &_Button_Secondary {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--space-sm);
+          padding: 10px 20px;
+          border: 1px solid transparent;
+          border-radius: var(--radius-md);
+          font-size: var(--font-size-base);
+          font-weight: var(--font-weight-medium);
+          line-height: 1.4;
+          white-space: nowrap;
+          transition: all var(--transition-base);
+        }
+
+        &_Button_Primary {
+          background: var(--primary);
+          color: #fff;
+
+          &:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 12px rgba(11, 25, 103, 0.22);
+          }
+        }
+
+        &_Button_Secondary {
+          background: var(--gray-100);
+          border-color: var(--gray-100);
+          color: var(--text-body);
+
+          &:hover {
+            background: var(--gray-200);
+            border-color: var(--gray-200);
+          }
+        }
+      }
+    }
+
+    &_NotificationAction {
+      margin-top: var(--space-base);
+
+      &_Button,
+      &_Button_Ghost {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        padding: 10px 20px;
+        border: 1px solid transparent;
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-base);
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all var(--transition-base);
+      }
+
+      &_Button_Ghost {
+        background: transparent;
+        border-color: var(--border);
+        color: var(--primary);
+
+        &:hover {
+          border-color: var(--primary);
+          background: var(--primary-light);
+        }
+      }
     }
   }
 
-}
+  &_Tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border-light);
 
+    &_Button,
+    &_Button_Active {
+      margin-bottom: -2px;
+      padding: 12px 24px;
+      border: none;
+      border-bottom: 2px solid transparent;
+      background: none;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      transition: all var(--transition-fast);
 
-.form-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-base);
-}
+      &:hover {
+        color: var(--primary);
+      }
+    }
 
-@media (max-width: 1024px) {
-  .form-grid-2 {
-    grid-template-columns: 1fr;
+    &_Button_Active {
+      border-bottom-color: var(--primary);
+      color: var(--primary);
+      font-weight: var(--font-weight-semibold);
+    }
+  }
+
+  &_Form {
+    &_Grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-base);
+
+      &_Group {
+        margin-bottom: var(--space-base);
+
+        &_Label {
+          display: block;
+          margin-bottom: 6px;
+          color: var(--text-body);
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-medium);
+        }
+
+        &_Input {
+          width: 100%;
+          height: 42px;
+          padding: 0 14px;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-md);
+          background: var(--card-bg);
+          color: var(--text-body);
+          font-size: var(--font-size-base);
+          outline: none;
+          transition: all var(--transition-fast);
+
+          &:focus {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-focus);
+          }
+        }
+      }
+    }
   }
 }

@@ -1,102 +1,342 @@
-.battery {
+.DAT_Battery {
+  animation: batteryFadeIn 0.3s ease-out;
 
-  &-container-card {
-    cursor: pointer;
-    position: relative;
-  }
-
-  &-container-card.selected {
-    border-color: var(--primary);
-    background: var(--primary-light);
-  }
-
-  &-container-stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  &-selected-check {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    color: var(--primary);
-    font-weight: bold;
-    font-size: var(--font-size-sm);
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-
-}
-
-.rack {
-
-  &-detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
-
-  &-detail-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 10px;
-    background: var(--bg-alt);
+  &_Panel {
+    padding: var(--space-lg);
+    border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
-  }
-}
-
-.cell {
-
-  &-matrix {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 6px;
-  }
-
-  &-item {
-    padding: 8px 4px;
-    border-radius: var(--radius-sm);
-    text-align: center;
-    color: white;
-    font-size: var(--font-size-xs);
-    cursor: pointer;
-    transition: transform var(--transition-fast);
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-base);
 
     &:hover {
-      transform: scale(1.1);
-      z-index: 1;
+      box-shadow: var(--shadow-md);
     }
   }
 
-  &-id {
-    font-weight: var(--font-weight-bold);
-  }
+  &_Overview {
+    display: grid;
+    gap: var(--space-base);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 
-  &-voltage {
-    font-size: 10px;
-  }
+    &_Card {
+      @extend .DAT_Battery_Panel;
+      cursor: pointer;
+      position: relative;
 
-  &-legend {
-    display: flex;
-    gap: 16px;
-    font-size: var(--font-size-xs);
-    color: var(--text-secondary);
+      &--selected {
+        border-color: var(--primary);
+        background: var(--primary-light);
+      }
 
-    &-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      margin-right: 4px;
-      vertical-align: middle;
+      &_Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-sm);
+
+        &_Title {
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-semibold);
+        }
+      }
+
+      &_Stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+
+        &_Label {
+          color: var(--text-secondary);
+          font-size: var(--font-size-sm);
+        }
+
+        &_Value {
+          font-weight: var(--font-weight-semibold);
+        }
+      }
+
+      &_Badge {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: var(--primary);
+        font-size: var(--font-size-sm);
+        font-weight: 700;
+      }
     }
   }
 
+  &_RackList {
+    @extend .DAT_Battery_Panel;
+    margin-top: var(--space-base);
+
+    &_Header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-base);
+      margin-bottom: var(--space-base);
+
+      &_Title {
+        color: var(--text-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
+    &_Filter {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+
+      &_Search {
+        position: relative;
+
+        &_Icon {
+          position: absolute;
+          top: 50%;
+          left: 7px;
+          transform: translateY(-50%);
+          color: var(--text-muted);
+          font-size: 16px;
+        }
+
+        &_Input {
+          width: 100%;
+          padding-left: 25px;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-md);
+          background: var(--card-bg);
+          color: var(--text-body);
+          font-size: var(--font-size-base);
+          outline: none;
+          transition: all var(--transition-fast);
+        }
+      }
+
+      &_Select {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--card-bg);
+        color: var(--text-body);
+        font-size: var(--font-size-base);
+        outline: none;
+        transition: all var(--transition-fast);
+      }
+    }
+
+    &_Table {
+      overflow-x: auto;
+
+      &_Main {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+
+        &_Head {
+          padding: 12px 16px;
+          border-bottom: 1px solid var(--border-light);
+          background: var(--bg-hover);
+          color: var(--text-secondary);
+          text-align: left;
+          white-space: nowrap;
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-semibold);
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+        }
+
+        &_Row {
+          transition: background var(--transition-fast);
+
+          &:hover {
+            background: var(--bg-hover);
+          }
+
+          &--selected,
+          &--warning {
+            background: var(--warning-light);
+          }
+        }
+
+        &_Cell {
+          padding: 12px 16px;
+          border-bottom: 1px solid var(--border-light);
+          color: var(--text-body);
+          font-size: var(--font-size-base);
+          vertical-align: middle;
+
+          &--medium {
+            font-weight: var(--font-weight-medium);
+          }
+        }
+      }
+    }
+  }
+
+  &_Detail {
+    margin-top: var(--space-base);
+
+    &_Summary,
+    &_Matrix {
+      @extend .DAT_Battery_Panel;
+    }
+
+    &_Matrix {
+      margin-top: var(--space-base);
+    }
+
+    &_Summary_Header,
+    &_Matrix_Header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-base);
+
+      &_Title {
+        color: var(--text-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+
+    &_Summary_Grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+
+      &_Item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 10px;
+        background: var(--bg-alt);
+        border-radius: var(--radius-md);
+
+        &_Label {
+          color: var(--text-secondary);
+        }
+
+        &_Value {
+          font-weight: 700;
+        }
+      }
+    }
+
+    &_Matrix_Grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 6px;
+
+      &_Item {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding: 8px 4px;
+        border-radius: var(--radius-sm);
+        color: #fff;
+        text-align: center;
+        font-size: var(--font-size-xs);
+        cursor: pointer;
+        transition: transform var(--transition-fast);
+
+        &:hover {
+          transform: scale(1.1);
+          z-index: 1;
+        }
+
+        &_Id {
+          font-weight: var(--font-weight-bold);
+        }
+
+        &_Voltage {
+          font-size: 10px;
+        }
+      }
+    }
+
+    &_Matrix_Legend {
+      display: flex;
+      gap: 16px;
+      margin-top: var(--space-sm);
+      color: var(--text-secondary);
+      font-size: var(--font-size-xs);
+
+      &_Dot {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-right: 4px;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &_Analytics {
+    display: grid;
+    gap: var(--space-base);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: var(--space-base);
+
+    &_Card {
+      @extend .DAT_Battery_Panel;
+
+      &_Header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--space-base);
+
+        &_Title {
+          color: var(--text-primary);
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-semibold);
+        }
+      }
+
+      &_Table {
+        overflow-x: auto;
+
+        &_Main {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0;
+
+          &_Head {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-hover);
+            color: var(--text-secondary);
+            text-align: left;
+            white-space: nowrap;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+          }
+
+          &_Row {
+            &:hover {
+              background: var(--bg-hover);
+            }
+          }
+
+          &_Cell {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-body);
+            font-size: var(--font-size-base);
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
 }
+
