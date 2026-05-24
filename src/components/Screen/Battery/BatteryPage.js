@@ -47,41 +47,41 @@ export default function BatteryPage() {
   };
 
   return (
-    <div className="battery-page animate-fadeIn">
-      <div className="grid grid-3">
+    <div className="DAT_Battery animate-fadeIn">
+      <div className="DAT_Battery_Section01">
         {mockContainers.map((c) => (
           <div
             key={c.id}
-            className={`card battery-container-card ${selectedContainer.id === c.id ? "selected" : ""}`}
+            className={`DAT_Battery_Section01_Container ${selectedContainer.id === c.id ? "DAT_Battery_Section01_Container_Selected" : ""}`}
             onClick={() => {
               setSelectedContainer(c);
               setSelectedRack(null);
             }}
           >
-            <div className="flex items-center justify-between mb-sm">
-              <span className="font-semibold text-lg">{c.name}</span>
+            <div className="DAT_Battery_Section01_Container_Item">
+              <span className="DAT_Battery_Section01_Container_Item_Title">{c.name}</span>
               <StatusBadge status={c.status} />
             </div>
-            <div className="battery-container-stats">
+            <div className="DAT_Battery_Section01_Container_Stats">
               <div>
-                <span className="text-secondary text-sm">Racks:</span>{" "}
-                <span className="font-semibold">{c.racks.length}</span>
+                <span className="DAT_Battery_Section01_Container_Stats_Title">Racks:</span>{" "}
+                <span className="DAT_Battery_Section01_Container_Stats_Subtitle">{c.racks.length}</span>
               </div>
               <div>
-                <span className="text-secondary text-sm">SOC:</span>{" "}
-                <span className="font-semibold">{c.soc}%</span>
+                <span className="DAT_Battery_Section01_Container_Stats_Title">SOC:</span>{" "}
+                <span className="DAT_Battery_Section01_Container_Stats_Subtitle">{c.soc}%</span>
               </div>
               <div>
-                <span className="text-secondary text-sm">SOH:</span>{" "}
-                <span className="font-semibold">{c.soh}%</span>
+                <span className="DAT_Battery_Section01_Container_Stats_Title">SOH:</span>{" "}
+                <span className="DAT_Battery_Section01_Container_Stats_Subtitle">{c.soh}%</span>
               </div>
               <div>
-                <span className="text-secondary text-sm">Temp:</span>{" "}
-                <span className="font-semibold">{c.temperature} degC</span>
+                <span className="DAT_Battery_Section01_Container_Stats_Title">Temp:</span>{" "}
+                <span className="DAT_Battery_Section01_Container_Stats_Subtitle">{c.temperature} degC</span>
               </div>
             </div>
             {selectedContainer.id === c.id && (
-              <div className="battery-selected-check">
+              <div className="DAT_Battery_Section01_Container_Selected_Check">
                 <LuBadgeCheck />
                 Selected
               </div>
@@ -90,18 +90,18 @@ export default function BatteryPage() {
         ))}
       </div>
 
-      <div className="card mt-base">
-        <div className="card-header">
-          <span className="card-title">
+      <div className="DAT_Battery_Section02">
+        <div className="DAT_Battery_Section02_Header">
+          <span className="DAT_Battery_Section02_Header_Title">
             Rack List - {selectedContainer.name}
           </span>
-          <div className="flex items-center gap-sm">
-            <div className="form-input-icon-wrapper" style={{ width: 180 }}>
-              <span className="form-input-icon">
+          <div className="DAT_Battery_Section02_Middle">
+            <div className="DAT_Battery_Section02_Middle_Form" style={{ width: 180 }}>
+              <span className="DAT_Battery_Section02_Middle_Form_Icon">
                 <LuSearch />
               </span>
               <input
-                className="form-input"
+                className="DAT_Battery_Section02_Middle_Form_Input"
                 style={{ height: 36 }}
                 placeholder="Search rack..."
                 value={searchRack}
@@ -109,7 +109,7 @@ export default function BatteryPage() {
               />
             </div>
             <select
-              className="form-select"
+              className="DAT_Battery_Section02_Middle_Select"
               style={{ width: 130, height: 36 }}
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
@@ -121,38 +121,38 @@ export default function BatteryPage() {
             </select>
           </div>
         </div>
-        <div className="table-container">
-          <table className="table">
+        <div className="DAT_Battery_Section02_Table">
+          <table className="DAT_Battery_Section02_Table_Main">
             <thead>
               <tr>
-                <th>Rack</th>
-                <th>Status</th>
-                <th>Voltage</th>
-                <th>Current</th>
-                <th>SOC</th>
-                <th>SOH</th>
-                <th>Temp</th>
-                <th>Cycles</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Rack</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Status</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Voltage</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Current</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">SOC</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">SOH</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Temp</th>
+                <th className="DAT_Battery_Section02_Table_Main_Th">Cycles</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="DAT_Battery_Section02_Table_Main_Body">
               {filteredRacks.map((r) => (
                 <tr
                   key={r.id}
-                  className={`${selectedRack?.id === r.id ? "highlight-warning" : ""} ${r.status === "Warning" ? "highlight-warning" : ""}`}
+                  className={`DAT_Battery_Section02_Table_Main_Tr ${selectedRack?.id === r.id ? "DAT_Battery_Section02_Table_Main_Tr_Highlight_Warning" : ""} ${r.status === "Warning" ? "DAT_Battery_Section02_Table_Main_Tr_Highlight_Warning" : ""}`}
                   style={{ cursor: "pointer" }}
                   onClick={() => setSelectedRack(r)}
                 >
-                  <td className="font-medium">{r.id}</td>
-                  <td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td--Medium">{r.id}</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">
                     <StatusBadge status={r.status} />
                   </td>
-                  <td>{r.voltage}V</td>
-                  <td>{r.current}A</td>
-                  <td>{r.soc}%</td>
-                  <td>{r.soh}%</td>
-                  <td>{r.temperature} degC</td>
-                  <td>{r.cycles}</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.voltage}V</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.current}A</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.soc}%</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.soh}%</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.temperature} degC</td>
+                  <td className="DAT_Battery_Section02_Table_Main_Td">{r.cycles}</td>
                 </tr>
               ))}
             </tbody>
@@ -161,12 +161,12 @@ export default function BatteryPage() {
       </div>
 
       {selectedRack && (
-        <div className="grid grid-2 mt-base">
-          <div className="card">
-            <div className="card-header">
-              <span className="card-title">{selectedRack.id} Detail</span>
+        <div className="DAT_Battery_Section03">
+          <div className="DAT_Battery_Section03_Container">
+            <div className="DAT_Battery_Section03_Container_Header">
+              <span className="DAT_Battery_Section03_Container_Header_Title">{selectedRack.id} Detail</span>
             </div>
-            <div className="rack-detail-grid">
+            <div className="DAT_Battery_Section03_Container_Box">
               {[
                 ["Voltage", `${selectedRack.voltage}V`],
                 ["Current", `${selectedRack.current}A`],
@@ -178,48 +178,48 @@ export default function BatteryPage() {
                 ["Max Temp", `${selectedRack.maxTemp} degC`],
                 ["Cycles", selectedRack.cycles],
               ].map(([k, v]) => (
-                <div key={k} className="rack-detail-item">
-                  <span className="text-secondary text-sm">{k}</span>
-                  <span className="font-bold">{v}</span>
+                <div key={k} className="DAT_Battery_Section03_Container_Box_Item">
+                  <span className="DAT_Battery_Section03_Container_Box_Item_Title">{k}</span>
+                  <span className="DAT_Battery_Section03_Container_Box_Item_Subtitle">{v}</span>
                 </div>
               ))}
             </div>
           </div>
-          <div className="card">
-            <div className="card-header">
-              <span className="card-title">Cell Matrix</span>
+          <div className="DAT_Battery_Section03_Middle">
+            <div className="DAT_Battery_Section03_Middle_Header">
+              <span className="DAT_Battery_Section03_Middle_Header_Title">Cell Matrix</span>
             </div>
-            <div className="cell-matrix">
+            <div className="DAT_Battery_Section03_Middle_Cell">
               {selectedRack.cells.map((cell) => (
                 <div
                   key={cell.id}
-                  className="cell-item"
+                  className="DAT_Battery_Section03_Middle_Cell_Item"
                   style={{ background: getCellColor(cell) }}
                   title={`${cell.id}\nVoltage: ${cell.voltage}V\nTemp: ${cell.temperature} degC\nStatus: ${cell.status}`}
                 >
-                  <span className="cell-id">{cell.id.split("-").pop()}</span>
-                  <span className="cell-voltage">{cell.voltage}V</span>
+                  <span className="DAT_Battery_Section03_Middle_Cell_Item_Id">{cell.id.split("-").pop()}</span>
+                  <span className="DAT_Battery_Section03_Middle_Cell_Item_Voltage">{cell.voltage}V</span>
                 </div>
               ))}
             </div>
-            <div className="cell-legend mt-sm">
+            <div className="DAT_Battery_Section03_Middle_Legend">
               <span>
                 <span
-                  className="cell-legend-dot"
+                  className="DAT_Battery_Section03_Middle_Legend_Dot"
                   style={{ background: "#22C55E" }}
                 ></span>{" "}
                 Normal
               </span>
               <span>
                 <span
-                  className="cell-legend-dot"
+                  className="DAT_Battery_Section03_Middle_Legend_Dot"
                   style={{ background: "#F59E0B" }}
                 ></span>{" "}
                 Low
               </span>
               <span>
                 <span
-                  className="cell-legend-dot"
+                  className="DAT_Battery_Section03_Middle_Legend_Dot"
                   style={{ background: "#EF4444" }}
                 ></span>{" "}
                 High
@@ -230,13 +230,13 @@ export default function BatteryPage() {
       )}
 
       {selectedRack && (
-        <div className="grid grid-2 mt-base">
-          <div className="card">
-            <div className="card-header">
-              <span className="card-title">Rack Trends</span>
+        <div className="DAT_Battery_Section04">
+          <div className="DAT_Battery_Section04_Container">
+            <div className="DAT_Battery_Section04_Container_Header">
+              <span className="DAT_Battery_Section04_Container_Header_Title">Rack Trends</span>
             </div>
-            <ResponsiveContainer width="100%" height={220}>
-              <LineChart data={rackChartData}>
+            <ResponsiveContainer width="100%" height={400} className={"DAT_Battery_Section04_Container_Chart"}>
+              <LineChart data={rackChartData} className="DAT_Battery_Section04_Container_Chart_Line">
                 <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
                 <XAxis dataKey="time" tick={{ fontSize: 10 }} />
                 <YAxis tick={{ fontSize: 11 }} />
@@ -260,29 +260,29 @@ export default function BatteryPage() {
               </LineChart>
             </ResponsiveContainer>
           </div>
-          <div className="card">
-            <div className="card-header">
-              <span className="card-title">Battery Alarms</span>
+          <div className="DAT_Battery_Section04_Container">
+            <div className="DAT_Battery_Section04_Container_Header">
+              <span className="DAT_Battery_Section04_Container_Header_Title">Battery Alarms</span>
             </div>
-            <div className="table-container">
-              <table className="table">
+            <div className="DAT_Battery_Section04_Container_Table">
+              <table className="DAT_Battery_Section04_Container_Table_Main">
                 <thead>
-                  <tr>
-                    <th>Time</th>
-                    <th>Level</th>
-                    <th>Message</th>
-                    <th>Status</th>
+                  <tr className="DAT_Battery_Section04_Container_Table_Main_Tr">
+                    <th className="DAT_Battery_Section04_Container_Table_Main_Tr_Th">Time</th>
+                    <th className="DAT_Battery_Section04_Container_Table_Main_Tr_Th">Level</th>
+                    <th className="DAT_Battery_Section04_Container_Table_Main_Tr_Th">Message</th>
+                    <th className="DAT_Battery_Section04_Container_Table_Main_Tr_Th">Status</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="DAT_Battery_Section04_Container_Table_Main">
                   {batteryAlarms.map((a) => (
-                    <tr key={a.id}>
-                      <td className="text-sm">{a.time.slice(11)}</td>
-                      <td>
+                    <tr key={a.id} className="DAT_Battery_Section04_Container_Table_Main_Tr">
+                      <td className="DAT_Battery_Section04_Container_Table_Main_Tr_Td">{a.time.slice(11)}</td>
+                      <td className="DAT_Battery_Section04_Container_Table_Main_Tr_Td">
                         <StatusBadge status={a.level} />
                       </td>
-                      <td className="text-sm">{a.message}</td>
-                      <td>
+                      <td className="DAT_Battery_Section04_Container_Table_Main_Tr_Td">{a.message}</td>
+                      <td className="DAT_Battery_Section04_Container_Table_Main_Tr_Td">
                         <StatusBadge status={a.status} />
                       </td>
                     </tr>
