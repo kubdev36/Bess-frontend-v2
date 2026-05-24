@@ -65,7 +65,7 @@ export default function EnergyReportPage() {
   const revenue = Math.round(summary.gridExport * 0.08);
 
   return (
-    <div className="page animate-fadeIn">
+    <div className="energy-report">
       <div className="card">
         <div className="page-toolbar">
           <div>

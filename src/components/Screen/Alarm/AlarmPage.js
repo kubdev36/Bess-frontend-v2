@@ -82,7 +82,7 @@ export default function AlarmPage() {
   };
 
   return (
-    <div className="alarm animate-fadeIn">
+    <div className="alarm">
       <div className="card alarm-filter-bar">
         <div className="flex items-center gap-sm flex-wrap">
           <select

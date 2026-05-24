@@ -19,41 +19,41 @@ import "./PCSPage.scss";
 
 export default function PCSPage() {
   return (
-    <div className="DAT_Pcs animate-fadeIn">
-      <div className="card DAT_Pcs_Overview">
-        <div className="DAT_Pcs_Overview_Main">
-          <div className="DAT_Pcs_Overview_Main_Item">
-            <span className="DAT_Pcs_Overview_Main_Item_Title">PCS-001</span>
+    <div className="DAT_PCS">
+      <div className="DAT_PCS_Card DAT_PCS_Overview">
+        <div className="DAT_PCS_Overview_Main">
+          <div className="DAT_PCS_Overview_Main_Item">
+            <span className="DAT_PCS_Overview_Main_Item_Title">PCS-001</span>
             <StatusBadge status={sys.pcsStatus} />
           </div>
-          <div className="DAT_Pcs_Overview_Main_Item">
-            <div className="DAT_Pcs_Overview_Main_Item_Stat">
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Title">Efficiency</span>
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Subtitle">{sys.pcsEfficiency}%</span>
+          <div className="DAT_PCS_Overview_Main_Item">
+            <div className="DAT_PCS_Overview_Main_Item_Stat">
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Efficiency</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">{sys.pcsEfficiency}%</span>
             </div>
-            <div className="DAT_Pcs_Overview_Main_Item_Stat">
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Title">Temperature</span>
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Subtitle">
+            <div className="DAT_PCS_Overview_Main_Item_Stat">
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Temperature</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">
                 {sys.pcsTemperature} degC
               </span>
             </div>
-            <div className="DAT_Pcs_Overview_Main_Item_Stat">
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Title">Power Factor</span>
-              <span className="DAT_Pcs_Overview_Main_Item_Stat_Subtitle">{sys.pcsPowerFactor}</span>
+            <div className="DAT_PCS_Overview_Main_Item_Stat">
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Power Factor</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">{sys.pcsPowerFactor}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="DAT_Pcs_Side">
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">
+      <div className="DAT_PCS_Side">
+        <div className="DAT_PCS_Card DAT_PCS_Side_Card">
+          <div className="DAT_PCS_Card_Header">
+            <span className="DAT_PCS_Card_Title">
               <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
               AC Side
             </span>
           </div>
-          <div className="DAT_Pcs_Side_Params">
+          <div className="DAT_PCS_Side_Params">
             {[
               ["AC Power", `${sys.pcsACPower} kW`],
               ["AC Voltage", `${sys.pcsACVoltage} V`],
@@ -61,41 +61,41 @@ export default function PCSPage() {
               ["Frequency", `${sys.pcsFrequency} Hz`],
               ["Power Factor", sys.pcsPowerFactor],
             ].map(([k, v]) => (
-              <div key={k} className="DAT_Pcs_Side_Params_Row">
-                <span className="DAT_Pcs_Side_Params_Row_Key">{k}</span>
-                <span className="DAT_Pcs_Side_Params_Row_Value">{v}</span>
+              <div key={k} className="DAT_PCS_Side_Params_Row">
+                <span className="DAT_PCS_Side_Params_Row_Key">{k}</span>
+                <span className="DAT_PCS_Side_Params_Row_Value">{v}</span>
               </div>
             ))}
           </div>
         </div>
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">
+        <div className="DAT_PCS_Card DAT_PCS_Side_Card">
+          <div className="DAT_PCS_Card_Header">
+            <span className="DAT_PCS_Card_Title">
               <LuBatteryCharging
                 style={{ marginRight: 8, verticalAlign: "text-bottom" }}
               />
               DC Side
             </span>
           </div>
-          <div className="DAT_Pcs_Side_Params">
+          <div className="DAT_PCS_Side_Params">
             {[
               ["DC Power", `${sys.pcsDCPower} kW`],
               ["DC Voltage", `${sys.pcsDCVoltage} V`],
               ["DC Current", `${sys.pcsDCCurrent} A`],
             ].map(([k, v]) => (
-              <div key={k} className="DAT_Pcs_Side_Params_Row">
-                <span className="DAT_Pcs_Side_Params_Row_Key">{k}</span>
-                <span className="DAT_Pcs_Side_Params_Row_Value">{v}</span>
+              <div key={k} className="DAT_PCS_Side_Params_Row">
+                <span className="DAT_PCS_Side_Params_Row_Key">{k}</span>
+                <span className="DAT_PCS_Side_Params_Row_Value">{v}</span>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="DAT_Pcs_Power">
-        <div className="DAT_Pcs_Power_Card">
-          <div className="DAT_Pcs_Power_Card_Header">
-            <span className="DAT_Pcs_Power_Card_Header_Title">AC/DC Power</span>
+      <div className="DAT_PCS_Charts">
+        <div className="DAT_PCS_Card DAT_PCS_Charts_Card">
+          <div className="DAT_PCS_Card_Header">
+            <span className="DAT_PCS_Card_Title">AC/DC Power</span>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={mockHourlyData}>
@@ -122,9 +122,9 @@ export default function PCSPage() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div className="DAT_Pcs_Power_Card">
-          <div className="DAT_Pcs_Power_Card_Header">
-            <span className="DAT_Pcs_Power_Card_Header_Title">Temperature</span>
+        <div className="DAT_PCS_Card DAT_PCS_Charts_Card">
+          <div className="DAT_PCS_Card_Header">
+            <span className="DAT_PCS_Card_Title">Temperature</span>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={mockHourlyData}>
@@ -145,16 +145,16 @@ export default function PCSPage() {
         </div>
       </div>
 
-      <div className="DAT_Pcs_History">
-        <div className="DAT_Pcs_History_Header">
-          <span className="DAT_Pcs_History_Header_Title">Fault Code History</span>
-          <button className="DAT_Pcs_History_Header_Button">
+      <div className="DAT_PCS_Card DAT_PCS_History">
+        <div className="DAT_PCS_History_Header">
+          <span className="DAT_PCS_History_Header_Title">Fault Code History</span>
+          <button className="DAT_PCS_History_Header_Button">
             <LuDownload />
             Export
           </button>
         </div>
-        <div className="DAT_Pcs_History_Table">
-          <table className="DAT_Pcs_History_Table_Main">
+        <div className="DAT_PCS_History_Table">
+          <table className="DAT_PCS_History_Table_Main">
             <thead>
               <tr>
                 <th>Time</th>
@@ -165,19 +165,19 @@ export default function PCSPage() {
                 <th>Description</th>
               </tr>
             </thead>
-            <tbody DAT_Pcs_History_Table_Main_Body>
+            <tbody className="DAT_PCS_History_Table_Main_Body">
               {mockPCSFaults.map((f) => (
-                <tr key={f.id} className="DAT_Pcs_History_Table_Main_Body_Tr">
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td--sm">{f.time}</td>
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td--fmedium">{f.code}</td>
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td ">{f.name}</td>
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td ">
+                <tr key={f.id} className="DAT_PCS_History_Table_Main_Body_Row">
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell DAT_PCS_History_Table_Main_Body_Row_Cell--sm">{f.time}</td>
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell DAT_PCS_History_Table_Main_Body_Row_Cell--medium">{f.code}</td>
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell">{f.name}</td>
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell">
                     <StatusBadge status={f.level} />
                   </td>
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td ">
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell">
                     <StatusBadge status={f.status} />
                   </td>
-                  <td className="DAT_Pcs_History_Table_Main_Body_Tr_Td--sm DAT_Pcs_History_Table_Main_Body_Tr_Td--secondary">{f.desc}</td>
+                  <td className="DAT_PCS_History_Table_Main_Body_Row_Cell DAT_PCS_History_Table_Main_Body_Row_Cell--sm DAT_PCS_History_Table_Main_Body_Row_Cell--secondary">{f.desc}</td>
                 </tr>
               ))}
             </tbody>
