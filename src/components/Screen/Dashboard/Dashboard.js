@@ -19,7 +19,7 @@ export default function Dashboard() {
 
 
     (async () => {
-        console.log("Step changed--");
+      console.log("Step changed--");
       let data = await callApi("post", process.env.REACT_APP_API + "/data/readBess", {
         level: "pcslevel",
       });
@@ -38,7 +38,7 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-  
+
 
     if (!step) return;
     console.log('Connecting to Socket.IO server...');
@@ -64,7 +64,7 @@ export default function Dashboard() {
       socket.value.emit("BESS_UNSUBSCRIBE", {
         level: "pcslevel",
       });
-      
+
       // socket.value.emit("BESS_UNSUBSCRIBE_MANY", {
       //     levels: ["pcslevel", "bmslevel"],
       // });
@@ -89,9 +89,7 @@ export default function Dashboard() {
         <div className="DAT_Dashboard_Page_Section_VisualCard">
           <div className="DAT_Dashboard_Page_Section_VisualCard_Layout">
             <div className="DAT_Dashboard_Page_Section_VisualCard_Layout_Main">
-              <div className="DAT_Dashboard_Page_Section_VisualCard_Layout_Main_Scene">
-                <Flow />
-              </div>
+              <Flow />
             </div>
 
             <div className="DAT_Dashboard_Page_Section_VisualCard_Layout_Side">

@@ -177,9 +177,8 @@ export default function AlarmPage() {
                   </td>
                   <td className="text_secondary">{a.operator}</td>
                   <td>
-                    <div className="DAT_alarm_main_container_table_actions">
                       <button
-                        className="DAT_alarm_main_container_table_actions_btn_view"
+                        className="DAT_alarm_main_container_table_btn_view"
                         onClick={() => setSelectedAlarm(a)}
                         aria-label="View alarm detail"
                       >
@@ -187,7 +186,7 @@ export default function AlarmPage() {
                       </button>
                       {hasPermission("ack_alarm") && a.status === "Active" && (
                         <button
-                          className="DAT_alarm_main_container_table_actions_btn_view_ack"
+                          className="DAT_alarm_main_container_table_btn_ack"
                           onClick={() => handleAck(a.id)}
                         >
                           Ack
@@ -196,13 +195,13 @@ export default function AlarmPage() {
                       {hasPermission("clear_alarm") &&
                         a.status === "Acknowledged" && (
                           <button
-                            className="DAT_alarm_main_container_table_actions_btn_view_clear"
+                            className="DAT_alarm_main_container_table_actions_clear"
                             onClick={() => handleClear(a.id)}
                           >
                             Clear
                           </button>
                         )}
-                    </div>
+                    
                   </td>
                 </tr>
               ))}

@@ -20,11 +20,11 @@
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 10px;
 
-      > .kpi-card {
+      >.kpi-card {
         display: none;
       }
     }
-    
+
     &_VisualCard {
       border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
@@ -34,7 +34,7 @@
       max-width: 100%;
       padding: 12px;
       transition: box-shadow var(--transition-base);
-      
+
       &_Layout {
         display: grid;
         grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
@@ -50,22 +50,20 @@
         &_Main {
           display: flex;
 
-          &_Scene {
-            position: relative;
-            flex: 1;
-            height: 100%;
-            min-height: 200px;
-            border-radius: var(--dashboard-radius);
-            overflow: hidden;
-            border: 1px solid rgba(214, 228, 238, 1);
-            background: linear-gradient(
-              180deg,
+
+          position: relative;
+          flex: 1;
+          height: 100%;
+          min-height: 200px;
+          border-radius: var(--dashboard-radius);
+          overflow: hidden;
+          border: 1px solid rgba(214, 228, 238, 1);
+          background: linear-gradient(180deg,
               rgba(165, 208, 234, 1) 0%,
               rgba(220, 233, 241, 1) 50%,
               rgba(128, 185, 93, 1) 50.2%,
-              rgba(117, 167, 79, 1) 100%
-            );
-          }
+              rgba(117, 167, 79, 1) 100%);
+
         }
 
         &_Side {
