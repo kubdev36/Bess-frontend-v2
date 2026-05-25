@@ -159,6 +159,19 @@ const enMessages = {
   load_trend: "Load Trend",
   detailed_report_table: "Detailed Report Table",
   records: "Record",
+  power_AC: "AC Power",
+  voltage_AC: "AC Voltage",
+  current_AC: "AC Current",
+  power_DC: "DC Power",
+  voltage_DC: "DC Voltage",
+  current_DC: "DC Current",
+  frequency: "Frequency",
+  power_AC_DC: "AC/DC Power",
+  temp_PCS: "PCS Temp",
+  fault_code_history: "Fault Code History",
+  description: "description",
+  name: "name",
+  code: "code"
 };
 
 const viMessages = {
@@ -290,9 +303,9 @@ const viMessages = {
   online: "Trực tuyến",
   offline: "Ngoại tuyến",
   running: "Đang chạy",
-  effciency: "",
+  effciency: "Hiệu suất",
   tempurature: "Nhiệt độ",
-  power_factor: "",
+  power_factor: "Hệ số công suất",
   export: "Xuất dữ liệu",
   state: "Trạng thái",
   report: "Báo cáo",
@@ -322,6 +335,19 @@ const viMessages = {
   DetailedReportTable: "Bảng Chi Tiết Báo Cáo",
   Date: "Thời gian",
   Records: "Dữ liệu",
+  power_AC: "Công suất AC",
+  voltage_AC: "Điện áp AC",
+  current_AC: "Dòng điện AC",
+  power_DC: "Công suất DC",
+  voltage_DC: "Điện áp DC",
+  current_DC: "Dòng điện DC",
+  frequency: "Tần số",
+  power_AC_DC: "Điện áp AC/DC",
+  temp_PCS: "Nhiệt độ PCS",
+  fault_code_history: "Lịch sử mã lỗi",
+  description: "mô tả",
+  name: "tên",
+  code: "mã"
 };
 
 export const messages = {

@@ -16,8 +16,11 @@ import {
   mockSystemSummary as sys,
 } from "../../data/mockData";
 import "./PCSPage.scss";
+import { useIntl } from "react-intl";
 
 export default function PCSPage() {
+  const lang = useIntl();
+
   return (
     <div className="DAT_PCS">
       <div className="DAT_PCS_Card DAT_PCS_Overview">
@@ -28,17 +31,17 @@ export default function PCSPage() {
           </div>
           <div className="DAT_PCS_Overview_Main_Item">
             <div className="DAT_PCS_Overview_Main_Item_Stat">
-              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Efficiency</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">{lang.formatMessage({ id: "effciency" })}</span>
               <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">{sys.pcsEfficiency}%</span>
             </div>
             <div className="DAT_PCS_Overview_Main_Item_Stat">
-              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Temperature</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">{lang.formatMessage({ id: "tempurature" })}</span>
               <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">
                 {sys.pcsTemperature} degC
               </span>
             </div>
             <div className="DAT_PCS_Overview_Main_Item_Stat">
-              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">Power Factor</span>
+              <span className="DAT_PCS_Overview_Main_Item_Stat_Title">{lang.formatMessage({ id: "power_factor" })}</span>
               <span className="DAT_PCS_Overview_Main_Item_Stat_Subtitle">{sys.pcsPowerFactor}</span>
             </div>
           </div>
@@ -50,16 +53,16 @@ export default function PCSPage() {
           <div className="DAT_PCS_Card_Header">
             <span className="DAT_PCS_Card_Title">
               <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
-              AC Side
+              AC
             </span>
           </div>
           <div className="DAT_PCS_Side_Params">
             {[
-              ["AC Power", `${sys.pcsACPower} kW`],
-              ["AC Voltage", `${sys.pcsACVoltage} V`],
-              ["AC Current", `${sys.pcsACCurrent} A`],
-              ["Frequency", `${sys.pcsFrequency} Hz`],
-              ["Power Factor", sys.pcsPowerFactor],
+              [`${lang.formatMessage({ id: "power_AC" })}`, `${sys.pcsACPower} kW`],
+              [`${lang.formatMessage({ id: "voltage_AC" })}`, `${sys.pcsACVoltage} V`],
+              [`${lang.formatMessage({ id: "current_AC" })}`, `${sys.pcsACCurrent} A`],
+              [`${lang.formatMessage({ id: "frequency" })}`, `${sys.pcsFrequency} Hz`],
+              [`${lang.formatMessage({ id: "power_factor" })}`, sys.pcsPowerFactor],
             ].map(([k, v]) => (
               <div key={k} className="DAT_PCS_Side_Params_Row">
                 <span className="DAT_PCS_Side_Params_Row_Key">{k}</span>
@@ -74,14 +77,14 @@ export default function PCSPage() {
               <LuBatteryCharging
                 style={{ marginRight: 8, verticalAlign: "text-bottom" }}
               />
-              DC Side
+              DC
             </span>
           </div>
           <div className="DAT_PCS_Side_Params">
             {[
-              ["DC Power", `${sys.pcsDCPower} kW`],
-              ["DC Voltage", `${sys.pcsDCVoltage} V`],
-              ["DC Current", `${sys.pcsDCCurrent} A`],
+              [`${lang.formatMessage({ id: "power_DC" })}`, `${sys.pcsDCPower} kW`],
+              [`${lang.formatMessage({ id: "voltag_DC" })}`, `${sys.pcsDCVoltage} V`],
+              [`${lang.formatMessage({ id: "current_DC" })}`, `${sys.pcsDCCurrent} A`],
             ].map(([k, v]) => (
               <div key={k} className="DAT_PCS_Side_Params_Row">
                 <span className="DAT_PCS_Side_Params_Row_Key">{k}</span>
@@ -95,7 +98,7 @@ export default function PCSPage() {
       <div className="DAT_PCS_Charts">
         <div className="DAT_PCS_Card DAT_PCS_Charts_Card">
           <div className="DAT_PCS_Card_Header">
-            <span className="DAT_PCS_Card_Title">AC/DC Power</span>
+            <span className="DAT_PCS_Card_Title">{lang.formatMessage({ id: "power_AC_DC" })}</span>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={mockHourlyData}>
@@ -106,7 +109,7 @@ export default function PCSPage() {
               <Line
                 type="monotone"
                 dataKey="batteryPower"
-                name="DC Power"
+                name={lang.formatMessage({ id: "power_DC" })}
                 stroke="#0EA5E9"
                 strokeWidth={2}
                 dot={false}
@@ -114,7 +117,7 @@ export default function PCSPage() {
               <Line
                 type="monotone"
                 dataKey="gridPower"
-                name="AC Power"
+                name={lang.formatMessage({ id: "power_AC" })}
                 stroke="#1677FF"
                 strokeWidth={2}
                 dot={false}
@@ -124,7 +127,7 @@ export default function PCSPage() {
         </div>
         <div className="DAT_PCS_Card DAT_PCS_Charts_Card">
           <div className="DAT_PCS_Card_Header">
-            <span className="DAT_PCS_Card_Title">Temperature</span>
+            <span className="DAT_PCS_Card_Title">{lang.formatMessage({ id: "tempurature" })}</span>
           </div>
           <ResponsiveContainer width="100%" height={220}>
             <LineChart data={mockHourlyData}>
@@ -135,7 +138,7 @@ export default function PCSPage() {
               <Line
                 type="monotone"
                 dataKey="temperature"
-                name="PCS Temp"
+                name={lang.formatMessage({ id: "temp_PCS" })}
                 stroke="#EF4444"
                 strokeWidth={2}
                 dot={false}
@@ -150,19 +153,19 @@ export default function PCSPage() {
           <span className="DAT_PCS_History_Header_Title">Fault Code History</span>
           <button className="DAT_PCS_History_Header_Button">
             <LuDownload />
-            Export
+            {lang.formatMessage({ id: "export" })}
           </button>
         </div>
         <div className="DAT_PCS_History_Table">
           <table className="DAT_PCS_History_Table_Main">
             <thead>
               <tr>
-                <th>Time</th>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Level</th>
-                <th>Status</th>
-                <th>Description</th>
+                <th> {lang.formatMessage({ id: "time" })}</th>
+                <th> {lang.formatMessage({ id: "code" })}</th>
+                <th> {lang.formatMessage({ id: "name" })}</th>
+                <th> {lang.formatMessage({ id: "level" })}</th>
+                <th> {lang.formatMessage({ id: "status" })}</th>
+                <th> {lang.formatMessage({ id: "description" })}</th>
               </tr>
             </thead>
             <tbody className="DAT_PCS_History_Table_Main_Body">

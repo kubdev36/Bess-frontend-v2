@@ -77,137 +77,135 @@ export default function AlarmPage() {
   return (
     <div className="DAT_alarm">
       <div className="DAT_alarm_filter">
-        <div className="DAT_alarm_filter_container">
-          <select
-            className="DAT_alarm_filter_container_form"
-            style={{ width: 130 }}
-            value={filterLevel}
+        <select
+          className="DAT_alarm_filter_form"
+          style={{ width: 130 }}
+          value={filterLevel}
+          onChange={(e) => {
+            setFilterLevel(e.target.value);
+            setPage(1);
+          }}
+        >
+          <option value="All">All Levels</option>
+          <option value="Info">Info</option>
+          <option value="Warning">Warning</option>
+          <option value="Fault">Fault</option>
+          <option value="Critical">Critical</option>
+        </select>
+        <select
+          className="DAT_alarm_filter_form"
+          style={{ width: 130 }}
+          value={filterDevice}
+          onChange={(e) => {
+            setFilterDevice(e.target.value);
+            setPage(1);
+          }}
+        >
+          <option value="All">All Devices</option>
+          <option value="BMS">BMS</option>
+          <option value="PCS">PCS</option>
+          <option value="Grid">Grid</option>
+          <option value="Battery">Battery</option>
+          <option value="System">System</option>
+        </select>
+        <select
+          className="DAT_alarm_filter_form"
+          style={{ width: 140 }}
+          value={filterStatus}
+          onChange={(e) => {
+            setFilterStatus(e.target.value);
+            setPage(1);
+          }}
+        >
+          <option value="All">All Status</option>
+          <option value="Active">Active</option>
+          <option value="Acknowledged">Acknowledged</option>
+          <option value="Cleared">Cleared</option>
+        </select>
+        <div className="DAT_alarm_filter_search" style={{ width: 200 }}>
+          <span className="DAT_alarm_filter_search_icon">
+            <LuSearch />
+          </span>
+          <input
+            className="DAT_alarm_filter_search_input"
+            placeholder="Search alarms..."
+            value={search}
             onChange={(e) => {
-              setFilterLevel(e.target.value);
+              setSearch(e.target.value);
               setPage(1);
             }}
-          >
-            <option value="All">All Levels</option>
-            <option value="Info">Info</option>
-            <option value="Warning">Warning</option>
-            <option value="Fault">Fault</option>
-            <option value="Critical">Critical</option>
-          </select>
-          <select
-            className="DAT_alarm_filter_container_form"
-            style={{ width: 130 }}
-            value={filterDevice}
-            onChange={(e) => {
-              setFilterDevice(e.target.value);
-              setPage(1);
-            }}
-          >
-            <option value="All">All Devices</option>
-            <option value="BMS">BMS</option>
-            <option value="PCS">PCS</option>
-            <option value="Grid">Grid</option>
-            <option value="Battery">Battery</option>
-            <option value="System">System</option>
-          </select>
-          <select
-            className="DAT_alarm_filter_container_form"
-            style={{ width: 140 }}
-            value={filterStatus}
-            onChange={(e) => {
-              setFilterStatus(e.target.value);
-              setPage(1);
-            }}
-          >
-            <option value="All">All Status</option>
-            <option value="Active">Active</option>
-            <option value="Acknowledged">Acknowledged</option>
-            <option value="Cleared">Cleared</option>
-          </select>
-          <div className="DAT_alarm_filter_container_search" style={{ width: 200 }}>
-            <span className="DAT_alarm_filter_container_search_icon">
-              <LuSearch />
-            </span>
-            <input
-              className="DAT_alarm_filter_container_search_input"
-              placeholder="Search alarms..."
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
-          </div>
-          <button className="DAT_alarm_filter_container_export">
-            <LuDownload />
-            Export
-          </button>
+          />
         </div>
+        <button className="DAT_alarm_filter_export">
+          <LuDownload />
+          Export
+        </button>
+
       </div>
 
       <div className="DAT_alarm_main">
-        <div className="DAT_alarm_main_container">
-          <table className="DAT_alarm_main_container_table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Time</th>
-                <th>Level</th>
-                <th>Device</th>
-                <th>Message</th>
-                <th>Status</th>
-                <th>Operator</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {paged.map((a) => (
-                <tr
-                  key={a.id}
-                  className={a.status === "Active" ? "highlight_danger" : ""}
-                >
-                  <td className="font_medium">{a.code}</td>
-                  <td>{a.time}</td>
-                  <td>
-                    <StatusBadge status={a.level} />
-                  </td>
-                  <td>{a.device}</td>
-                  <td>{a.message}</td>
-                  <td>
-                    <StatusBadge status={a.status} />
-                  </td>
-                  <td className="text_secondary">{a.operator}</td>
-                  <td>
+        <table className="DAT_alarm_main_table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Time</th>
+              <th>Level</th>
+              <th>Device</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Operator</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paged.map((a) => (
+              <tr
+                key={a.id}
+                className={a.status === "Active" ? "highlight_danger" : ""}
+              >
+                <td className="font_medium">{a.code}</td>
+                <td>{a.time}</td>
+                <td>
+                  <StatusBadge status={a.level} />
+                </td>
+                <td>{a.device}</td>
+                <td>{a.message}</td>
+                <td>
+                  <StatusBadge status={a.status} />
+                </td>
+                <td className="text_secondary">{a.operator}</td>
+                <td>
+                  <button
+                    className="DAT_alarm_main_table_view"
+                    onClick={() => setSelectedAlarm(a)}
+                    aria-label="View alarm detail"
+                  >
+                    <LuEye />
+                  </button>
+                  {hasPermission("ack_alarm") && a.status === "Active" && (
+                    <button
+                      className="DAT_alarm_main_table_ack"
+                      onClick={() => handleAck(a.id)}
+                    >
+                      Ack
+                    </button>
+                  )}
+                  {hasPermission("clear_alarm") &&
+                    a.status === "Acknowledged" && (
                       <button
-                        className="DAT_alarm_main_container_table_btn_view"
-                        onClick={() => setSelectedAlarm(a)}
-                        aria-label="View alarm detail"
+                        className="DAT_alarm_main_table_clear"
+                        onClick={() => handleClear(a.id)}
                       >
-                        <LuEye />
+                        Clear
                       </button>
-                      {hasPermission("ack_alarm") && a.status === "Active" && (
-                        <button
-                          className="DAT_alarm_main_container_table_btn_ack"
-                          onClick={() => handleAck(a.id)}
-                        >
-                          Ack
-                        </button>
-                      )}
-                      {hasPermission("clear_alarm") &&
-                        a.status === "Acknowledged" && (
-                          <button
-                            className="DAT_alarm_main_container_table_actions_clear"
-                            onClick={() => handleClear(a.id)}
-                          >
-                            Clear
-                          </button>
-                        )}
-                    
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    )}
+
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
         {totalPages > 1 && (
           <div className="DAT_alarm_main_pagination">
             <button

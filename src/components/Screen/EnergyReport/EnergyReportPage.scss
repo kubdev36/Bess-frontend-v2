@@ -12,101 +12,101 @@
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--transition-base);
 
-    &_content {
+
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-base);
+    flex-wrap: wrap;
+
+    &_title {
+      color: var(--text-primary);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    &_subtitle {
+      margin-top: 2px;
+      color: var(--text-secondary);
+      font-size: var(--font-size-sm);
+      margin-bottom: 10px;
+    }
+
+    &_actions {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: var(--space-base);
+      gap: var(--space-sm);
       flex-wrap: wrap;
 
-      &_title {
-        color: var(--text-primary);
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-semibold);
-      }
-
-      &_subtitle {
-        margin-top: 2px;
-        color: var(--text-secondary);
-        font-size: var(--font-size-sm);
-      }
-
-      &_actions {
+      &_opt {
         display: flex;
-        align-items: center;
-        gap: var(--space-sm);
         flex-wrap: wrap;
+        gap: var(--space-sm);
 
-        &_opt {
-          display: flex;
-          flex-wrap: wrap;
-          gap: var(--space-sm);
-
-          &_btn {
-            border: 1px solid var(--border);
-            background: #fff;
-            color: var(--text-body);
-            border-radius: var(--radius-full);
-            padding: 8px 14px;
-            font-size: var(--font-size-sm);
-            transition: all var(--transition-fast);
-
-            &.active,
-            &:hover {
-              background: var(--primary-light);
-              border-color: var(--primary);
-              color: var(--primary);
-            }
-          }
-
-        }
-
-        &_excel {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--space-sm);
-          border-radius: var(--radius-md);
-          font-weight: var(--font-weight-medium);
-          line-height: 1.4;
-          white-space: nowrap;
-          transition: all var(--transition-base);
-          padding: 6px 12px;
-          font-size: var(--font-size-sm);
+        &_btn {
           border: 1px solid var(--border);
-          background: transparent;
-          color: var(--primary);
+          background: #fff;
+          color: var(--text-body);
+          border-radius: var(--radius-full);
+          padding: 8px 14px;
+          font-size: var(--font-size-sm);
+          transition: all var(--transition-fast);
 
-          &:hover:not(:disabled) {
-            border-color: var(--primary);
+          &.active,
+          &:hover {
             background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary);
           }
-
         }
 
-        &_pdf {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: var(--space-sm);
-          border: none;
-          border-radius: var(--radius-md);
-          font-weight: var(--font-weight-medium);
-          line-height: 1.4;
-          white-space: nowrap;
-          transition: all var(--transition-base);
-          padding: 6px 12px;
-          font-size: var(--font-size-sm);
-          background: var(--primary);
-          color: #fff;
+      }
 
-          &:hover:not(:disabled) {
-            background: var(--primary-hover);
-            box-shadow: 0 4px 12px rgba(11, 25, 103, 0.22);
-          }
+      &_excel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        border-radius: var(--radius-md);
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all var(--transition-base);
+        padding: 6px 12px;
+        font-size: var(--font-size-sm);
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--primary);
+
+        &:hover:not(:disabled) {
+          border-color: var(--primary);
+          background: var(--primary-light);
+        }
+
+      }
+
+      &_pdf {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-sm);
+        border: none;
+        border-radius: var(--radius-md);
+        font-weight: var(--font-weight-medium);
+        line-height: 1.4;
+        white-space: nowrap;
+        transition: all var(--transition-base);
+        padding: 6px 12px;
+        font-size: var(--font-size-sm);
+        background: var(--primary);
+        color: #fff;
+
+        &:hover:not(:disabled) {
+          background: var(--primary-hover);
+          box-shadow: 0 4px 12px rgba(11, 25, 103, 0.22);
         }
       }
     }
+
   }
 
   &_stat {
@@ -154,12 +154,10 @@
         align-items: center;
         justify-content: space-between;
         margin-bottom: var(--space-base);
+        color: var(--text-primary);
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-semibold);
 
-        &_title {
-          color: var(--text-primary);
-          font-size: var(--font-size-lg);
-          font-weight: var(--font-weight-semibold);
-        }
       }
     }
   }
@@ -194,7 +192,7 @@
     &_container {
       overflow-x: auto;
 
-      &_table {
+      table {
         width: 100%;
         border-collapse: separate;
         border-spacing: 0;
@@ -253,28 +251,28 @@
         }
       }
 
-      &_empty {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-4xl);
-        color: var(--text-muted);
+    }
+    &_empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-4xl);
+      color: var(--text-muted);
 
-        &_icon {
-          margin-bottom: var(--space-base);
-          font-size: 48px;
-        }
+      &_icon {
+        margin-bottom: var(--space-base);
+        font-size: 48px;
+      }
 
-        &_sub {
-          margin-top: var(--space-xs);
-          font-size: var(--font-size-sm);
-        }
+      &_sub {
+        margin-top: var(--space-xs);
+        font-size: var(--font-size-sm);
+      }
 
-        &_text {
-          font-size: var(--font-size-lg);
-          font-weight: var(--font-weight-medium);
-        }
+      &_text {
+        font-size: var(--font-size-lg);
+        font-weight: var(--font-weight-medium);
       }
     }
   }

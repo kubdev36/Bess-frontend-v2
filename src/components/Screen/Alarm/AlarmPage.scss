@@ -9,7 +9,7 @@
         box-shadow: var(--shadow-card);
         transition: box-shadow var(--transition-base);
 
-        &_container {
+        
             display: flex;
             align-items: center;
             gap: var(--space-sm);
@@ -106,7 +106,7 @@
                 padding: 6px 12px;
                 font-size: var(--font-size-sm);
             }
-        }
+        
     }
 
     &_main {
@@ -118,7 +118,7 @@
         transition: box-shadow var(--transition-base);
         margin-top: var(--space-base);
 
-        &_container {
+        
             overflow-x: auto;
 
             &_table {
@@ -182,7 +182,7 @@
 
 
 
-                &_btn {
+                
 
                     &_view {
                         border: 1px solid var(--border);
@@ -250,12 +250,10 @@
                             background: var(--primary-light);
                         }
                     }
-                }
+                
 
             }
 
-
-        }
 
         &_pagination {
             display: flex;
