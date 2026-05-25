@@ -19,15 +19,15 @@
     gap: var(--space-base);
     grid-template-columns: repeat(3, minmax(0, 1fr));
 
+    &_Selected {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
     &_Card {
       @extend .DAT_Battery_Panel;
       cursor: pointer;
       position: relative;
-
-      &--selected {
-        border-color: var(--primary);
-        background: var(--primary-light);
-      }
 
       &_Header {
         display: flex;
@@ -46,20 +46,25 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
 
-        &_Label {
-          color: var(--text-secondary);
-          font-size: var(--font-size-sm);
-        }
+        &_Item {
+          display: flex;
+          gap: 5px;
 
-        &_Value {
-          font-weight: var(--font-weight-semibold);
+          &_Label {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+          }
+
+          &_Value {
+            font-weight: var(--font-weight-semibold);
+          }
         }
       }
 
       &_Badge {
         position: absolute;
-        top: 12px;
-        right: 12px;
+        top: 2px;
+        left: 6px;
         display: inline-flex;
         align-items: center;
         gap: 4px;
@@ -139,40 +144,44 @@
         border-spacing: 0;
 
         &_Head {
-          padding: 12px 16px;
-          border-bottom: 1px solid var(--border-light);
-          background: var(--bg-hover);
-          color: var(--text-secondary);
-          text-align: left;
-          white-space: nowrap;
-          font-size: var(--font-size-sm);
-          font-weight: var(--font-weight-semibold);
-          text-transform: uppercase;
-          letter-spacing: 0.03em;
-        }
-
-        &_Row {
-          transition: background var(--transition-fast);
-
-          &:hover {
+          &_Th {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-light);
             background: var(--bg-hover);
-          }
-
-          &--selected,
-          &--warning {
-            background: var(--warning-light);
+            color: var(--text-secondary);
+            text-align: left;
+            white-space: nowrap;
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
           }
         }
 
-        &_Cell {
-          padding: 12px 16px;
-          border-bottom: 1px solid var(--border-light);
-          color: var(--text-body);
-          font-size: var(--font-size-base);
-          vertical-align: middle;
+        &_Body {
+          &_Row {
+            transition: background var(--transition-fast);
 
-          &--medium {
-            font-weight: var(--font-weight-medium);
+            &:hover {
+              background: var(--bg-hover);
+            }
+
+            &--selected,
+            &--warning {
+              background: var(--warning-light);
+            }
+
+            &_Cell {
+              padding: 12px 16px;
+              border-bottom: 1px solid var(--border-light);
+              color: var(--text-body);
+              font-size: var(--font-size-base);
+              vertical-align: middle;
+
+              &--medium {
+                font-weight: var(--font-weight-medium);
+              }
+            }
           }
         }
       }
@@ -339,4 +348,3 @@
     }
   }
 }
-
