@@ -39,13 +39,6 @@ export default function AlarmPage() {
   const totalPages = Math.ceil(filtered.length / perPage);
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
 
-  const counts = {
-    total: alarms.length,
-    active: alarms.filter((a) => a.status === "Active").length,
-    ack: alarms.filter((a) => a.status === "Acknowledged").length,
-    cleared: alarms.filter((a) => a.status === "Cleared").length,
-  };
-
   const handleAck = (id) => {
     setAlarms((prev) =>
       prev.map((a) =>
@@ -148,34 +141,6 @@ export default function AlarmPage() {
             <LuDownload />
             Export
           </button>
-        </div>
-      </div>
-
-      <div className="DAT_alarm_summary">
-        <div className="card DAT_alarm_summary_box">
-          <span className="DAT_alarm_summary_box_label">Total</span>
-          <span className="DAT_alarm_summary_box_value">{counts.total}</span>
-        </div>
-        <div className="card DAT_alarm_summary_box">
-          <span className="DAT_alarm_summary_box_label">Active</span>
-          <span className="DAT_alarm_summary_box_value" style={{ color: "var(--danger)" }}>
-            {counts.active}
-          </span>
-        </div>
-        <div className="card DAT_alarm_summary_box">
-          <span className="DAT_alarm_summary_box_label">Acknowledged</span>
-          <span
-            className="DAT_alarm_summary_box_value"
-            style={{ color: "var(--warning)" }}
-          >
-            {counts.ack}
-          </span>
-        </div>
-        <div className="card DAT_alarm_summary_box">
-          <span className="DAT_alarm_summary_box_label">Cleared</span>
-          <span className="DAT_alarm_summary_box_value" style={{ color: "var(--success)" }}>
-            {counts.cleared}
-          </span>
         </div>
       </div>
 
