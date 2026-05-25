@@ -83,10 +83,10 @@ export default function AlarmPage() {
 
   return (
     <div className="DAT_alarm">
-      <div className="DAT_alarm_filter_bar">
-        <div className="flex items-center gap-sm flex-wrap">
+      <div className="DAT_alarm_filter">
+        <div className="DAT_alarm_filter_container">
           <select
-            className="form-select"
+            className="DAT_alarm_filter_container_form"
             style={{ width: 130 }}
             value={filterLevel}
             onChange={(e) => {
@@ -101,7 +101,7 @@ export default function AlarmPage() {
             <option value="Critical">Critical</option>
           </select>
           <select
-            className="form-select"
+            className="DAT_alarm_filter_container_form"
             style={{ width: 130 }}
             value={filterDevice}
             onChange={(e) => {
@@ -117,7 +117,7 @@ export default function AlarmPage() {
             <option value="System">System</option>
           </select>
           <select
-            className="form-select"
+            className="DAT_alarm_filter_container_form"
             style={{ width: 140 }}
             value={filterStatus}
             onChange={(e) => {
@@ -130,12 +130,12 @@ export default function AlarmPage() {
             <option value="Acknowledged">Acknowledged</option>
             <option value="Cleared">Cleared</option>
           </select>
-          <div className="form-input-icon-wrapper" style={{ width: 200 }}>
-            <span className="form-input-icon">
+          <div className="DAT_alarm_filter_container_search" style={{ width: 200 }}>
+            <span className="DAT_alarm_filter_container_search_icon">
               <LuSearch />
             </span>
             <input
-              className="form-input"
+              className="DAT_alarm_filter_container_search_input"
               placeholder="Search alarms..."
               value={search}
               onChange={(e) => {
@@ -144,7 +144,7 @@ export default function AlarmPage() {
               }}
             />
           </div>
-          <button className="btn btn-ghost btn-sm">
+          <button className="DAT_alarm_filter_container_export">
             <LuDownload />
             Export
           </button>
