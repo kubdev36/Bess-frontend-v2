@@ -1,7 +1,5 @@
-import React, { use, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import StatusBadge from "../../Modal/StatusBadge";
-import { mockSystemSummary as sys } from "../../data/mockData";
 import { convertToDoublewordAndFloat } from "../../../App";
 
 const Infor = (props) => {

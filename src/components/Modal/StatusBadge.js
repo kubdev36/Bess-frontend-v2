@@ -137,11 +137,7 @@ const statusMessageIds = {
   Idle: "status_idle",
 };
 
-export default function StatusBadge({
-  status,
-  showIcon = true,
-  size = "normal",
-}) {
+export default function StatusBadge({ status }) {
   const intl = useIntl();
   const className = badgeMap[status] || "status-badge--gray";
   const Icon = iconMap[status];
@@ -152,9 +148,9 @@ export default function StatusBadge({
 
   return (
     <span
-      className={`status-badge ${className} ${size === "small" ? "status-badge--small" : ""}`}
+      className={`status-badge ${className}`}
     >
-      {showIcon && Icon ? <Icon size={12} /> : null}
+      {Icon ? <Icon size={12} /> : null}
       {label}
     </span>
   );
