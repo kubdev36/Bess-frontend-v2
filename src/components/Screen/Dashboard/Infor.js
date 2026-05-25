@@ -45,7 +45,7 @@ const Infor = (props) => {
             <div className="DAT_Infor_Card_SOC_Body_Progress_Bar">
               <div
                 className="DAT_Infor_Card_SOC_Body_Progress_Bar_Fill"
-                style={{ width: `${Math.min(100, Math.max(0, sys.soc))}%` }}
+                style={{ width: `${Math.min(100, Math.max(0, parseFloat(dataInf?.["8203-1"] * 0.1).toFixed(0) || 0))}%` }}
               />
             </div>
           </div>
@@ -69,7 +69,7 @@ const Infor = (props) => {
             <div className="DAT_Infor_Card_SOH_Body_Progress_Bar">
               <div
                 className="DAT_Infor_Card_SOH_Body_Progress_Bar_Fill"
-                style={{ width: `${Math.min(100, Math.max(0, sys.soh))}%` }}
+                style={{ width: `${Math.min(100, Math.max(0, parseFloat(dataInf?.["8204-1"] * 0.1).toFixed(1) || 0))}%` }}
               />
             </div>
           </div>

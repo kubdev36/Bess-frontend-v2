@@ -65,80 +65,80 @@ export default function EnergyReportPage() {
   const revenue = Math.round(summary.gridExport * 0.08);
 
   return (
-    <div className="energy-report">
-      <div className="card">
-        <div className="page-toolbar">
+    <div className="DAT_report">
+      <div className="DAT_report_toolbar">
+        <div className="DAT_report_toolbar_content">
           <div>
-            <div className="card-title">Energy Report</div>
-            <div className="card-subtitle">
+            <div className="DAT_report_toolbar_content_title">Energy Report</div>
+            <div className="DAT_report_toolbar_content_subtitle">
               Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
             </div>
           </div>
-          <div className="page-toolbar-actions">
-            <div className="chip">
+          <div className="DAT_report_toolbar_content_actions">
+            <div className="DAT_report_toolbar_content_actions_opt">
               {presets.map((item) => (
                 <button
                   key={item}
-                  className={`chip-btn ${preset === item ? "active" : ""}`}
+                  className={`DAT_report_toolbar_content_actions_opt_btn ${preset === item ? "active" : ""}`}
                   onClick={() => setPreset(item)}
                 >
                   {item}
                 </button>
               ))}
             </div>
-            <button className="btn btn-ghost btn-sm">Export Excel</button>
-            <button className="btn btn-primary btn-sm">Export PDF</button>
+            <button className="DAT_report_toolbar_content_actions_excel">Export Excel</button>
+            <button className="DAT_report_toolbar_content_actions_pdf">Export PDF</button>
           </div>
         </div>
       </div>
 
-      <div className="stats-grid-auto">
-        <div className="mini-stat">
-          <span className="mini-stat-label">Total Charge Energy</span>
-          <span className="mini-stat-value">{summary.charge} kWh</span>
+      <div className="DAT_report_stat">
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Total Charge Energy</span>
+          <span className="DAT_report_stat_box_value">{summary.charge} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Total Discharge Energy</span>
-          <span className="mini-stat-value">{summary.discharge} kWh</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Total Discharge Energy</span>
+          <span className="DAT_report_stat_box_value">{summary.discharge} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Round-trip Efficiency</span>
-          <span className="mini-stat-value">{avgEfficiency}%</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Round-trip Efficiency</span>
+          <span className="DAT_report_stat_box_value">{avgEfficiency}%</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">PV Energy</span>
-          <span className="mini-stat-value">{summary.pv} kWh</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">PV Energy</span>
+          <span className="DAT_report_stat_box_value">{summary.pv} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Grid Import</span>
-          <span className="mini-stat-value">{summary.gridImport} kWh</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Grid Import</span>
+          <span className="DAT_report_stat_box_value">{summary.gridImport} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Grid Export</span>
-          <span className="mini-stat-value">{summary.gridExport} kWh</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Grid Export</span>
+          <span className="DAT_report_stat_box_value">{summary.gridExport} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Load Consumption</span>
-          <span className="mini-stat-value">{summary.load} kWh</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Load Consumption</span>
+          <span className="DAT_report_stat_box_value">{summary.load} kWh</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Cycle Count</span>
-          <span className="mini-stat-value">{summary.cycles}</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Cycle Count</span>
+          <span className="DAT_report_stat_box_value">{summary.cycles}</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Cost Saving</span>
-          <span className="mini-stat-value">${costSaving}</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Cost Saving</span>
+          <span className="DAT_report_stat_box_value">${costSaving}</span>
         </div>
-        <div className="mini-stat">
-          <span className="mini-stat-label">Revenue</span>
-          <span className="mini-stat-value">${revenue}</span>
+        <div className="DAT_report_stat_box">
+          <span className="DAT_report_stat_box_label">Revenue</span>
+          <span className="DAT_report_stat_box_value">${revenue}</span>
         </div>
       </div>
 
-      <div className="split-panel">
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Charge / Discharge / PV</span>
+      <div className="DAT_report_chart">
+        <div className="DAT_report_chart_container">
+          <div className="DAT_report_chart_container_header">
+            <span className="DAT_report_chart_container_header_title">Charge / Discharge / PV</span>
           </div>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={rows.slice().reverse()}>
@@ -154,9 +154,9 @@ export default function EnergyReportPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="card">
-          <div className="card-header">
-            <span className="card-title">Efficiency / Load Trend</span>
+        <div className="DAT_report_chart_container">
+          <div className="DAT_report_chart_container_header">
+            <span className="DAT_report_chart_container_header_title">Efficiency / Load Trend</span>
           </div>
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={rows.slice().reverse()}>
@@ -182,14 +182,14 @@ export default function EnergyReportPage() {
         </div>
       </div>
 
-      <div className="card">
-        <div className="card-header">
-          <span className="card-title">Detailed Report Table</span>
-          <span className="card-subtitle">{rows.length} records</span>
+      <div className="DAT_report_detail">
+        <div className="DAT_report_detail_header">
+          <span className="DAT_report_detail_header_title">Detailed Report Table</span>
+          <span className="DAT_report_detail_header_subtitle">{rows.length} records</span>
         </div>
         {rows.length ? (
-          <div className="table-container">
-            <table className="table">
+          <div className="DAT_report_detail_container">
+            <table className="DAT_report_detail_container_table">
               <thead>
                 <tr>
                   <th>Date</th>
@@ -223,10 +223,10 @@ export default function EnergyReportPage() {
             </table>
           </div>
         ) : (
-          <div className="empty-state">
-            <div className="empty-state-icon">📭</div>
-            <div className="empty-state-text">No report data</div>
-            <div className="empty-state-sub">Try another time range.</div>
+          <div className="DAT_report_detail_container_empty">
+            <div className="DAT_report_detail_container_empty_icon">📭</div>
+            <div className="DAT_report_detail_container_empty_text">No report data</div>
+            <div className="DAT_report_detail_container_empty_sub">Try another time range.</div>
           </div>
         )}
       </div>
