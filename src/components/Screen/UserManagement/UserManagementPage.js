@@ -100,7 +100,7 @@ export default function UserManagementPage() {
           <input
             className="DAT_UserManagement_Card_Actions_FilterInput"
             style={{ width: 220 }}
-            placeholder="Search name or email"
+            placeholder={lang.formatMessage({id: "user_search"})}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
