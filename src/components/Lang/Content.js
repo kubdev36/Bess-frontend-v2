@@ -262,7 +262,8 @@ const enMessages = {
   new_password: "New Password",
   password_confirm: "Confirm Password",
   save: "Save",
-  password_input: "Enter password"
+  password_input: "Enter password",
+  user_search: "Search name or email"
 };
 
 const viMessages = {
@@ -536,7 +537,8 @@ const viMessages = {
   new_password: "Mật khẩu mới",
   password_confirm: "Xác nhận mật khẩu",
   save: "lưu",
-  password_input: "Nhập mật khẩu"
+  password_input: "Nhập mật khẩu",
+  user_search: "Tìm kiếm theo tên hoặc email"
 
 };
 
