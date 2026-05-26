@@ -194,26 +194,26 @@ export const mockEnergyReport = Array.from({ length: 30 }, (_, i) => {
 // --- System Settings ---
 export const mockSystemSettings = {
   site: {
-    siteName: 'BESS Station 01',
+    site_name: 'BESS Station 01',
     location: 'Ho Chi Minh City',
     capacity: 2000,
-    batteryType: 'LFP',
-    commissioningDate: '2024-01-15',
+    battery_type: 'LFP',
+    commissioning_date: '2024-01-15',
     owner: 'Energy Corp',
     operator: 'BESS Operations',
   },
   notification: {
-    emailEnabled: true,
-    emailRecipients: 'admin@bess.com, op@bess.com',
-    telegramEnabled: true,
-    botToken: '***************************',
+    email_enabled: true,
+    email_recipients: 'admin@bess.com, op@bess.com',
+    telegram_enabled: true,
+    bot_token: '***************************',
     chatId: '-100123456789',
-    notifyLevels: { critical: true, fault: true, warning: true, info: false },
+    notify_levels: { critical: true, fault: true, warning: true, info: false },
   },
   realtime: {
-    refreshInterval: 5,
-    chartUpdateInterval: 10,
-    dataRetention: 30,
-    reconnectInterval: 5,
+    refresh_interval: 5,
+    chart_updateInterval: 10,
+    data_retention: 30,
+    reconnect_Interval: 5,
   },
 };

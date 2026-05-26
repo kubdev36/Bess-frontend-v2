@@ -3,6 +3,7 @@ import Modal from "../../Modal/Modal";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockUsers } from "../../data/mockData";
 import "./UserManagementPage.scss";
+import { useIntl } from "react-intl";
 
 const emptyUser = {
   name: "",
@@ -21,6 +22,7 @@ export default function UserManagementPage() {
   const [form, setForm] = useState(emptyUser);
   const [editing, setEditing] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const lang = useIntl();
 
   const filtered = useMemo(
     () =>
@@ -92,10 +94,7 @@ export default function UserManagementPage() {
     <div className="DAT_UserManagement">
       <div className="DAT_UserManagement_Card">
         <div className="DAT_UserManagement_Card_Info">
-          <div className="DAT_UserManagement_Card_Info_Title">User Management</div>
-          <div className="DAT_UserManagement_Card_Info_Subtitle">
-            Quan ly tai khoan, role, trang thai va hanh dong reset password.
-          </div>
+          <div className="DAT_UserManagement_Card_Info_Title">{lang.formatMessage({id: "user_management"})}</div>
         </div>
         <div className="DAT_UserManagement_Card_Actions">
           <input
@@ -111,11 +110,11 @@ export default function UserManagementPage() {
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
-            <option value="All">All Roles</option>
-            <option value="Viewer">Viewer</option>
-            <option value="Operator">Operator</option>
-            <option value="Admin">Admin</option>
-            <option value="Engineer">Engineer</option>
+            <option value="All">{lang.formatMessage({id: "all_role"})}</option>
+            <option value="Viewer">{lang.formatMessage({id: "viewer_role"})}</option>
+            <option value="Operator">{lang.formatMessage({id: "operator_role"})}</option>
+            <option value="Admin">{lang.formatMessage({id: "admin_role"})}</option>
+            <option value="Engineer">{lang.formatMessage({id: "engineer_role"})}</option>
           </select>
           <select
             className="DAT_UserManagement_Card_Actions_FilterSelect"
@@ -123,16 +122,16 @@ export default function UserManagementPage() {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="All">All Status</option>
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Locked">Locked</option>
+            <option value="All">{lang.formatMessage({id: "all_status_role"})}</option>
+            <option value="Active">{lang.formatMessage({id: "statusActive_role"})}</option>
+            <option value="Inactive">{lang.formatMessage({id: "statusInactive_role"})}</option>
+            <option value="Locked">{lang.formatMessage({id: "statusLocked_role"})}</option>
           </select>
           <button
             className="DAT_UserManagement_Card_Actions_Button_Primary"
             onClick={openNew}
           >
-            Add User
+            {lang.formatMessage({id: "add_user"})}
           </button>
         </div>
       </div>

@@ -1,22 +1,23 @@
 import React, { useState } from "react";
 import { mockSystemSettings } from "../../data/mockData";
 import "./SystemSettingsPage.scss";
+import { useIntl } from "react-intl";
 
 const tabs = ["site", "device", "notification", "realtime"];
 const tabLabels = {
-  site: "Site Information",
-  device: "Device Configuration",
-  notification: "Notification Settings",
-  realtime: "Realtime Settings",
+  site: "site_information",
+  device: "device_configuration",
+  notification: "notification_settings",
+  realtime: "realtime_settings",
 };
 
 const defaultDeviceSettings = {
-  batteryContainers: "CTN-01, CTN-02, CTN-03",
-  rackConfiguration: "10 racks per container",
-  pcsConfiguration: "PCS-001 / 500 kW",
-  bmsConfiguration: "BMS main bus online",
-  gridMeterConfiguration: "Grid Meter 01",
-  pvMeterConfiguration: "PV Meter 01",
+  battery_containers: "CTN-01, CTN-02, CTN-03",
+  rack_configuration: "10 racks per container",
+  pcs_configuration: "PCS-001 / 500 kW",
+  bms_configuration: "BMS main bus online",
+  grid_meter_configuration: "Grid Meter 01",
+  pv_meter_configuration: "PV Meter 01",
 };
 
 const createDefaultSettings = () => ({
@@ -25,6 +26,7 @@ const createDefaultSettings = () => ({
 });
 
 export default function SystemSettingsPage() {
+  const lang = useIntl();
   const [activeTab, setActiveTab] = useState("site");
   const [settings, setSettings] = useState(createDefaultSettings);
 
@@ -41,10 +43,10 @@ export default function SystemSettingsPage() {
   const renderFields = (section) => (
     <div className="DAT_SystemSettings_Grid">
       {Object.entries(settings[section]).map(([key, value]) => (
-        <div key={key} className="DAT_SystemSettings_Field">
-          <label className="DAT_SystemSettings_Label">{key}</label>
+        <div key={key} className="DAT_SystemSettings_Grid_Field">
+          <label className="DAT_SystemSettings_Grid_Field_Label">{lang.formatMessage({id: key})}</label>
           <input
-            className="DAT_SystemSettings_Input"
+            className="DAT_SystemSettings_Grid_Field_Input"
             value={String(value)}
             onChange={(e) => updateSection(section, key, e.target.value)}
           />
@@ -56,18 +58,21 @@ export default function SystemSettingsPage() {
   return (
     <div className="DAT_SystemSettings">
       <div className="DAT_SystemSettings_HeaderCard">
-        <div className="DAT_SystemSettings_Title">System Settings</div>
-        <div className="DAT_SystemSettings_Subtitle">
-          Cau hinh thong tin tram, thiet bi, thong bao va realtime refresh.
+        <div className="DAT_SystemSettings_HeaderCard_Main">
+          <div className="DAT_SystemSettings_HeaderCard_Main_Title">
+            {lang.formatMessage({id: "system_settings"})}
+          </div>
         </div>
-        <div className="DAT_SystemSettings_Actions">
+        <div className="DAT_SystemSettings_HeaderCard_Actions">
           <button
-            className="DAT_SystemSettings_ResetButton"
+            className="DAT_SystemSettings_HeaderCard_Actions_ResetButton"
             onClick={() => setSettings(createDefaultSettings())}
           >
-            Reset Default
+            {lang.formatMessage({id: "reset_default"})}
           </button>
-          <button className="DAT_SystemSettings_SaveButton">Save Settings</button>
+          <button className="DAT_SystemSettings_HeaderCard_Actions_SaveButton">
+            {lang.formatMessage({id: "save_settings"})}
+          </button>
         </div>
       </div>
 
@@ -77,12 +82,12 @@ export default function SystemSettingsPage() {
             key={tab}
             className={
               activeTab === tab
-                ? "DAT_SystemSettings_TabActive"
-                : "DAT_SystemSettings_Tab"
+                ? "DAT_SystemSettings_Tabs_Active"
+                : "DAT_SystemSettings_Tabs_Normal"
             }
             onClick={() => setActiveTab(tab)}
           >
-            {tabLabels[tab]}
+            {lang.formatMessage({id: tabLabels[tab]})}
           </button>
         ))}
       </div>
@@ -90,8 +95,8 @@ export default function SystemSettingsPage() {
       <div className="DAT_SystemSettings_ContentCard">
         {renderFields(activeTab)}
         {activeTab === "notification" && (
-          <div className="DAT_SystemSettings_NotificationAction">
-            <button className="DAT_SystemSettings_NotificationButton">Test Notification</button>
+          <div className="DAT_SystemSettings_ContentCard_NotificationAction">
+            <button className="DAT_SystemSettings_ContentCard_NotificationButton">{lang.formatMessage({id: "test_notification"})}</button>
           </div>
         )}
       </div>

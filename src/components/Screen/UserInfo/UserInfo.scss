@@ -72,7 +72,7 @@
 
     }
 
-    &_container {
+    &_Container {
         padding: var(--space-lg);
         border: 1px solid var(--border-light);
         border-radius: var(--radius-md);
@@ -80,7 +80,7 @@
         box-shadow: var(--shadow-card);
         transition: box-shadow var(--transition-base);
 
-        &_row {
+        &_Row {
             display: flex;
             justify-content: space-between;
             border-bottom: 1px solid var(--border-light);
@@ -95,20 +95,20 @@
                 padding-top: 0px;
             }
 
-            &_content {
+            &_Content {
 
-                &_title {
+                &_Title {
                     color: var(--text-secondary);
                     margin-bottom: 8px;
 
                 }
 
-                &_label {
+                &_Label {
                     font-weight: var(--font-weight-medium);
 
                 }
 
-                &_avt {
+                &_Avt {
                     box-shadow: 0 0 0 3px #d5d5d5;
                     cursor: pointer;
                     height: 45px;
@@ -124,7 +124,7 @@
                 }
             }
 
-            &_btn {
+            &_Btn {
                 color: var(--primary);
                 cursor: pointer;
                 display: block;
@@ -136,7 +136,7 @@
         }
     }
 
-    &_modal {
+    &_Modal {
         position: fixed;
         inset: 0;
         background: rgba(0, 0, 0, 0.5);
@@ -144,7 +144,7 @@
         justify-content: center;
         align-items: center;
 
-        &_container {
+        &_Container {
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 2px 2px 5px #49494933, -2px -2px 5px #43434333;
@@ -153,7 +153,7 @@
             position: relative;
             width: 400px;
 
-            &_header {
+            &_Header {
                 align-items: center;
                 background-color: #0b1967;
                 padding: 16px;
@@ -162,7 +162,7 @@
                 justify-content: space-between;
                 border-bottom: 1px solid var(--border-light);
 
-                &_title {
+                &_Title {
                     flex: 5 1;
                     font-size: var(--font-size-xl);
                     font-weight: var(--font-weight-bold);
@@ -172,7 +172,7 @@
                     gap: 8px;
                 }
 
-                &_close {
+                &_Close {
                     width: 32px;
                     height: 32px;
                     display: flex;
@@ -193,7 +193,7 @@
                 }
             }
 
-            &_main {
+            &_Main {
                 align-items: center;
                 border-bottom: 1px solid #c6c5c580;
                 color: #505050;
@@ -201,11 +201,11 @@
                 justify-content: center;
                 padding: 16px;
 
-                &_label {
+                &_Label {
                     cursor: default;
                 }
 
-                &_box {
+                &_Box {
                     align-items: center;
                     border: 1px solid #c6c5c580;
                     border-radius: 5px;
@@ -245,7 +245,7 @@
                 }
             }
 
-            &_foot {
+            &_Foot {
                 display: flex;
                 justify-content: flex-end;
                 padding: 8px;
