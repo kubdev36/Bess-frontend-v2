@@ -15,6 +15,9 @@ import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { mockEnergyReport } from "../../data/mockData";
 import "./EnergyReportPage.scss";
+import { useIntl } from "react-intl";
+
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,16 +30,17 @@ ChartJS.register(
 );
 
 const presets = [
-  "Today",
-  "Yesterday",
-  "Last 7 days",
-  "This month",
-  "This year",
-  "Custom range",
+  "today",
+  "yesterday",
+  "last7days",
+  "this_month",
+  "this_year",
+  "custom_range",
 ];
 
 export default function EnergyReportPage() {
   const [preset, setPreset] = useState("Last 7 days");
+  const lang = useIntl();
 
   const rows = useMemo(() => {
     if (preset === "Today") return mockEnergyReport.slice(0, 1);
@@ -79,10 +83,8 @@ export default function EnergyReportPage() {
   return (
     <div className="DAT_Report">
       <div className="DAT_Report_Toolbar">
-        <div className="DAT_Report_Toolbar_Title">Energy Report</div>
-        <div className="DAT_Report_Toolbar_Subtitle">
-          Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
-        </div>
+        <div className="DAT_Report_Toolbar_Title">{lang.formatMessage({ id: "energy_report" })}</div>
+
         <div className="DAT_Report_Toolbar_Actions">
           <div className="DAT_Report_Toolbar_Actions_Opt">
             {presets.map((item) => (
@@ -91,54 +93,51 @@ export default function EnergyReportPage() {
                 className={`DAT_Report_Toolbar_Actions_Opt_Btn ${preset === item ? "Active" : ""}`}
                 onClick={() => setPreset(item)}
               >
-                {item}
+                {lang.formatMessage({ id: item })}
               </button>
             ))}
           </div>
-          <button className="DAT_Report_Toolbar_Actions_Excel">Export Excel</button>
-          <button className="DAT_Report_Toolbar_Actions_PDF">Export PDF</button>
+          <button className="DAT_Report_Toolbar_Actions_Excel">{lang.formatMessage({ id: "export_excel" })}</button>
+          <button className="DAT_Report_Toolbar_Actions_PDF">{lang.formatMessage({ id: "export_pdf" })}</button>
         </div>
       </div>
 
       <div className="DAT_Report_Stat">
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Total Charge Energy</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "total_charge" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.charge} kWh</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Total Discharge Energy</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "total_discharge" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.discharge} kWh</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Round-trip Efficiency</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "round_trip" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{avgEfficiency}%</span>
         </div>
+
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">PV Energy</span>
-          <span className="DAT_Report_Stat_Box_Value">{summary.pv} kWh</span>
-        </div>
-        <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Grid Import</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "dashboard_chart_series_grid_import" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.gridImport} kWh</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Grid Export</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "grid_export" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.gridExport} kWh</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Load Consumption</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "load_consumption" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.load} kWh</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Cycle Count</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "cycle_count" })}</span>
           <span className="DAT_Report_Stat_Box_Value">{summary.cycles}</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Cost Saving</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "cost_saving" })}</span>
           <span className="DAT_Report_Stat_Box_Value">${costSaving}</span>
         </div>
         <div className="DAT_Report_Stat_Box">
-          <span className="DAT_Report_Stat_Box_Label">Revenue</span>
+          <span className="DAT_Report_Stat_Box_Label">{lang.formatMessage({ id: "revenue" })}</span>
           <span className="DAT_Report_Stat_Box_Value">${revenue}</span>
         </div>
       </div>
@@ -146,7 +145,7 @@ export default function EnergyReportPage() {
       <div className="DAT_Report_Chart">
         <div className="DAT_Report_Chart_Container">
           <div className="DAT_Report_Chart_Container_Header">
-            Charge / Discharge / PV
+            {lang.formatMessage({ id: "charge" })} / {lang.formatMessage({ id: "discharge" })}
           </div>
           <div style={{ width: "100%", height: 280 }}>
             <Bar
@@ -158,7 +157,7 @@ export default function EnergyReportPage() {
 
                 datasets: [
                   {
-                    label: "charge",
+                    label: lang.formatMessage({ id: "charge" }),
                     data: rows
                       .slice()
                       .reverse()
@@ -169,24 +168,13 @@ export default function EnergyReportPage() {
                   },
 
                   {
-                    label: "discharge",
+                    label: lang.formatMessage({ id: "discharge" }),
                     data: rows
                       .slice()
                       .reverse()
                       .map((item) => item.discharge),
 
                     backgroundColor: "#8B5CF6",
-                    borderRadius: 4,
-                  },
-
-                  {
-                    label: "pv",
-                    data: rows
-                      .slice()
-                      .reverse()
-                      .map((item) => item.pv),
-
-                    backgroundColor: "#22C55E",
                     borderRadius: 4,
                   },
                 ],
@@ -237,7 +225,7 @@ export default function EnergyReportPage() {
 
         <div className="DAT_Report_Chart_Container">
           <div className="DAT_Report_Chart_Container_Header">
-            Efficiency / Load Trend
+            {lang.formatMessage({ id: "efficiency" })} / {lang.formatMessage({ id: "load_trend" })}
           </div>
           {/* <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={rows.slice().reverse()}>
@@ -270,7 +258,7 @@ export default function EnergyReportPage() {
 
                 datasets: [
                   {
-                    label: "efficiency",
+                    label: lang.formatMessage({ id: "efficiency" }),
 
                     data: rows
                       .slice()
@@ -285,7 +273,7 @@ export default function EnergyReportPage() {
                   },
 
                   {
-                    label: "load",
+                    label: lang.formatMessage({ id: "load" }),
 
                     data: rows
                       .slice()
@@ -353,24 +341,23 @@ export default function EnergyReportPage() {
 
       <div className="DAT_Report_Detail">
         <div className="DAT_Report_Detail_Header">
-          <span className="DAT_Report_Detail_Header_Title">Detailed Report Table</span>
-          <span className="DAT_Report_Detail_Header_Subtitle">{rows.length} records</span>
+          <span className="DAT_Report_Detail_Header_Title">{lang.formatMessage({ id: "detailed_report_table" })}</span>
+          <span className="DAT_Report_Detail_Header_Subtitle">{rows.length} {lang.formatMessage({ id: "records" })}</span>
         </div>
         {rows.length ? (
           <div className="DAT_Report_Detail_Container">
             <table >
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Charge</th>
-                  <th>Discharge</th>
-                  <th>PV</th>
-                  <th>Grid Import</th>
-                  <th>Grid Export</th>
-                  <th>Load</th>
-                  <th>Efficiency</th>
-                  <th>Cycle Count</th>
-                  <th>Cost Saving</th>
+                  <th>{lang.formatMessage({ id: "date" })}</th>
+                  <th>{lang.formatMessage({ id: "charge" })}</th>
+                  <th>{lang.formatMessage({ id: "discharge" })}</th>
+                  <th>{lang.formatMessage({ id: "dashboard_chart_series_grid_import" })}</th>
+                  <th>{lang.formatMessage({ id: "grid_export" })}</th>
+                  <th>{lang.formatMessage({ id: "load" })}</th>
+                  <th>{lang.formatMessage({ id: "efficiency" })}</th>
+                  <th>{lang.formatMessage({ id: "cycle_count" })}</th>
+                  <th>{lang.formatMessage({ id: "cost_saving" })}</th>
                 </tr>
               </thead>
               <tbody>
@@ -379,7 +366,6 @@ export default function EnergyReportPage() {
                     <td>{row.date}</td>
                     <td>{row.charge} kWh</td>
                     <td>{row.discharge} kWh</td>
-                    <td>{row.pv} kWh</td>
                     <td>{row.gridImport} kWh</td>
                     <td>{row.gridExport} kWh</td>
                     <td>{row.load} kWh</td>

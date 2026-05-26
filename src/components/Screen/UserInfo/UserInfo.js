@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import './UserInfo.scss'
 import { useAuth } from "../../contexts/AuthContext";
-import { FaRegEye,FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useIntl } from "react-intl";
+
 export default function UserInfo() {
+  const lang = useIntl();
+
   const { currentUser, logout } = useAuth();
   const [changeInfor, setChangeInfor] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
@@ -11,9 +15,9 @@ export default function UserInfo() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [password, setPassword] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
-      const [passwordCurrent, setPasswordCurrent] = useState("");
+  const [passwordCurrent, setPasswordCurrent] = useState("");
 
   const [editField, setEditField] = useState("");
   const [value, setValue] = useState("");
@@ -52,20 +56,34 @@ export default function UserInfo() {
     };
   }, [changeInfor]);
 
+  useEffect(() => {
+    if (!changePassword) return;
+
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setChangePassword(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleEsc
+      );
+    };
+  }, [changePassword]);
+
   return (
     <div className="DAT_UserInfor">
       <div className="DAT_UserInfor_Card">
         <div className="DAT_UserInfor_Card_Header">
           <div>
-            <div className="DAT_UserInfor_Card_Header_Title">User Information</div>
+            <div className="DAT_UserInfor_Card_Header_Title">{lang.formatMessage({ id: "user_information" })}</div>
             <div className="DAT_UserInfor_Card_Header_Subtitle">
             </div>
           </div>
-          {/* <div className="DAT_UserInfor_Card_Header_Actions">
-            <button className="DAT_UserInfor_Card_Header_Actions_Button_Primary">
-              Save
-            </button>
-          </div> */}
         </div>
       </div>
 
@@ -73,7 +91,7 @@ export default function UserInfo() {
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Ảnh đại diện
+              {lang.formatMessage({ id: "avatar" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Avt'>
               {currentUser?.name?.charAt(0) || "U"}
@@ -86,7 +104,7 @@ export default function UserInfo() {
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Tên
+              {lang.formatMessage({ id: "name" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
               {currentUser?.name}
@@ -96,7 +114,7 @@ export default function UserInfo() {
             onClick={() => handleOpenModal("Tên", currentUser?.name)}
             aria-label="Change Name"
           >
-            Thay đổi
+            {lang.formatMessage({ id: "change" })}
           </div>
         </div>
         <div className='DAT_UserInfor_Container_Row'>
@@ -112,33 +130,33 @@ export default function UserInfo() {
             onClick={() => handleOpenModal("Email", currentUser?.email)}
             aria-label="Change Name"
           >
-            Thay đổi
+            {lang.formatMessage({ id: "change" })}
           </div>
         </div>
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Số điện thoại
+              {lang.formatMessage({ id: "phone_number" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
               1234567890
             </div>
           </div>
           <div className='DAT_UserInfor_Container_Row_Btn'>
-            Thay đổi
+            {lang.formatMessage({ id: "change" })}
           </div>
         </div>
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Địa chỉ
+              {lang.formatMessage({ id: "address" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
               12 Đông Hưng Thuận 10, phường Đông Hưng Thuận, Thành phố Hồ Chí Minh
             </div>
           </div>
           <div className='DAT_UserInfor_Container_Row_Btn'>
-            Thay đổi
+            {lang.formatMessage({ id: "change" })}
           </div>
         </div>
         {changeInfor && (
@@ -146,7 +164,7 @@ export default function UserInfo() {
             <div className="DAT_UserInfor_Modal_Container">
               <div className="DAT_UserInfor_Modal_Container_Header">
                 <div className="DAT_UserInfor_Modal_Container_Header_Title">
-                  Thay đổi {editField}
+                  {lang.formatMessage({ id: "change" })} {editField}
                 </div>
                 <div className="DAT_UserInfor_Modal_Container_Header_Close">
 
@@ -160,7 +178,9 @@ export default function UserInfo() {
 
               <div className='DAT_UserInfor_Modal_Container_Main'>
 
-                <input
+                <input style={{
+                  border: "1px solid #c6c5c580"
+                }}
                   type="text"
                   value={value}
                   onChange={(e) =>
@@ -171,7 +191,7 @@ export default function UserInfo() {
 
               <div className='DAT_UserInfor_Modal_Container_Foot'>
                 <button onClick={handleSave}>
-                  Lưu
+                  {lang.formatMessage({ id: "save" })}
                 </button>
               </div>
 
@@ -181,7 +201,7 @@ export default function UserInfo() {
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Mật khẩu
+              {lang.formatMessage({ id: "password" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
               ********
@@ -190,14 +210,14 @@ export default function UserInfo() {
           <div className='DAT_UserInfor_Container_Row_Btn'
             onClick={() => setChangePassword(true)}
           >
-            Đổi mật khẩu
+            {lang.formatMessage({ id: "change_password" })}
           </div>
           {changePassword && (
             <div className="DAT_UserInfor_Modal">
               <div className="DAT_UserInfor_Modal_Container">
                 <div className="DAT_UserInfor_Modal_Container_Header">
                   <div className="DAT_UserInfor_Modal_Container_Header_Title">
-                    Thay đổi mật khẩu
+                    {lang.formatMessage({ id: "change_password_title" })}
                   </div>
                   <div className="DAT_UserInfor_Modal_Container_Header_Close">
 
@@ -211,7 +231,7 @@ export default function UserInfo() {
 
                 <div className='DAT_UserInfor_Modal_Container_Main'>
                   <div className='DAT_UserInfor_Modal_Container_Main_Label'>
-                    Mật khẩu hiện tại
+                    {lang.formatMessage({ id: "current_password" })}
                   </div>
                   <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
@@ -224,7 +244,7 @@ export default function UserInfo() {
                       onChange={(e) =>
                         setPasswordCurrent(e.target.value)
                       }
-                      placeholder="Nhập mật khẩu"
+                      placeholder={lang.formatMessage({ id: "password_input" })}
                     />
                     <button
                       type="button"
@@ -240,7 +260,7 @@ export default function UserInfo() {
                     </button>
                   </div>
                   <div className='DAT_UserInfor_Modal_Container_Main_Label'>
-                    Mật khẩu mới
+                    {lang.formatMessage({ id: "new_password" })}
                   </div>
                   <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
@@ -253,7 +273,7 @@ export default function UserInfo() {
                       onChange={(e) =>
                         setNewPassword(e.target.value)
                       }
-                      placeholder="Nhập mật khẩu"
+                      placeholder={lang.formatMessage({ id: "password_input" })}
                     />
                     <button
                       type="button"
@@ -269,7 +289,7 @@ export default function UserInfo() {
                     </button>
                   </div>
                   <div className='DAT_UserInfor_Modal_Container_Main_Label'>
-                    Xác nhận mật khẩu
+                    {lang.formatMessage({ id: "password_confirm" })}
                   </div>
                   <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
@@ -282,7 +302,8 @@ export default function UserInfo() {
                       onChange={(e) =>
                         setPassword(e.target.value)
                       }
-                      placeholder="Nhập mật khẩu"
+                      placeholder={lang.formatMessage({ id: "password_input" })}
+
                     />
                     <button
                       type="button"
@@ -301,7 +322,7 @@ export default function UserInfo() {
 
                 <div className='DAT_UserInfor_Modal_Container_Foot'>
                   <button onClick={handleSave}>
-                    Lưu
+                    {lang.formatMessage({ id: "save" })}
                   </button>
                 </div>
 
@@ -312,23 +333,23 @@ export default function UserInfo() {
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Quyền hệ thống
+              {lang.formatMessage({ id: "system_permissions" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
-              Yêu cầu quyền thông báo
+              {lang.formatMessage({ id: "notification_permission" })}
             </div>
           </div>
           <div className='DAT_UserInfor_Container_Row_Btn'>
-            Yêu cầu
+            {lang.formatMessage({ id: "request" })}
           </div>
         </div>
         <div className='DAT_UserInfor_Container_Row'>
           <div className='DAT_UserInfor_Container_Row_Content'>
             <div className='DAT_UserInfor_Container_Row_Content_Title'>
-              Thông báo
+              {lang.formatMessage({ id: "notification" })}
             </div>
             <div className='DAT_UserInfor_Container_Row_Content_Label'>
-              Thông báo Bật/Tắt
+              {lang.formatMessage({ id: "notification_on_off" })}
             </div>
           </div>
           <div className='DAT_UserInfor_Container_Row_Btn'>

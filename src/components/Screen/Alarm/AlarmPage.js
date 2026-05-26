@@ -11,6 +11,7 @@ import StatusBadge from "../../Modal/StatusBadge";
 import { useAuth } from "../../contexts/AuthContext";
 import { mockAlarms } from "../../data/mockData";
 import "./AlarmPage.scss";
+import { useIntl } from "react-intl";
 
 export default function AlarmPage() {
   const { hasPermission } = useAuth();
@@ -38,6 +39,7 @@ export default function AlarmPage() {
 
   const totalPages = Math.ceil(filtered.length / perPage);
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
+  const lang = useIntl();
 
   const handleAck = (id) => {
     setAlarms((prev) =>
@@ -86,11 +88,11 @@ export default function AlarmPage() {
             setPage(1);
           }}
         >
-          <option value="All">All Levels</option>
-          <option value="Info">Info</option>
-          <option value="Warning">Warning</option>
-          <option value="Fault">Fault</option>
-          <option value="Critical">Critical</option>
+          <option value="All">{lang.formatMessage({ id: "all_levels" })}</option>
+          <option value="Info">{lang.formatMessage({ id: "information" })}</option>
+          <option value="Warning">{lang.formatMessage({ id: "warning" })}</option>
+          <option value="Fault">{lang.formatMessage({ id: "error" })}</option>
+          <option value="Critical">{lang.formatMessage({ id: "critical" })}</option>
         </select>
         <select
           className="DAT_Alarm_Filter_Form"
@@ -101,12 +103,12 @@ export default function AlarmPage() {
             setPage(1);
           }}
         >
-          <option value="All">All Devices</option>
+          <option value="All">{lang.formatMessage({ id: "all_devices" })}</option>
           <option value="BMS">BMS</option>
           <option value="PCS">PCS</option>
-          <option value="Grid">Grid</option>
-          <option value="Battery">Battery</option>
-          <option value="System">System</option>
+          <option value="Grid">{lang.formatMessage({ id: "grid" })}</option>
+          <option value="Battery">{lang.formatMessage({ id: "battery" })}</option>
+          <option value="System">{lang.formatMessage({ id: "system" })}</option>
         </select>
         <select
           className="DAT_Alarm_Filter_Form"
@@ -117,10 +119,10 @@ export default function AlarmPage() {
             setPage(1);
           }}
         >
-          <option value="All">All Status</option>
-          <option value="Active">Active</option>
-          <option value="Acknowledged">Acknowledged</option>
-          <option value="Cleared">Cleared</option>
+          <option value="All">{lang.formatMessage({ id: "all_status" })}</option>
+          <option value="Active">{lang.formatMessage({ id: "status_active" })}</option>
+          <option value="Acknowledged">{lang.formatMessage({ id: "status_acknowledged" })}</option>
+          <option value="Cleared">{lang.formatMessage({ id: "status_cleared" })}</option>
         </select>
         <div className="DAT_Alarm_Filter_Search" style={{ width: 200 }}>
           <span className="DAT_Alarm_Filter_Search_Icon">
@@ -128,7 +130,7 @@ export default function AlarmPage() {
           </span>
           <input
             className="DAT_Alarm_Filter_Search_Input"
-            placeholder="Search alarms..."
+            placeholder={lang.formatMessage({ id: "search_alarms" })}
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -138,7 +140,7 @@ export default function AlarmPage() {
         </div>
         <button className="DAT_Alarm_Filter_Export">
           <LuDownload />
-          Export
+          {lang.formatMessage({ id: "export" })}
         </button>
 
       </div>
@@ -148,13 +150,13 @@ export default function AlarmPage() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Time</th>
-              <th>Level</th>
-              <th>Device</th>
-              <th>Message</th>
-              <th>Status</th>
-              <th>Operator</th>
-              <th>Actions</th>
+              <th>{lang.formatMessage({ id: "date" })}</th>
+              <th>{lang.formatMessage({ id: "level" })}</th>
+              <th>{lang.formatMessage({ id: "device" })}</th>
+              <th>{lang.formatMessage({ id: "message" })}</th>
+              <th>{lang.formatMessage({ id: "status" })}</th>
+              <th>{lang.formatMessage({ id: "operator" })}</th>
+              <th>{lang.formatMessage({ id: "action" })}</th>
             </tr>
           </thead>
           <tbody>
@@ -187,7 +189,7 @@ export default function AlarmPage() {
                       className="DAT_Alarm_Main_Table_Ack"
                       onClick={() => handleAck(a.id)}
                     >
-                      Ack
+                      {lang.formatMessage({ id: "ack_alarm" })}
                     </button>
                   )}
                   {hasPermission("clear_alarm") &&
@@ -196,7 +198,8 @@ export default function AlarmPage() {
                         className="DAT_Alarm_Main_Table_Clear"
                         onClick={() => handleClear(a.id)}
                       >
-                        Clear
+                        {lang.formatMessage({ id: "clear_alarm" })}
+
                       </button>
                     )}
 
@@ -245,16 +248,16 @@ export default function AlarmPage() {
         {selectedAlarm && (
           <div className="DAT_Alarm_Detail">
             {[
-              ["Alarm ID", selectedAlarm.code],
-              ["Time", selectedAlarm.time],
-              ["Level", selectedAlarm.level],
-              ["Device", selectedAlarm.device],
-              ["Message", selectedAlarm.message],
-              ["Description", selectedAlarm.description],
-              ["Status", selectedAlarm.status],
-              ["Operator", selectedAlarm.operator],
-              ["Acknowledged At", selectedAlarm.acknowledgedAt || "-"],
-              ["Cleared At", selectedAlarm.clearedAt || "-"],
+              [lang.formatMessage({ id: "alarm_id" }), selectedAlarm.code],
+              [lang.formatMessage({ id: "date" }), selectedAlarm.time],
+              [lang.formatMessage({ id: "level" }), selectedAlarm.level],
+              [lang.formatMessage({ id: "device" }), selectedAlarm.device],
+              [lang.formatMessage({ id: "message" }), selectedAlarm.message],
+              [lang.formatMessage({ id: "description" }), selectedAlarm.description],
+              [lang.formatMessage({ id: "status" }), selectedAlarm.status],
+              [lang.formatMessage({ id: "operator" }), selectedAlarm.operator],
+              [lang.formatMessage({ id: "acknowledged_at" }), selectedAlarm.acknowledgedAt || "-"],
+              [lang.formatMessage({ id: "clear_at" }), selectedAlarm.clearedAt || "-"],
             ].map(([k, v]) => (
               <div key={k} className="DAT_Alarm_Detail_Row">
                 <span className="DAT_Alarm_Detail_Row_Label">{k}</span>
