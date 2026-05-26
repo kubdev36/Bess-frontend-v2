@@ -317,7 +317,7 @@ const PCSPage = (props) => {
       <div className="DAT_PCS_Overview">
         <div className="DAT_PCS_Overview_OverviewTitle">
           <span className="DAT_PCS_Overview_OverviewTitle_Text">PCS-001</span>
-          <div className="DAT_PCS_Overview_StatusPill">
+          <div className="DAT_PCS_Overview_OverviewTitle_StatusPill">
             {batteryStatus[dataInf?.["7000-1"] ?? 0]}
           </div>
         </div>
@@ -400,15 +400,15 @@ const PCSPage = (props) => {
       </div>
 
       <div className="DAT_PCS_ChartGrid">
-        <div className="DAT_PCS_Panel">
-          <span className="DAT_PCS_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
-          <div className="DAT_PCS_Panel_ControlRow">
-            <div className="DAT_PCS_Panel_TabList">
+        <div className="DAT_PCS_ChartGrid_Panel">
+          <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
+          <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
+            <div className="DAT_PCS_ChartGrid_Panel_TabList">
               {acMetricTabs.map((tab) => (
                 <button
                   key={tab.key}
                   type="button"
-                  className={`DAT_PCS_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCS_Panel_TabButton--active" : ""}`}
+                  className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
                   onClick={() => setSelectedAcMetric(tab.key)}
                 >
                   {tab.label}
@@ -417,27 +417,27 @@ const PCSPage = (props) => {
             </div>
             <input
               type="date"
-              className="DAT_PCS_Panel_DateInput"
+              className="DAT_PCS_ChartGrid_Panel_DateInput"
               value={selectedDate}
               min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
               max={mockEnergyReport[0]?.date}
               onChange={(e) => setSelectedDate(e.target.value)}
             />
           </div>
-          <div className="DAT_PCS_Panel_ChartWrap">
+          <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
             <Line data={acChart.data} options={acChart.options} />
           </div>
         </div>
 
-        <div className="DAT_PCS_Panel">
-          <span className="DAT_PCS_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
-          <div className="DAT_PCS_Panel_ControlRow">
-            <div className="DAT_PCS_Panel_TabList">
+        <div className="DAT_PCS_ChartGrid_Panel">
+          <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
+          <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
+            <div className="DAT_PCS_ChartGrid_Panel_TabList">
               {dcMetricTabs.map((tab) => (
                 <button
                   key={tab.key}
                   type="button"
-                  className={`DAT_PCS_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCS_Panel_TabButton--active" : ""}`}
+                  className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
                   onClick={() => setSelectedDcMetric(tab.key)}
                 >
                   {tab.label}
@@ -446,7 +446,7 @@ const PCSPage = (props) => {
             </div>
             <input
               type="date"
-              className="DAT_PCS_Panel_DateInput"
+              className="DAT_PCS_ChartGrid_Panel_DateInput"
               value={selectedDate}
               min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
               max={mockEnergyReport[0]?.date}
