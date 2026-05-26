@@ -59,12 +59,12 @@ export default function UserManagementPage() {
         prev.map((user) =>
           user.id === editing.id
             ? {
-                ...user,
-                name: form.name,
-                email: form.email,
-                role: form.role,
-                status: form.status,
-              }
+              ...user,
+              name: form.name,
+              email: form.email,
+              role: form.role,
+              status: form.status,
+            }
             : user,
         ),
       );
@@ -91,57 +91,55 @@ export default function UserManagementPage() {
   return (
     <div className="DAT_UserManagement">
       <div className="DAT_UserManagement_Card">
-        <div className="DAT_UserManagement_Card_Header">
-          <div>
-            <div className="DAT_UserManagement_Card_Header_Title">User Management</div>
-            <div className="DAT_UserManagement_Card_Header_Subtitle">
-              Quan ly tai khoan, role, trang thai va hanh dong reset password.
-            </div>
+        <div className="DAT_UserManagement_Card_Info">
+          <div className="DAT_UserManagement_Card_Info_Title">User Management</div>
+          <div className="DAT_UserManagement_Card_Info_Subtitle">
+            Quan ly tai khoan, role, trang thai va hanh dong reset password.
           </div>
-          <div className="DAT_UserManagement_Card_Header_Actions">
-            <input
-              className="DAT_UserManagement_Card_Header_Actions_FilterInput"
-              style={{ width: 220 }}
-              placeholder="Search name or email"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-            <select
-              className="DAT_UserManagement_Card_Header_Actions_FilterSelect"
-              style={{ width: 140 }}
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="All">All Roles</option>
-              <option value="Viewer">Viewer</option>
-              <option value="Operator">Operator</option>
-              <option value="Admin">Admin</option>
-              <option value="Engineer">Engineer</option>
-            </select>
-            <select
-              className="DAT_UserManagement_Card_Header_Actions_FilterSelect"
-              style={{ width: 140 }}
-              value={status}
-              onChange={(e) => setStatus(e.target.value)}
-            >
-              <option value="All">All Status</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-              <option value="Locked">Locked</option>
-            </select>
-            <button
-              className="DAT_UserManagement_Card_Header_Actions_Button_Primary"
-              onClick={openNew}
-            >
-              Add User
-            </button>
-          </div>
+        </div>
+        <div className="DAT_UserManagement_Card_Actions">
+          <input
+            className="DAT_UserManagement_Card_Actions_FilterInput"
+            style={{ width: 220 }}
+            placeholder="Search name or email"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <select
+            className="DAT_UserManagement_Card_Actions_FilterSelect"
+            style={{ width: 140 }}
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="All">All Roles</option>
+            <option value="Viewer">Viewer</option>
+            <option value="Operator">Operator</option>
+            <option value="Admin">Admin</option>
+            <option value="Engineer">Engineer</option>
+          </select>
+          <select
+            className="DAT_UserManagement_Card_Actions_FilterSelect"
+            style={{ width: 140 }}
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="All">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+            <option value="Locked">Locked</option>
+          </select>
+          <button
+            className="DAT_UserManagement_Card_Actions_Button_Primary"
+            onClick={openNew}
+          >
+            Add User
+          </button>
         </div>
       </div>
 
-      <div className="DAT_UserManagement_Card">
-        <div className="DAT_UserManagement_Card_Table">
-          <table className="DAT_UserManagement_Card_Table_Main">
+      <div className="DAT_UserManagement_Container">
+        <div className="DAT_UserManagement_Container_Table">
+          <table className="DAT_UserManagement_Container_Table_Main">
             <thead>
               <tr>
                 <th>User ID</th>
@@ -154,41 +152,41 @@ export default function UserManagementPage() {
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody className="DAT_UserManagement_Card_Table_Main_Body">
+            <tbody className="DAT_UserManagement_Container_Table_Main_Body">
               {filtered.map((user) => (
-                <tr key={user.id} className="DAT_UserManagement_Card_Table_Main_Row">
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                <tr key={user.id} className="DAT_UserManagement_Container_Table_Main_Row">
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">
                     USR-{String(user.id).padStart(3, "0")}
                   </td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.name}</td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.email}</td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.role}</td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">{user.name}</td>
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">{user.email}</td>
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">{user.role}</td>
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">
                     <StatusBadge status={user.status} />
                   </td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">
                     {user.lastLogin || "-"}
                   </td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">{user.created}</td>
-                  <td className="DAT_UserManagement_Card_Table_Main_Cell">
-                    <div className="DAT_UserManagement_Card_Table_Actions">
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">{user.created}</td>
+                  <td className="DAT_UserManagement_Container_Table_Main_Cell">
+                    <div className="DAT_UserManagement_Container_Table_Actions">
                       <button
-                        className="DAT_UserManagement_Card_Table_Actions_Button_GhostSm"
+                        className="DAT_UserManagement_Container_Table_Actions_Button_GhostSm"
                         onClick={() => openEdit(user)}
                       >
                         Edit
                       </button>
                       <button
-                        className="DAT_UserManagement_Card_Table_Actions_Button_SecondarySm"
+                        className="DAT_UserManagement_Container_Table_Actions_Button_SecondarySm"
                         onClick={() =>
                           setUsers((prev) =>
                             prev.map((item) =>
                               item.id === user.id
                                 ? {
-                                    ...item,
-                                    status:
-                                      item.status === "Locked" ? "Active" : "Locked",
-                                  }
+                                  ...item,
+                                  status:
+                                    item.status === "Locked" ? "Active" : "Locked",
+                                }
                                 : item,
                             ),
                           )
