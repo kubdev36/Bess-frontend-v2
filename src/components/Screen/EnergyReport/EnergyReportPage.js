@@ -15,6 +15,9 @@ import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { mockEnergyReport } from "../../data/mockData";
 import "./EnergyReportPage.scss";
+import { useIntl } from "react-intl";
+
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -37,6 +40,7 @@ const presets = [
 
 export default function EnergyReportPage() {
   const [preset, setPreset] = useState("Last 7 days");
+  const lang = useIntl();
 
   const rows = useMemo(() => {
     if (preset === "Today") return mockEnergyReport.slice(0, 1);
@@ -79,7 +83,7 @@ export default function EnergyReportPage() {
   return (
     <div className="DAT_Report">
       <div className="DAT_Report_Toolbar">
-        <div className="DAT_Report_Toolbar_Title">Energy Report</div>
+        <div className="DAT_Report_Toolbar_Title">{lang.formatMessage({ id: "energy_report" })}</div>
         <div className="DAT_Report_Toolbar_Subtitle">
           Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
         </div>

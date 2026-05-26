@@ -94,7 +94,7 @@ export default function UserManagementPage() {
     <div className="DAT_UserManagement">
       <div className="DAT_UserManagement_Card">
         <div className="DAT_UserManagement_Card_Info">
-          <div className="DAT_UserManagement_Card_Info_Title">{lang.formatMessage({id: "user_management"})}</div>
+          <div className="DAT_UserManagement_Card_Info_Title">{lang.formatMessage({ id: "user_management" })}</div>
         </div>
         <div className="DAT_UserManagement_Card_Actions">
           <input
@@ -110,11 +110,11 @@ export default function UserManagementPage() {
             value={role}
             onChange={(e) => setRole(e.target.value)}
           >
-            <option value="All">{lang.formatMessage({id: "all_role"})}</option>
-            <option value="Viewer">{lang.formatMessage({id: "viewer_role"})}</option>
-            <option value="Operator">{lang.formatMessage({id: "operator_role"})}</option>
-            <option value="Admin">{lang.formatMessage({id: "admin_role"})}</option>
-            <option value="Engineer">{lang.formatMessage({id: "engineer_role"})}</option>
+            <option value="All">{lang.formatMessage({ id: "all_role" })}</option>
+            <option value="Viewer">{lang.formatMessage({ id: "viewer_role" })}</option>
+            <option value="Operator">{lang.formatMessage({ id: "operator_role" })}</option>
+            <option value="Admin">{lang.formatMessage({ id: "admin_role" })}</option>
+            <option value="Engineer">{lang.formatMessage({ id: "engineer_role" })}</option>
           </select>
           <select
             className="DAT_UserManagement_Card_Actions_FilterSelect"
@@ -122,16 +122,16 @@ export default function UserManagementPage() {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="All">{lang.formatMessage({id: "all_status_role"})}</option>
-            <option value="Active">{lang.formatMessage({id: "statusActive_role"})}</option>
-            <option value="Inactive">{lang.formatMessage({id: "statusInactive_role"})}</option>
-            <option value="Locked">{lang.formatMessage({id: "statusLocked_role"})}</option>
+            <option value="All">{lang.formatMessage({ id: "all_status_role" })}</option>
+            <option value="Active">{lang.formatMessage({ id: "statusActive_role" })}</option>
+            <option value="Inactive">{lang.formatMessage({ id: "statusInactive_role" })}</option>
+            <option value="Locked">{lang.formatMessage({ id: "statusLocked_role" })}</option>
           </select>
           <button
             className="DAT_UserManagement_Card_Actions_Button_Primary"
             onClick={openNew}
           >
-            {lang.formatMessage({id: "add_user"})}
+            {lang.formatMessage({ id: "add_user" })}
           </button>
         </div>
       </div>

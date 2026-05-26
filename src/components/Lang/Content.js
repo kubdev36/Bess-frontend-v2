@@ -100,11 +100,11 @@ const enMessages = {
   export_data: "Export data",
   level: "Level",
   device: "Device",
-  date: "Date",
+  date: "time",
   status: "Status",
   operator: "Operator",
   action: "Action",
-  error: "Error",
+  error: "Fault",
   critical: "Critical",
   warning: "Warning",
   information: "Information",
@@ -135,7 +135,7 @@ const enMessages = {
   power_factor: "Power Factor",
   export: "Export data",
   report: "Report",
-  description:
+  description_energy:
     "Monitor charging, discharging, PV, grid import/export, and system efficiency.",
   today: "Today",
   yesterday: "Yesterday",
@@ -176,7 +176,7 @@ const enMessages = {
   pcs_status_charge_derate: "Charge derate",
   pcs_status_discharge_derate: "Discharge derate",
   fault_code_history: "Fault Code History",
-  description: "description",
+  description: "Description",
   name: "name",
   code: "code",
   system_settings: "System Settings",
@@ -223,8 +223,16 @@ const enMessages = {
   add_user: "Add User",
   user_id_table: "User Id",
   user_name_table: "Full Name",
-  user_email_table: "Email"
-};  
+  user_email_table: "Email",
+  energy_report: "Energy Report",
+  ack_alarm: "ack",
+  clear_alarm: " clear",
+  acknowledged_at: "Acknowledged At",
+  clear_at: "Cleared At",
+  message: "Message",
+  alarm_id: "Alarm ID"
+
+};
 
 const viMessages = {
   bess: "Hệ thống lưu trữ toàn diện",
@@ -364,7 +372,7 @@ const viMessages = {
   export: "Xuất dữ liệu",
   state: "Trạng thái",
   report: "Báo cáo",
-  description:
+  description_energy:
     "Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.",
   today: "Hôm nay",
   yesterday: "Hôm qua",
@@ -407,7 +415,7 @@ const viMessages = {
   pcs_status_charge_derate: "Giảm công suất sạc",
   pcs_status_discharge_derate: "Giảm công suất xả",
   fault_code_history: "Lịch sử mã lỗi",
-  description: "mô tả",
+  description: "Mô tả",
   name: "tên",
   code: "mã",
   system_settings: "Cấu hình hệ thống",
@@ -451,7 +459,15 @@ const viMessages = {
   statusActive_role: "Hoạt động",
   statusInactive_role: "Dừng hoạt động",
   statusLocked_role: "Bị khóa",
-  add_user: "Thêm mới người dùng"
+  add_user: "Thêm mới người dùng",
+  energy_report: "Báo cáo năng lượng",
+  ack_alarm: "Xác nhận",
+  clear_alarm: "Xóa",
+  acknowledged_at: "Đã xác nhận tại",
+  clear_at: "Đã xóa tại",
+  message: "Lời nhắn",
+  alarm_id: "mã cảnh báo"
+
 };
 
 export const messages = {
