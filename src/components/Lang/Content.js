@@ -135,7 +135,7 @@ const enMessages = {
   power_factor: "Power Factor",
   export: "Export data",
   report: "Report",
-  description:
+  report_description:
     "Monitor charging, discharging, PV, grid import/export, and system efficiency.",
   today: "Today",
   yesterday: "Yesterday",
@@ -191,7 +191,7 @@ const enMessages = {
   capacity: "Capacity",
   battery_type: "Battery Type",
   commissioning_date: "Commissioning Date",
-  operator: "Operator",
+  site_operator: "Operator",
   owner: 'Owner',
   email_enabled: "Email Enabled",
   email_recipients: "Email Recipients",
@@ -373,7 +373,7 @@ const viMessages = {
   export: "Xuất dữ liệu",
   state: "Trạng thái",
   report: "Báo cáo",
-  description:
+  report_description:
     "Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.",
   today: "Hôm nay",
   yesterday: "Hôm qua",
@@ -405,7 +405,7 @@ const viMessages = {
   power_DC: "Công suất DC",
   voltage_DC: "Điện áp DC",
   current_DC: "Dòng điện DC",
-  frequency: "Tần số",
+  frequency: "Tần số AC",
   power_AC_DC: "Điện áp AC/DC",
   temp_PCS: "Nhiệt độ PCS",
   pcs_ac: "AC",
@@ -431,7 +431,7 @@ const viMessages = {
   capacity: "Dung lượng",
   battery_type: "Loại pin",
   commissioning_date: "Ngày vận hành",
-  operator: "Nhà điều hành",
+  site_operator: "Nhà điều hành",
   owner: 'Chủ sở hữu',
   email_enabled: "Kích hoạt email",
   email_recipients: "Người nhận email",

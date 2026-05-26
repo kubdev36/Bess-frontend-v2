@@ -102,7 +102,7 @@
 
         &_Header {
           display: grid;
-          grid-template-columns: 48px repeat(3, minmax(0, 1fr));
+          grid-template-columns: 48px repeat(4, minmax(0, 1fr));
           align-items: center;
           gap: 12px;
           padding-bottom: 10px;
@@ -118,7 +118,7 @@
 
         &_Row {
           display: grid;
-          grid-template-columns: 48px repeat(3, minmax(0, 1fr));
+          grid-template-columns: 48px repeat(4, minmax(0, 1fr));
           align-items: center;
           gap: 12px;
           min-height: 52px;
@@ -272,6 +272,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
 
     &_Panel {
+      display: flex;
+      flex-direction: column;
       padding: var(--space-lg);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
@@ -343,6 +345,7 @@
       }
 
       &_ChartWrap {
+        flex: 1 1 auto;
         height: 260px;
         padding: 12px 8px 0;
         border-top: 1px solid var(--border-light);
