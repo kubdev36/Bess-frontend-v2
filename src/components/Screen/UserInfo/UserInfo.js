@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './UserInfo.scss'
 import { useAuth } from "../../contexts/AuthContext";
-import { Eye, EyeOff } from "lucide-react";
-
+import { FaRegEye,FaRegEyeSlash } from "react-icons/fa";
 export default function UserInfo() {
   const { currentUser, logout } = useAuth();
   const [changeInfor, setChangeInfor] = useState(false);
@@ -70,86 +69,86 @@ export default function UserInfo() {
         </div>
       </div>
 
-      <div className='DAT_UserInfor_container'>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+      <div className='DAT_UserInfor_Container'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Ảnh đại diện
             </div>
-            <div className='DAT_UserInfor_container_row_content_avt'>
+            <div className='DAT_UserInfor_Container_Row_Content_Avt'>
               {currentUser?.name?.charAt(0) || "U"}
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'>
+          <div className='DAT_UserInfor_Container_Row_Btn'>
 
           </div>
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Tên
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               {currentUser?.name}
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'
+          <div className='DAT_UserInfor_Container_Row_Btn'
             onClick={() => handleOpenModal("Tên", currentUser?.name)}
             aria-label="Change Name"
           >
             Thay đổi
           </div>
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Email
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               {currentUser?.email}
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'
+          <div className='DAT_UserInfor_Container_Row_Btn'
             onClick={() => handleOpenModal("Email", currentUser?.email)}
             aria-label="Change Name"
           >
             Thay đổi
           </div>
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Số điện thoại
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               1234567890
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'>
+          <div className='DAT_UserInfor_Container_Row_Btn'>
             Thay đổi
           </div>
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Địa chỉ
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               12 Đông Hưng Thuận 10, phường Đông Hưng Thuận, Thành phố Hồ Chí Minh
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'>
+          <div className='DAT_UserInfor_Container_Row_Btn'>
             Thay đổi
           </div>
         </div>
         {changeInfor && (
-          <div className="DAT_UserInfor_modal">
-            <div className="DAT_UserInfor_modal_container">
-              <div className="DAT_UserInfor_modal_container_header">
-                <div className="DAT_UserInfor_modal_container_header_title">
+          <div className="DAT_UserInfor_Modal">
+            <div className="DAT_UserInfor_Modal_Container">
+              <div className="DAT_UserInfor_Modal_Container_Header">
+                <div className="DAT_UserInfor_Modal_Container_Header_Title">
                   Thay đổi {editField}
                 </div>
-                <div className="DAT_UserInfor_modal_container_header_close">
+                <div className="DAT_UserInfor_Modal_Container_Header_Close">
 
                   <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="25" width="25" xmlns="http://www.w3.org/2000/svg"
                     onClick={() => setChangeInfor(false)}
@@ -159,7 +158,7 @@ export default function UserInfo() {
                 </div>
               </div>
 
-              <div className='DAT_UserInfor_modal_container_main'>
+              <div className='DAT_UserInfor_Modal_Container_Main'>
 
                 <input
                   type="text"
@@ -170,7 +169,7 @@ export default function UserInfo() {
                 />
               </div>
 
-              <div className='DAT_UserInfor_modal_container_foot'>
+              <div className='DAT_UserInfor_Modal_Container_Foot'>
                 <button onClick={handleSave}>
                   Lưu
                 </button>
@@ -179,28 +178,28 @@ export default function UserInfo() {
             </div>
           </div>
         )}
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Mật khẩu
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               ********
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'
+          <div className='DAT_UserInfor_Container_Row_Btn'
             onClick={() => setChangePassword(true)}
           >
             Đổi mật khẩu
           </div>
           {changePassword && (
-            <div className="DAT_UserInfor_modal">
-              <div className="DAT_UserInfor_modal_container">
-                <div className="DAT_UserInfor_modal_container_header">
-                  <div className="DAT_UserInfor_modal_container_header_title">
+            <div className="DAT_UserInfor_Modal">
+              <div className="DAT_UserInfor_Modal_Container">
+                <div className="DAT_UserInfor_Modal_Container_Header">
+                  <div className="DAT_UserInfor_Modal_Container_Header_Title">
                     Thay đổi mật khẩu
                   </div>
-                  <div className="DAT_UserInfor_modal_container_header_close">
+                  <div className="DAT_UserInfor_Modal_Container_Header_Close">
 
                     <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="25" width="25" xmlns="http://www.w3.org/2000/svg"
                       onClick={() => setChangePassword(false)}
@@ -210,11 +209,11 @@ export default function UserInfo() {
                   </div>
                 </div>
 
-                <div className='DAT_UserInfor_modal_container_main'>
-                  <div className='DAT_UserInfor_modal_container_main_label'>
+                <div className='DAT_UserInfor_Modal_Container_Main'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Label'>
                     Mật khẩu hiện tại
                   </div>
-                  <div className='DAT_UserInfor_modal_container_main_box'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
                       type={
                         showPasswordCurrent
@@ -234,16 +233,16 @@ export default function UserInfo() {
                       }
                     >
                       {showPasswordCurrent ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>
-                  <div className='DAT_UserInfor_modal_container_main_label'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Label'>
                     Mật khẩu mới
                   </div>
-                  <div className='DAT_UserInfor_modal_container_main_box'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
                       type={
                         showNewPassword
@@ -263,16 +262,16 @@ export default function UserInfo() {
                       }
                     >
                       {showNewPassword ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>
-                  <div className='DAT_UserInfor_modal_container_main_label'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Label'>
                     Xác nhận mật khẩu
                   </div>
-                  <div className='DAT_UserInfor_modal_container_main_box'>
+                  <div className='DAT_UserInfor_Modal_Container_Main_Box'>
                     <input
                       type={
                         showPassword
@@ -292,15 +291,15 @@ export default function UserInfo() {
                       }
                     >
                       {showPassword ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>
                 </div>
 
-                <div className='DAT_UserInfor_modal_container_foot'>
+                <div className='DAT_UserInfor_Modal_Container_Foot'>
                   <button onClick={handleSave}>
                     Lưu
                   </button>
@@ -310,29 +309,29 @@ export default function UserInfo() {
             </div>
           )}
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Quyền hệ thống
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               Yêu cầu quyền thông báo
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'>
+          <div className='DAT_UserInfor_Container_Row_Btn'>
             Yêu cầu
           </div>
         </div>
-        <div className='DAT_UserInfor_container_row'>
-          <div className='DAT_UserInfor_container_row_content'>
-            <div className='DAT_UserInfor_container_row_content_title'>
+        <div className='DAT_UserInfor_Container_Row'>
+          <div className='DAT_UserInfor_Container_Row_Content'>
+            <div className='DAT_UserInfor_Container_Row_Content_Title'>
               Thông báo
             </div>
-            <div className='DAT_UserInfor_container_row_content_label'>
+            <div className='DAT_UserInfor_Container_Row_Content_Label'>
               Thông báo Bật/Tắt
             </div>
           </div>
-          <div className='DAT_UserInfor_container_row_btn'>
+          <div className='DAT_UserInfor_Container_Row_Btn'>
             Bật
           </div>
         </div>
