@@ -141,14 +141,14 @@ export default function UserManagementPage() {
           <table className="DAT_UserManagement_Container_Table_Main">
             <thead>
               <tr>
-                <th>User ID</th>
-                <th>Full Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Status</th>
-                <th>Last Login</th>
-                <th>Created At</th>
-                <th>Action</th>
+                <th>{lang.formatMessage({id: "user_id_table"})}</th>
+                <th>{lang.formatMessage({id: "user_name_table"})}</th>
+                <th>{lang.formatMessage({id: "user_email_table"})}</th>
+                <th>{lang.formatMessage({id: "user_role_table"})}</th>
+                <th>{lang.formatMessage({id: "user_status_table"})}</th>
+                <th>{lang.formatMessage({id: "user_last_login_table"})}</th>
+                <th>{lang.formatMessage({id: "user_create_at_table"})}</th>
+                <th>{lang.formatMessage({id: "user_action_table"})}</th>
               </tr>
             </thead>
             <tbody className="DAT_UserManagement_Container_Table_Main_Body">
@@ -173,7 +173,7 @@ export default function UserManagementPage() {
                         className="DAT_UserManagement_Container_Table_Actions_Button_GhostSm"
                         onClick={() => openEdit(user)}
                       >
-                        Edit
+                        {lang.formatMessage({id: "user_edit_button"})}
                       </button>
                       <button
                         className="DAT_UserManagement_Container_Table_Actions_Button_SecondarySm"
@@ -191,7 +191,7 @@ export default function UserManagementPage() {
                           )
                         }
                       >
-                        {user.status === "Locked" ? "Unlock" : "Lock"}
+                        {user.status === "Locked" ? lang.formatMessage({id: "user_unlock_button"}) : lang.formatMessage({id: "user_locked_button"})}
                       </button>
                     </div>
                   </td>
