@@ -1,10 +1,10 @@
-.DAT_report {
+.DAT_Report {
   display: flex;
   flex-direction: column;
   gap: var(--space-base);
   animation: fadeIn 0.3s ease-out;
 
-  &_toolbar {
+  &_Toolbar {
     padding: var(--space-lg);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
@@ -18,31 +18,31 @@
     gap: var(--space-base);
     flex-wrap: wrap;
 
-    &_title {
+    &_Title {
       color: var(--text-primary);
       font-size: var(--font-size-lg);
       font-weight: var(--font-weight-semibold);
     }
 
-    &_subtitle {
+    &_Subtitle {
       margin-top: 2px;
       color: var(--text-secondary);
       font-size: var(--font-size-sm);
       margin-bottom: 10px;
     }
 
-    &_actions {
+    &_Actions {
       display: flex;
       align-items: center;
       gap: var(--space-sm);
       flex-wrap: wrap;
 
-      &_opt {
+      &_Opt {
         display: flex;
         flex-wrap: wrap;
         gap: var(--space-sm);
 
-        &_btn {
+        &_Btn {
           border: 1px solid var(--border);
           background: #fff;
           color: var(--text-body);
@@ -51,7 +51,7 @@
           font-size: var(--font-size-sm);
           transition: all var(--transition-fast);
 
-          &.active,
+          &.Active,
           &:hover {
             background: var(--primary-light);
             border-color: var(--primary);
@@ -61,7 +61,7 @@
 
       }
 
-      &_excel {
+      &_Excel {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -84,7 +84,7 @@
 
       }
 
-      &_pdf {
+      &_PDF {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -109,25 +109,25 @@
 
   }
 
-  &_stat {
+  &_Stat {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: var(--space-base);
 
-    &_box {
+    &_Box {
       padding: var(--space-base);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-lg);
       background: linear-gradient(180deg, #ffffff 0%, #fbfcfe 100%);
 
-      &_label {
+      &_Label {
         display: block;
         color: var(--text-secondary);
         font-size: var(--font-size-sm);
         margin-bottom: 6px;
       }
 
-      &_value {
+      &_Value {
         display: block;
         color: var(--text-primary);
         font-size: var(--font-size-xl);
@@ -136,12 +136,12 @@
     }
   }
 
-  &_chart {
+  &_Chart {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: var(--space-base);
 
-    &_container {
+    &_Container {
       padding: var(--space-lg);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-md);
@@ -149,7 +149,7 @@
       box-shadow: var(--shadow-card);
       transition: box-shadow var(--transition-base);
 
-      &_header {
+      &_Header {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -162,7 +162,7 @@
     }
   }
 
-  &_detail {
+  &_Detail {
     padding: var(--space-lg);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-md);
@@ -170,26 +170,26 @@
     box-shadow: var(--shadow-card);
     transition: box-shadow var(--transition-base);
 
-    &_header {
+    &_Header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: var(--space-base);
 
-      &_title {
+      &_Title {
         color: var(--text-primary);
         font-size: var(--font-size-lg);
         font-weight: var(--font-weight-semibold);
       }
 
-      &_subtitle {
+      &_Subtitle {
         margin-top: 2px;
         color: var(--text-secondary);
         font-size: var(--font-size-sm);
       }
     }
 
-    &_container {
+    &_Container {
       overflow-x: auto;
 
       table {
@@ -217,15 +217,15 @@
           font-size: var(--font-size-base);
           vertical-align: middle;
 
-          &.font_medium {
+          &.Font_Medium {
             font-weight: var(--font-weight-medium);
           }
 
-          &.text_sm {
+          &.Text_Sm {
             font-size: var(--font-size-sm);
           }
 
-          &.text-secondary {
+          &.Text_Secondary {
             color: var(--text-secondary);
           }
 
@@ -240,11 +240,11 @@
               background: var(--bg-hover);
             }
 
-            &.highlight_danger {
+            &.Highlight_Danger {
               background: var(--danger-light);
             }
 
-            &.highlight-warning {
+            &.Highlight_Warning {
               background: var(--warning-light);
             }
           }
@@ -252,7 +252,7 @@
       }
 
     }
-    &_empty {
+    &_Empty {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -260,17 +260,17 @@
       padding: var(--space-4xl);
       color: var(--text-muted);
 
-      &_icon {
+      &_Icon {
         margin-bottom: var(--space-base);
         font-size: 48px;
       }
 
-      &_sub {
+      &_Sub {
         margin-top: var(--space-xs);
         font-size: var(--font-size-sm);
       }
 
-      &_text {
+      &_Text {
         font-size: var(--font-size-lg);
         font-weight: var(--font-weight-medium);
       }
@@ -279,7 +279,7 @@
 }
 
 @media (max-width: 1024px) {
-  .DAT_report_chart {
+  .DAT_Report_Chart {
     grid-template-columns: 1fr;
   }
 }

@@ -1,18 +1,30 @@
 import React, { useMemo, useState } from "react";
 import {
-  Area,
-  AreaChart,
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
   Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+  Legend,
+  LineElement,
+  PointElement,
+  Filler,
+} from "chart.js";
+
+import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import { mockEnergyReport } from "../../data/mockData";
 import "./EnergyReportPage.scss";
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  LineElement,
+  PointElement,
+  Filler,
+);
 
 const presets = [
   "Today",
@@ -65,96 +77,169 @@ export default function EnergyReportPage() {
   const revenue = Math.round(summary.gridExport * 0.08);
 
   return (
-    <div className="DAT_report">
-      <div className="DAT_report_toolbar">
-        <div className="DAT_report_toolbar_title">Energy Report</div>
-        <div className="DAT_report_toolbar_subtitle">
+    <div className="DAT_Report">
+      <div className="DAT_Report_Toolbar">
+        <div className="DAT_Report_Toolbar_Title">Energy Report</div>
+        <div className="DAT_Report_Toolbar_Subtitle">
           Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
         </div>
-        <div className="DAT_report_toolbar_actions">
-          <div className="DAT_report_toolbar_actions_opt">
+        <div className="DAT_Report_Toolbar_Actions">
+          <div className="DAT_Report_Toolbar_Actions_Opt">
             {presets.map((item) => (
               <button
                 key={item}
-                className={`DAT_report_toolbar_actions_opt_btn ${preset === item ? "active" : ""}`}
+                className={`DAT_Report_Toolbar_Actions_Opt_Btn ${preset === item ? "Active" : ""}`}
                 onClick={() => setPreset(item)}
               >
                 {item}
               </button>
             ))}
           </div>
-          <button className="DAT_report_toolbar_actions_excel">Export Excel</button>
-          <button className="DAT_report_toolbar_actions_pdf">Export PDF</button>
+          <button className="DAT_Report_Toolbar_Actions_Excel">Export Excel</button>
+          <button className="DAT_Report_Toolbar_Actions_PDF">Export PDF</button>
         </div>
       </div>
 
-      <div className="DAT_report_stat">
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Total Charge Energy</span>
-          <span className="DAT_report_stat_box_value">{summary.charge} kWh</span>
+      <div className="DAT_Report_Stat">
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Total Charge Energy</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.charge} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Total Discharge Energy</span>
-          <span className="DAT_report_stat_box_value">{summary.discharge} kWh</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Total Discharge Energy</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.discharge} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Round-trip Efficiency</span>
-          <span className="DAT_report_stat_box_value">{avgEfficiency}%</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Round-trip Efficiency</span>
+          <span className="DAT_Report_Stat_Box_Value">{avgEfficiency}%</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">PV Energy</span>
-          <span className="DAT_report_stat_box_value">{summary.pv} kWh</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">PV Energy</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.pv} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Grid Import</span>
-          <span className="DAT_report_stat_box_value">{summary.gridImport} kWh</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Grid Import</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.gridImport} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Grid Export</span>
-          <span className="DAT_report_stat_box_value">{summary.gridExport} kWh</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Grid Export</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.gridExport} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Load Consumption</span>
-          <span className="DAT_report_stat_box_value">{summary.load} kWh</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Load Consumption</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.load} kWh</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Cycle Count</span>
-          <span className="DAT_report_stat_box_value">{summary.cycles}</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Cycle Count</span>
+          <span className="DAT_Report_Stat_Box_Value">{summary.cycles}</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Cost Saving</span>
-          <span className="DAT_report_stat_box_value">${costSaving}</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Cost Saving</span>
+          <span className="DAT_Report_Stat_Box_Value">${costSaving}</span>
         </div>
-        <div className="DAT_report_stat_box">
-          <span className="DAT_report_stat_box_label">Revenue</span>
-          <span className="DAT_report_stat_box_value">${revenue}</span>
+        <div className="DAT_Report_Stat_Box">
+          <span className="DAT_Report_Stat_Box_Label">Revenue</span>
+          <span className="DAT_Report_Stat_Box_Value">${revenue}</span>
         </div>
       </div>
 
-      <div className="DAT_report_chart">
-        <div className="DAT_report_chart_container">
-          <div className="DAT_report_chart_container_header">
+      <div className="DAT_Report_Chart">
+        <div className="DAT_Report_Chart_Container">
+          <div className="DAT_Report_Chart_Container_Header">
             Charge / Discharge / PV
           </div>
-          <ResponsiveContainer width="100%" height={280}>
-            <BarChart data={rows.slice().reverse()}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="charge" fill="#0EA5E9" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="discharge" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="pv" fill="#22C55E" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <div style={{ width: "100%", height: 280 }}>
+            <Bar
+              data={{
+                labels: rows
+                  .slice()
+                  .reverse()
+                  .map((item) => item.date),
+
+                datasets: [
+                  {
+                    label: "charge",
+                    data: rows
+                      .slice()
+                      .reverse()
+                      .map((item) => item.charge),
+
+                    backgroundColor: "#0EA5E9",
+                    borderRadius: 4,
+                  },
+
+                  {
+                    label: "discharge",
+                    data: rows
+                      .slice()
+                      .reverse()
+                      .map((item) => item.discharge),
+
+                    backgroundColor: "#8B5CF6",
+                    borderRadius: 4,
+                  },
+
+                  {
+                    label: "pv",
+                    data: rows
+                      .slice()
+                      .reverse()
+                      .map((item) => item.pv),
+
+                    backgroundColor: "#22C55E",
+                    borderRadius: 4,
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                  legend: {
+                    position: "bottom",
+                  },
+                },
+
+                scales: {
+                  x: {
+                    grid: {
+                      color: "#E5EAF2",
+                      borderDash: [3, 3],
+                    },
+
+                    ticks: {
+                      font: {
+                        size: 11,
+                      },
+                    },
+                  },
+
+                  y: {
+                    beginAtZero: true,
+
+                    grid: {
+                      color: "#E5EAF2",
+                      borderDash: [3, 3],
+                    },
+
+                    ticks: {
+                      font: {
+                        size: 11,
+                      },
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
         </div>
 
-        <div className="DAT_report_chart_container">
-          <div className="DAT_report_chart_container_header">
+        <div className="DAT_Report_Chart_Container">
+          <div className="DAT_Report_Chart_Container_Header">
             Efficiency / Load Trend
           </div>
-          <ResponsiveContainer width="100%" height={280}>
+          {/* <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={rows.slice().reverse()}>
               <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
               <XAxis dataKey="date" tick={{ fontSize: 11 }} />
@@ -174,17 +259,105 @@ export default function EnergyReportPage() {
                 fill="rgba(20,184,166,0.12)"
               />
             </AreaChart>
-          </ResponsiveContainer>
+          </ResponsiveContainer> */}
+          <div style={{ width: "100%", height: 280 }}>
+            <Line
+              data={{
+                labels: rows
+                  .slice()
+                  .reverse()
+                  .map((item) => item.date),
+
+                datasets: [
+                  {
+                    label: "efficiency",
+
+                    data: rows
+                      .slice()
+                      .reverse()
+                      .map((item) => item.efficiency),
+
+                    borderColor: "#1677FF",
+                    backgroundColor: "rgba(22,119,255,0.12)",
+
+                    fill: true,
+                    tension: 0.4,
+                  },
+
+                  {
+                    label: "load",
+
+                    data: rows
+                      .slice()
+                      .reverse()
+                      .map((item) => item.load),
+
+                    borderColor: "#14B8A6",
+                    backgroundColor: "rgba(20,184,166,0.12)",
+
+                    fill: true,
+                    tension: 0.4,
+                  },
+                ],
+              }}
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                  legend: {
+                    position: "bottom",
+                  },
+                },
+
+                scales: {
+                  x: {
+                    grid: {
+                      color: "#E5EAF2",
+                      borderDash: [3, 3],
+                    },
+
+                    ticks: {
+                      font: {
+                        size: 11,
+                      },
+                    },
+                  },
+
+                  y: {
+                    beginAtZero: true,
+
+                    grid: {
+                      color: "#E5EAF2",
+                      borderDash: [3, 3],
+                    },
+
+                    ticks: {
+                      font: {
+                        size: 11,
+                      },
+                    },
+                  },
+                },
+
+                elements: {
+                  point: {
+                    radius: 0,
+                  },
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="DAT_report_detail">
-        <div className="DAT_report_detail_header">
-          <span className="DAT_report_detail_header_title">Detailed Report Table</span>
-          <span className="DAT_report_detail_header_subtitle">{rows.length} records</span>
+      <div className="DAT_Report_Detail">
+        <div className="DAT_Report_Detail_Header">
+          <span className="DAT_Report_Detail_Header_Title">Detailed Report Table</span>
+          <span className="DAT_Report_Detail_Header_Subtitle">{rows.length} records</span>
         </div>
         {rows.length ? (
-          <div className="DAT_report_detail_container">
+          <div className="DAT_Report_Detail_Container">
             <table >
               <thead>
                 <tr>
@@ -219,10 +392,10 @@ export default function EnergyReportPage() {
             </table>
           </div>
         ) : (
-          <div className="DAT_report_detail_empty">
-            <div className="DAT_report_detail_empty_icon">📭</div>
-            <div className="DAT_report_detail_empty_text">No report data</div>
-            <div className="DAT_report_detail_empty_sub">Try another time range.</div>
+          <div className="DAT_Report_Detail_Empty">
+            <div className="DAT_Report_Detail_Empty_Icon">📭</div>
+            <div className="DAT_Report_Detail_Empty_Text">No report data</div>
+            <div className="DAT_Report_Detail_Empty_Sub">Try another time range.</div>
           </div>
         )}
       </div>

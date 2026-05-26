@@ -75,10 +75,10 @@ export default function AlarmPage() {
   };
 
   return (
-    <div className="DAT_alarm">
-      <div className="DAT_alarm_filter">
+    <div className="DAT_Alarm">
+      <div className="DAT_Alarm_Filter">
         <select
-          className="DAT_alarm_filter_form"
+          className="DAT_Alarm_Filter_Form"
           style={{ width: 130 }}
           value={filterLevel}
           onChange={(e) => {
@@ -93,7 +93,7 @@ export default function AlarmPage() {
           <option value="Critical">Critical</option>
         </select>
         <select
-          className="DAT_alarm_filter_form"
+          className="DAT_Alarm_Filter_Form"
           style={{ width: 130 }}
           value={filterDevice}
           onChange={(e) => {
@@ -109,7 +109,7 @@ export default function AlarmPage() {
           <option value="System">System</option>
         </select>
         <select
-          className="DAT_alarm_filter_form"
+          className="DAT_Alarm_Filter_Form"
           style={{ width: 140 }}
           value={filterStatus}
           onChange={(e) => {
@@ -122,12 +122,12 @@ export default function AlarmPage() {
           <option value="Acknowledged">Acknowledged</option>
           <option value="Cleared">Cleared</option>
         </select>
-        <div className="DAT_alarm_filter_search" style={{ width: 200 }}>
-          <span className="DAT_alarm_filter_search_icon">
+        <div className="DAT_Alarm_Filter_Search" style={{ width: 200 }}>
+          <span className="DAT_Alarm_Filter_Search_Icon">
             <LuSearch />
           </span>
           <input
-            className="DAT_alarm_filter_search_input"
+            className="DAT_Alarm_Filter_Search_Input"
             placeholder="Search alarms..."
             value={search}
             onChange={(e) => {
@@ -136,15 +136,15 @@ export default function AlarmPage() {
             }}
           />
         </div>
-        <button className="DAT_alarm_filter_export">
+        <button className="DAT_Alarm_Filter_Export">
           <LuDownload />
           Export
         </button>
 
       </div>
 
-      <div className="DAT_alarm_main">
-        <table className="DAT_alarm_main_table">
+      <div className="DAT_Alarm_Main">
+        <table className="DAT_Alarm_Main_Table">
           <thead>
             <tr>
               <th>ID</th>
@@ -163,7 +163,7 @@ export default function AlarmPage() {
                 key={a.id}
                 className={a.status === "Active" ? "highlight_danger" : ""}
               >
-                <td className="font_medium">{a.code}</td>
+                <td className="Font_Medium">{a.code}</td>
                 <td>{a.time}</td>
                 <td>
                   <StatusBadge status={a.level} />
@@ -173,10 +173,10 @@ export default function AlarmPage() {
                 <td>
                   <StatusBadge status={a.status} />
                 </td>
-                <td className="text_secondary">{a.operator}</td>
+                <td className="Text_Secondary">{a.operator}</td>
                 <td>
                   <button
-                    className="DAT_alarm_main_table_view"
+                    className="DAT_Alarm_Main_Table_View"
                     onClick={() => setSelectedAlarm(a)}
                     aria-label="View alarm detail"
                   >
@@ -184,7 +184,7 @@ export default function AlarmPage() {
                   </button>
                   {hasPermission("ack_alarm") && a.status === "Active" && (
                     <button
-                      className="DAT_alarm_main_table_ack"
+                      className="DAT_Alarm_Main_Table_Ack"
                       onClick={() => handleAck(a.id)}
                     >
                       Ack
@@ -193,7 +193,7 @@ export default function AlarmPage() {
                   {hasPermission("clear_alarm") &&
                     a.status === "Acknowledged" && (
                       <button
-                        className="DAT_alarm_main_table_clear"
+                        className="DAT_Alarm_Main_Table_Clear"
                         onClick={() => handleClear(a.id)}
                       >
                         Clear
@@ -207,9 +207,9 @@ export default function AlarmPage() {
         </table>
 
         {totalPages > 1 && (
-          <div className="DAT_alarm_main_pagination">
+          <div className="DAT_Alarm_Main_Pagination">
             <button
-              className="DAT_alarm_main_pagination_btn"
+              className="DAT_Alarm_Main_Pagination_Btn"
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
               aria-label="Previous page"
@@ -219,14 +219,14 @@ export default function AlarmPage() {
             {Array.from({ length: totalPages }, (_, i) => (
               <button
                 key={i + 1}
-                className={`DAT_alarm_main_pagination_btn ${page === i + 1 ? "active" : ""}`}
+                className={`DAT_Alarm_Main_Pagination_Btn ${page === i + 1 ? "active" : ""}`}
                 onClick={() => setPage(i + 1)}
               >
                 {i + 1}
               </button>
             ))}
             <button
-              className="DAT_alarm_main_pagination_btn"
+              className="DAT_Alarm_Main_Pagination_Btn"
               disabled={page === totalPages}
               onClick={() => setPage(page + 1)}
               aria-label="Next page"
@@ -243,7 +243,7 @@ export default function AlarmPage() {
         title={selectedAlarm ? `Alarm ${selectedAlarm.code}` : ""}
       >
         {selectedAlarm && (
-          <div className="DAT_alarm_detail">
+          <div className="DAT_Alarm_Detail">
             {[
               ["Alarm ID", selectedAlarm.code],
               ["Time", selectedAlarm.time],
@@ -256,20 +256,20 @@ export default function AlarmPage() {
               ["Acknowledged At", selectedAlarm.acknowledgedAt || "-"],
               ["Cleared At", selectedAlarm.clearedAt || "-"],
             ].map(([k, v]) => (
-              <div key={k} className="DAT_alarm_detail_row">
-                <span className="DAT_alarm_detail_row_label">{k}</span>
-                <span className="DAT_alarm_detail_row_val">{v}</span>
+              <div key={k} className="DAT_Alarm_Detail_Row">
+                <span className="DAT_Alarm_Detail_Row_Label">{k}</span>
+                <span className="DAT_Alarm_Detail_Row_Val">{v}</span>
               </div>
             ))}
             {selectedAlarm.relatedParams && (
               <>
-                <div className="DAT_alarm_detail_title">
+                <div className="DAT_Alarm_Detail_Title">
                   Related Parameters
                 </div>
                 {Object.entries(selectedAlarm.relatedParams).map(([k, v]) => (
-                  <div key={k} className="DAT_alarm_detail_row">
-                    <span className="DAT_alarm_detail_row_label">{k}</span>
-                    <span className="DAT_alarm_detail_row_val">{v}</span>
+                  <div key={k} className="DAT_Alarm_Detail_Row">
+                    <span className="DAT_Alarm_Detail_Row_Label">{k}</span>
+                    <span className="DAT_Alarm_Detail_Row_Val">{v}</span>
                   </div>
                 ))}
               </>
