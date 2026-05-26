@@ -60,7 +60,7 @@ export default function Sidebar({ collapsed, onToggle }) {
   const { hasPermission } = useAuth();
 
   return (
-    <aside className={collapsed ? `${SIDEBAR_CLASS}_Collapsed` : SIDEBAR_CLASS}>
+    <aside className={collapsed ? `${SIDEBAR_CLASS} ${SIDEBAR_CLASS}_Collapsed` : SIDEBAR_CLASS}>
       <div
         className={
           collapsed

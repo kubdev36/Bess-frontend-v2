@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './UserInfo.scss'
 import { useAuth } from "../../contexts/AuthContext";
-import { Eye, EyeOff } from "lucide-react";
+import { FaRegEye,FaRegEyeSlash } from "react-icons/fa";
 
 export default function UserInfo() {
   const { currentUser, logout } = useAuth();
@@ -234,9 +234,9 @@ export default function UserInfo() {
                       }
                     >
                       {showPasswordCurrent ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>
@@ -263,9 +263,9 @@ export default function UserInfo() {
                       }
                     >
                       {showNewPassword ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>
@@ -292,9 +292,9 @@ export default function UserInfo() {
                       }
                     >
                       {showPassword ? (
-                        <Eye size={20} />
+                        <FaRegEye size={20} />
                       ) : (
-                        <EyeOff size={20} />
+                        <FaRegEyeSlash size={20} />
                       )}
                     </button>
                   </div>

@@ -168,10 +168,18 @@ const enMessages = {
   frequency: "Frequency",
   power_AC_DC: "AC/DC Power",
   temp_PCS: "PCS Temp",
+  pcs_ac: "AC",
+  pcs_dc: "DC",
+  pcs_ac_trend: "AC Trend",
+  pcs_dc_trend: "DC Trend",
+  pcs_status_off: "Off",
+  pcs_status_charge_derate: "Charge derate",
+  pcs_status_discharge_derate: "Discharge derate",
   fault_code_history: "Fault Code History",
   description: "description",
   name: "name",
-  code: "code"
+  code: "code",
+  time: "time"
 };
 
 const viMessages = {
@@ -347,10 +355,18 @@ const viMessages = {
   frequency: "Tần số",
   power_AC_DC: "Điện áp AC/DC",
   temp_PCS: "Nhiệt độ PCS",
+  pcs_ac: "AC",
+  pcs_dc: "DC",
+  pcs_ac_trend: "Xu hướng AC",
+  pcs_dc_trend: "Xu hướng DC",
+  pcs_status_off: "Tắt",
+  pcs_status_charge_derate: "Giảm công suất sạc",
+  pcs_status_discharge_derate: "Giảm công suất xả",
   fault_code_history: "Lịch sử mã lỗi",
   description: "mô tả",
   name: "tên",
-  code: "mã"
+  code: "mã",
+  time: "thời gian"
 };
 
 export const messages = {
