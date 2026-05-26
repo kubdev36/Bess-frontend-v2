@@ -223,8 +223,16 @@ const enMessages = {
   add_user: "Add User",
   user_id_table: "User Id",
   user_name_table: "Full Name",
-  user_email_table: "Email"
-};  
+  user_email_table: "Email",
+  user_role_table: "Role",
+  user_status_table: "Status",
+  user_last_login_table: "Last Login",
+  user_create_at_table: "Created At",
+  user_action_table: "Action",
+  user_locked_button: "Locked",
+  user_unlock_button: "Unlocked",
+  user_edit_button: "Edit"
+};
 
 const viMessages = {
   bess: "Hệ thống lưu trữ toàn diện",
@@ -451,7 +459,18 @@ const viMessages = {
   statusActive_role: "Hoạt động",
   statusInactive_role: "Dừng hoạt động",
   statusLocked_role: "Bị khóa",
-  add_user: "Thêm mới người dùng"
+  add_user: "Thêm mới người dùng",
+  user_id_table: "Id",
+  user_name_table: "Họ và tên",
+  user_email_table: "Email",
+  user_role_table: "Quyền điều hành",
+  user_status_table: "Trạng thái",
+  user_last_login_table: "Đăng nhập lần cuối",
+  user_create_at_table: "Ngày tạo",
+  user_action_table: "Hành động",
+  user_edit_button: "Chỉnh sửa",
+  user_locked_button: "Khóa",
+  user_unlock_button: "Mở khóa",
 };
 
 export const messages = {
