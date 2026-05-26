@@ -1,17 +1,56 @@
 import React, { useState } from "react";
 import { LuBadgeCheck, LuSearch } from "react-icons/lu";
-import {
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockAlarms, mockContainers } from "../../data/mockData";
 import "./BatteryPage.scss";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
+
+const rackTrendData = [
+  {
+    timestamp: "10:00",
+    rack1: 45,
+    rack2: 52,
+    rack3: 38,
+  },
+  {
+    timestamp: "11:00",
+    rack1: 48,
+    rack2: 55,
+    rack3: 40,
+  },
+  {
+    timestamp: "12:00",
+    rack1: 50,
+    rack2: 58,
+    rack3: 43,
+  },
+  {
+    timestamp: "13:00",
+    rack1: 47,
+    rack2: 56,
+    rack3: 42,
+  },
+];
 
 export default function BatteryPage() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
@@ -31,13 +70,12 @@ export default function BatteryPage() {
 
   const rackChartData = selectedRack
     ? Array.from({ length: 24 }, (_, i) => ({
-        time: `${String(i).padStart(2, "0")}:00`,
-        voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
-        temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
-        soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
-      }))
+      time: `${String(i).padStart(2, "0")}:00`,
+      voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
+      temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
+      soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
+    }))
     : [];
-
   const getCellColor = (cell) => {
     if (cell.status === "High") return "#EF4444";
     if (cell.status === "Low") return "#F59E0B";
@@ -46,13 +84,39 @@ export default function BatteryPage() {
     return `rgb(34, ${Math.min(255, g)}, 94)`;
   };
 
+  const data = {
+    labels: rackTrendData.map((item) => item.timestamp),
+
+    datasets: [
+      {
+        label: "Rack 1",
+        data: rackTrendData.map((item) => item.rack1),
+        borderColor: "#36A2EB",
+        tension: 0.3,
+      },
+      {
+        label: "Rack 2",
+        data: rackTrendData.map((item) => item.rack2),
+        borderColor: "#FF6384",
+        tension: 0.3,
+      },
+
+      {
+        label: "Rack 3",
+        data: rackTrendData.map((item) => item.rack3),
+        borderColor: "#4BC0C0",
+        tension: 0.3,
+      },
+    ]
+  }
+
   return (
     <div className="DAT_Battery">
       <div className="DAT_Battery_Overview">
         {mockContainers.map((c) => (
           <div
             key={c.id}
-            className={`DAT_Battery_Overview_Card ${selectedContainer.id === c.id ? "DAT_Battery_Overview_Card--selected" : ""}`}
+            className={`DAT_Battery_Overview_Card ${selectedContainer.id === c.id ? "DAT_Battery_Overview_Selected" : ""}`}
             onClick={() => {
               setSelectedContainer(c);
               setSelectedRack(null);
@@ -63,21 +127,23 @@ export default function BatteryPage() {
               <StatusBadge status={c.status} />
             </div>
             <div className="DAT_Battery_Overview_Card_Stats">
-              <div>
-                <span className="DAT_Battery_Overview_Card_Stats_Label">Racks:</span>{" "}
-                <span className="DAT_Battery_Overview_Card_Stats_Value">{c.racks.length}</span>
+              <div className="DAT_Battery_Overview_Card_Stats_Item">
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">Racks:</div>
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.racks.length}</div>
               </div>
-              <div>
-                <span className="DAT_Battery_Overview_Card_Stats_Label">SOC:</span>{" "}
-                <span className="DAT_Battery_Overview_Card_Stats_Value">{c.soc}%</span>
+              <div className="DAT_Battery_Overview_Card_Stats_Item">
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">SOC:</div>
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.soc}%</div>
               </div>
-              <div>
-                <span className="DAT_Battery_Overview_Card_Stats_Label">SOH:</span>{" "}
-                <span className="DAT_Battery_Overview_Card_Stats_Value">{c.soh}%</span>
+
+              <div className="DAT_Battery_Overview_Card_Stats_Item">
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">SOH:</div>
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.soh}%</div>
               </div>
-              <div>
-                <span className="DAT_Battery_Overview_Card_Stats_Label">Temp:</span>{" "}
-                <span className="DAT_Battery_Overview_Card_Stats_Value">{c.temperature} degC</span>
+
+              <div className="DAT_Battery_Overview_Card_Stats_Item">
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">Temp:</div>
+                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.temperature} degC</div>
               </div>
             </div>
             {selectedContainer.id === c.id && (
@@ -123,36 +189,36 @@ export default function BatteryPage() {
         </div>
         <div className="DAT_Battery_RackList_Table">
           <table className="DAT_Battery_RackList_Table_Main">
-            <thead>
+            <thead className="DAT_Battery_RackList_Table_Main_Head">
               <tr>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Rack</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Status</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Voltage</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Current</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">SOC</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">SOH</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Temp</th>
-                <th className="DAT_Battery_RackList_Table_Main_Head">Cycles</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Rack</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Status</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Voltage</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Current</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">SOC</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">SOH</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Temp</th>
+                <th className="DAT_Battery_RackList_Table_Main_Head_Th">Cycles</th>
               </tr>
             </thead>
             <tbody className="DAT_Battery_RackList_Table_Main_Body">
               {filteredRacks.map((r) => (
                 <tr
                   key={r.id}
-                  className={`DAT_Battery_RackList_Table_Main_Row ${selectedRack?.id === r.id ? "DAT_Battery_RackList_Table_Main_Row--selected" : ""} ${r.status === "Warning" ? "DAT_Battery_RackList_Table_Main_Row--warning" : ""}`}
+                  className={`DAT_Battery_RackList_Table_Main_Body_Row ${selectedRack?.id === r.id ? "DAT_Battery_RackList_Table_Main_Body_Row--selected" : ""} ${r.status === "Warning" ? "DAT_Battery_RackList_Table_Main_Body_Row--warning" : ""}`}
                   style={{ cursor: "pointer" }}
                   onClick={() => setSelectedRack(r)}
                 >
-                  <td className="DAT_Battery_RackList_Table_Main_Cell DAT_Battery_RackList_Table_Main_Cell--medium">{r.id}</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell DAT_Battery_RackList_Table_Main_Body_Row_Cell--medium">{r.id}</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">
                     <StatusBadge status={r.status} />
                   </td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.voltage}V</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.current}A</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.soc}%</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.soh}%</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.temperature} degC</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Cell">{r.cycles}</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.voltage}V</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.current}A</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.soc}%</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.soh}%</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.temperature} degC</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.cycles}</td>
                 </tr>
               ))}
             </tbody>
@@ -235,30 +301,7 @@ export default function BatteryPage() {
             <div className="DAT_Battery_Analytics_Card_Header">
               <span className="DAT_Battery_Analytics_Card_Header_Title">Rack Trends</span>
             </div>
-            <ResponsiveContainer width="100%" height={400} className={"DAT_Battery_Analytics_Card_Chart"}>
-              <LineChart data={rackChartData} className="DAT_Battery_Analytics_Card_Chart_Line">
-                <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
-                <XAxis dataKey="time" tick={{ fontSize: 10 }} />
-                <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="voltage"
-                  name="Voltage"
-                  stroke="#1677FF"
-                  strokeWidth={2}
-                  dot={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="temperature"
-                  name="Temp"
-                  stroke="#EF4444"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <Line data={data}/>
           </div>
           <div className="DAT_Battery_Analytics_Card">
             <div className="DAT_Battery_Analytics_Card_Header">

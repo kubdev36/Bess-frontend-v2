@@ -3,6 +3,12 @@ import { mockSystemSettings } from "../../data/mockData";
 import "./SystemSettingsPage.scss";
 
 const tabs = ["site", "device", "notification", "realtime"];
+const tabLabels = {
+  site: "Site Information",
+  device: "Device Configuration",
+  notification: "Notification Settings",
+  realtime: "Realtime Settings",
+};
 
 const defaultDeviceSettings = {
   batteryContainers: "CTN-01, CTN-02, CTN-03",
@@ -33,12 +39,12 @@ export default function SystemSettingsPage() {
   };
 
   const renderFields = (section) => (
-    <div className="DAT_SystemSettings_Form_Grid">
+    <div className="DAT_SystemSettings_Grid">
       {Object.entries(settings[section]).map(([key, value]) => (
-        <div key={key} className="DAT_SystemSettings_Form_Grid_Group">
-          <label className="DAT_SystemSettings_Form_Grid_Group_Label">{key}</label>
+        <div key={key} className="DAT_SystemSettings_Field">
+          <label className="DAT_SystemSettings_Label">{key}</label>
           <input
-            className="DAT_SystemSettings_Form_Grid_Group_Input"
+            className="DAT_SystemSettings_Input"
             value={String(value)}
             onChange={(e) => updateSection(section, key, e.target.value)}
           />
@@ -49,25 +55,19 @@ export default function SystemSettingsPage() {
 
   return (
     <div className="DAT_SystemSettings">
-      <div className="DAT_SystemSettings_Card">
-        <div className="DAT_SystemSettings_Card_Header">
-          <div>
-            <div className="DAT_SystemSettings_Card_Header_Title">System Settings</div>
-            <div className="DAT_SystemSettings_Card_Header_Subtitle">
-              Cau hinh thong tin tram, thiet bi, thong bao va realtime refresh.
-            </div>
-          </div>
-          <div className="DAT_SystemSettings_Card_Header_Actions">
-            <button
-              className="DAT_SystemSettings_Card_Header_Actions_Button_Secondary"
-              onClick={() => setSettings(createDefaultSettings())}
-            >
-              Reset Default
-            </button>
-            <button className="DAT_SystemSettings_Card_Header_Actions_Button_Primary">
-              Save Settings
-            </button>
-          </div>
+      <div className="DAT_SystemSettings_HeaderCard">
+        <div className="DAT_SystemSettings_Title">System Settings</div>
+        <div className="DAT_SystemSettings_Subtitle">
+          Cau hinh thong tin tram, thiet bi, thong bao va realtime refresh.
+        </div>
+        <div className="DAT_SystemSettings_Actions">
+          <button
+            className="DAT_SystemSettings_ResetButton"
+            onClick={() => setSettings(createDefaultSettings())}
+          >
+            Reset Default
+          </button>
+          <button className="DAT_SystemSettings_SaveButton">Save Settings</button>
         </div>
       </div>
 
@@ -77,26 +77,21 @@ export default function SystemSettingsPage() {
             key={tab}
             className={
               activeTab === tab
-                ? "DAT_SystemSettings_Tabs_Button_Active"
-                : "DAT_SystemSettings_Tabs_Button"
+                ? "DAT_SystemSettings_TabActive"
+                : "DAT_SystemSettings_Tab"
             }
             onClick={() => setActiveTab(tab)}
           >
-            {tab === "site" && "Site Information"}
-            {tab === "device" && "Device Configuration"}
-            {tab === "notification" && "Notification Settings"}
-            {tab === "realtime" && "Realtime Settings"}
+            {tabLabels[tab]}
           </button>
         ))}
       </div>
 
-      <div className="DAT_SystemSettings_Card">
+      <div className="DAT_SystemSettings_ContentCard">
         {renderFields(activeTab)}
         {activeTab === "notification" && (
-          <div className="DAT_SystemSettings_Card_NotificationAction">
-            <button className="DAT_SystemSettings_Card_NotificationAction_Button_Ghost">
-              Test Notification
-            </button>
+          <div className="DAT_SystemSettings_NotificationAction">
+            <button className="DAT_SystemSettings_NotificationButton">Test Notification</button>
           </div>
         )}
       </div>

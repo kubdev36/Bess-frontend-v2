@@ -67,28 +67,24 @@ export default function EnergyReportPage() {
   return (
     <div className="DAT_report">
       <div className="DAT_report_toolbar">
-        <div className="DAT_report_toolbar_content">
-          <div>
-            <div className="DAT_report_toolbar_content_title">Energy Report</div>
-            <div className="DAT_report_toolbar_content_subtitle">
-              Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
-            </div>
+        <div className="DAT_report_toolbar_title">Energy Report</div>
+        <div className="DAT_report_toolbar_subtitle">
+          Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.
+        </div>
+        <div className="DAT_report_toolbar_actions">
+          <div className="DAT_report_toolbar_actions_opt">
+            {presets.map((item) => (
+              <button
+                key={item}
+                className={`DAT_report_toolbar_actions_opt_btn ${preset === item ? "active" : ""}`}
+                onClick={() => setPreset(item)}
+              >
+                {item}
+              </button>
+            ))}
           </div>
-          <div className="DAT_report_toolbar_content_actions">
-            <div className="DAT_report_toolbar_content_actions_opt">
-              {presets.map((item) => (
-                <button
-                  key={item}
-                  className={`DAT_report_toolbar_content_actions_opt_btn ${preset === item ? "active" : ""}`}
-                  onClick={() => setPreset(item)}
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-            <button className="DAT_report_toolbar_content_actions_excel">Export Excel</button>
-            <button className="DAT_report_toolbar_content_actions_pdf">Export PDF</button>
-          </div>
+          <button className="DAT_report_toolbar_actions_excel">Export Excel</button>
+          <button className="DAT_report_toolbar_actions_pdf">Export PDF</button>
         </div>
       </div>
 
@@ -138,7 +134,7 @@ export default function EnergyReportPage() {
       <div className="DAT_report_chart">
         <div className="DAT_report_chart_container">
           <div className="DAT_report_chart_container_header">
-            <span className="DAT_report_chart_container_header_title">Charge / Discharge / PV</span>
+            Charge / Discharge / PV
           </div>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={rows.slice().reverse()}>
@@ -156,7 +152,7 @@ export default function EnergyReportPage() {
 
         <div className="DAT_report_chart_container">
           <div className="DAT_report_chart_container_header">
-            <span className="DAT_report_chart_container_header_title">Efficiency / Load Trend</span>
+            Efficiency / Load Trend
           </div>
           <ResponsiveContainer width="100%" height={280}>
             <AreaChart data={rows.slice().reverse()}>
@@ -189,7 +185,7 @@ export default function EnergyReportPage() {
         </div>
         {rows.length ? (
           <div className="DAT_report_detail_container">
-            <table className="DAT_report_detail_container_table">
+            <table >
               <thead>
                 <tr>
                   <th>Date</th>
@@ -223,10 +219,10 @@ export default function EnergyReportPage() {
             </table>
           </div>
         ) : (
-          <div className="DAT_report_detail_container_empty">
-            <div className="DAT_report_detail_container_empty_icon">📭</div>
-            <div className="DAT_report_detail_container_empty_text">No report data</div>
-            <div className="DAT_report_detail_container_empty_sub">Try another time range.</div>
+          <div className="DAT_report_detail_empty">
+            <div className="DAT_report_detail_empty_icon">📭</div>
+            <div className="DAT_report_detail_empty_text">No report data</div>
+            <div className="DAT_report_detail_empty_sub">Try another time range.</div>
           </div>
         )}
       </div>
