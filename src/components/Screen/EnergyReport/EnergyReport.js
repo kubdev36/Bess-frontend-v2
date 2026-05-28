@@ -42,15 +42,63 @@ export default function EnergyReport() {
   const [preset, setPreset] = useState("Last 7 days");
   const lang = useIntl();
 
-  const rows = useMemo(() => {
-    if (preset === "Today") return mockEnergyReport.slice(0, 1);
-    if (preset === "Yesterday") return mockEnergyReport.slice(1, 2);
-    if (preset === "Last 7 days") return mockEnergyReport.slice(0, 7);
-    if (preset === "This month") return mockEnergyReport.slice(0, 30);
-    if (preset === "This year") return mockEnergyReport;
-    return mockEnergyReport.slice(0, 14);
-  }, [preset]);
+  // const rows = useMemo(() => {
+  //   if (preset === "Today") return mockEnergyReport.slice(0, 1);
+  //   if (preset === "Yesterday") return mockEnergyReport.slice(1, 2);
+  //   if (preset === "Last 7 days") return mockEnergyReport.slice(0, 7);
+  //   if (preset === "This month") return mockEnergyReport.slice(0, 30);
+  //   if (preset === "This year") return mockEnergyReport;
+  //   return mockEnergyReport.slice(0, 14);
+  // }, [preset]);
+ const rows = useMemo(() => {
+    const now = new Date();
 
+  return mockEnergyReport.filter((item) => {
+    const d = new Date(item.date);
+
+    switch (preset) {
+      case "today":
+        return (
+          d.getDate() === now.getDate() &&
+          d.getMonth() === now.getMonth() &&
+          d.getFullYear() === now.getFullYear()
+        );
+
+      case "yesterday": {
+        const yesterday = new Date();
+        yesterday.setDate(now.getDate() - 1);
+
+        return (
+          d.getDate() === yesterday.getDate() &&
+          d.getMonth() === yesterday.getMonth() &&
+          d.getFullYear() === yesterday.getFullYear()
+        );
+      }
+
+      case "last7days": {
+        const last7 = new Date();
+        last7.setDate(now.getDate() - 7);
+
+        return d >= last7;
+      }
+
+      case "this_month":
+        return (
+          d.getMonth() === now.getMonth() &&
+          d.getFullYear() === now.getFullYear()
+        );
+
+      case "this_year":
+        return d.getFullYear() === now.getFullYear();
+
+      case "custom_range":
+        return true;
+
+      default:
+        return true;
+    }
+  });
+  }, [preset, mockEnergyReport]);
   const summary = rows.reduce(
     (acc, row) => ({
       charge: acc.charge + row.charge,
@@ -91,7 +139,9 @@ export default function EnergyReport() {
               <button
                 key={item}
                 className={`DAT_Report_Toolbar_Actions_Opt_Btn ${preset === item ? "Active" : ""}`}
-                onClick={() => setPreset(item)}
+                onClick={() => {
+                  setPreset(item);
+                }}
               >
                 {lang.formatMessage({ id: item })}
               </button>
