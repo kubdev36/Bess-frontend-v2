@@ -59,7 +59,7 @@
 
                 &_Button_Primary {
                     background: var(--primary);
-                    color: rgba(255, 255, 255, 1);
+                    color: var(--card-bg);
 
                     &:hover {
                         background: var(--primary-hover);
@@ -145,7 +145,7 @@
         align-items: center;
 
         &_Container {
-            background-color: rgba(255, 255, 255, 1);
+            background-color: var(--card-bg);
             border-radius: 5px;
             box-shadow:
                 2px 2px 5px rgba(73, 73, 73, 0.2),
@@ -157,7 +157,7 @@
 
             &_Header {
                 align-items: center;
-                background-color: rgba(11, 25, 103, 1);
+                background-color: var(--primary);
                 padding: 16px;
                 display: flex;
                 align-items: center;
@@ -168,7 +168,7 @@
                     flex: 5 1;
                     font-size: var(--font-size-xl);
                     font-weight: var(--font-weight-bold);
-                    color: rgba(255, 255, 255, 1);
+                    color: var(--card-bg);
                     display: flex;
                     align-items: center;
                     gap: 8px;
@@ -181,7 +181,7 @@
                     align-items: center;
                     justify-content: center;
                     border: none;
-                    color: rgba(255, 255, 255, 1);
+                    color: var(--card-bg);
                     font-size: 14px;
                     cursor: pointer;
                     transition: all var(--transition-fast);
@@ -198,14 +198,13 @@
             &_Main {
                 align-items: center;
                 border-bottom: 1px solid rgba(198, 197, 197, 0.5);
-                color: rgba(80, 80, 80, 1);
                 font-size: 14px;
                 justify-content: center;
                 padding: 16px;
 
                 &_Label {
                     cursor: default;
-                    color: rgba(255, 255, 255, 1);
+                    color: var(--card-bg);
                 }
 
                 &_Box {
@@ -254,10 +253,10 @@
                 padding: 8px;
 
                 button {
-                    background-color: rgba(11, 25, 103, 1);
+                    background-color: var(--primary);
                     border: none;
                     border-radius: 5px;
-                    color: rgba(255, 255, 255, 1);
+                    color: var(--card-bg);
                     cursor: pointer;
                     padding: 8px 16px;
                 }
