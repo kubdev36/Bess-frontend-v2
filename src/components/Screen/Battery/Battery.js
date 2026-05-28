@@ -3,60 +3,16 @@ import { LuBadgeCheck, LuSearch } from "react-icons/lu";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockAlarms, mockContainers } from "../../data/mockData";
 import "./Battery.scss";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-const rackTrendData = [
-  {
-    timestamp: "10:00",
-    rack1: 45,
-    rack2: 52,
-    rack3: 38,
-  },
-  {
-    timestamp: "11:00",
-    rack1: 48,
-    rack2: 55,
-    rack3: 40,
-  },
-  {
-    timestamp: "12:00",
-    rack1: 50,
-    rack2: 58,
-    rack3: 43,
-  },
-  {
-    timestamp: "13:00",
-    rack1: 47,
-    rack2: 56,
-    rack3: 42,
-  },
-];
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 export default function Battery() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
   const [selectedRack, setSelectedRack] = useState(null);
   const [searchRack, setSearchRack] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModelModuleOpen, setIsModalModuleOpen] = useState(false);
+  const [moduleName, setModuleName] = useState("")
 
   const filteredRacks = selectedContainer.racks.filter((r) => {
     const matchSearch = r.id.toLowerCase().includes(searchRack.toLowerCase());
@@ -77,39 +33,14 @@ export default function Battery() {
     }))
     : [];
   const getCellColor = (cell) => {
-  if (cell.status === "High") return "rgba(239, 68, 68, 1)";   
-  if (cell.status === "Low") return "rgba(245, 158, 11, 1)";   
+    if (cell.status === "High") return "rgba(239, 68, 68, 1)";
+    if (cell.status === "Low") return "rgba(245, 158, 11, 1)";
 
-  const ratio = (cell.voltage - 3.0) / 0.35;
-  const g = Math.round(180 + ratio * 75);
+    const ratio = (cell.voltage - 3.0) / 0.35;
+    const g = Math.round(180 + ratio * 75);
 
-  return `rgba(34, ${Math.min(255, g)}, 94, 1)`;
-};
-
-const data = {
-  labels: rackTrendData.map((item) => item.timestamp),
-
-  datasets: [
-    {
-      label: "Rack 1",
-      data: rackTrendData.map((item) => item.rack1),
-      borderColor: "rgba(54, 162, 235, 1)", 
-      tension: 0.3,
-    },
-    {
-      label: "Rack 2",
-      data: rackTrendData.map((item) => item.rack2),
-      borderColor: "rgba(255, 99, 132, 1)", 
-      tension: 0.3,
-    },
-    {
-      label: "Rack 3",
-      data: rackTrendData.map((item) => item.rack3),
-      borderColor: "rgba(75, 192, 192, 1)", 
-      tension: 0.3,
-    },
-  ],
-};
+    return `rgba(34, ${Math.min(255, g)}, 94, 1)`;
+  };
 
   return (
     <div className="DAT_Battery">
@@ -117,42 +48,37 @@ const data = {
         {mockContainers.map((c) => (
           <div
             key={c.id}
-            className={`DAT_Battery_Overview_Card ${selectedContainer.id === c.id ? "DAT_Battery_Overview_Selected" : ""}`}
+            className={`DAT_Battery_Overview_Card`}
             onClick={() => {
               setSelectedContainer(c);
               setSelectedRack(null);
             }}
           >
             <div className="DAT_Battery_Overview_Card_Header">
-              <span className="DAT_Battery_Overview_Card_Header_Title">{c.name}</span>
-              <StatusBadge status={c.status} />
-            </div>
-            <div className="DAT_Battery_Overview_Card_Stats">
-              <div className="DAT_Battery_Overview_Card_Stats_Item">
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">Racks:</div>
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.racks.length}</div>
+              <div className="DAT_Battery_Overview_Card_Header_Box">
+                <div className="DAT_Battery_Overview_Card_Header_Box_Title">{c.name}</div>
+                <StatusBadge status={c.status} />
               </div>
-              <div className="DAT_Battery_Overview_Card_Stats_Item">
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">SOC:</div>
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.soc}%</div>
+              <div className="DAT_Battery_Overview_Card_Header_Box">
+                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Racks:</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.racks.length}</div>
               </div>
 
-              <div className="DAT_Battery_Overview_Card_Stats_Item">
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">SOH:</div>
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.soh}%</div>
+              <div className="DAT_Battery_Overview_Card_Header_Box">
+                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOC:</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soc}%</div>
               </div>
 
-              <div className="DAT_Battery_Overview_Card_Stats_Item">
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Label">Temp:</div>
-                <div className="DAT_Battery_Overview_Card_Stats_Item_Value">{c.temperature} degC</div>
+              <div className="DAT_Battery_Overview_Card_Header_Box">
+                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOH:</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soh}%</div>
+              </div>
+
+              <div className="DAT_Battery_Overview_Card_Header_Box">
+                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Temp:</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.temperature}°C</div>
               </div>
             </div>
-            {selectedContainer.id === c.id && (
-              <div className="DAT_Battery_Overview_Card_Badge">
-                <LuBadgeCheck />
-                Selected
-              </div>
-            )}
           </div>
         ))}
       </div>
@@ -160,7 +86,7 @@ const data = {
       <div className="DAT_Battery_RackList">
         <div className="DAT_Battery_RackList_Header">
           <span className="DAT_Battery_RackList_Header_Title">
-            Rack List - {selectedContainer.name}
+            Rack List - Level 01
           </span>
           <div className="DAT_Battery_RackList_Filter">
             <div className="DAT_Battery_RackList_Filter_Search" style={{ width: 180 }}>
@@ -208,7 +134,10 @@ const data = {
                   key={r.id}
                   className={`DAT_Battery_RackList_Table_Main_Body_Row ${selectedRack?.id === r.id ? "DAT_Battery_RackList_Table_Main_Body_Row--selected" : ""} ${r.status === "Warning" ? "DAT_Battery_RackList_Table_Main_Body_Row--warning" : ""}`}
                   style={{ cursor: "pointer" }}
-                  onClick={() => setSelectedRack(r)}
+                  onClick={() => {
+                    setSelectedRack(r);
+                    setIsModalOpen(true);
+                  }}
                 >
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell DAT_Battery_RackList_Table_Main_Body_Row_Cell--medium">{r.id}</td>
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">
@@ -218,7 +147,7 @@ const data = {
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.current}A</td>
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.soc}%</td>
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.soh}%</td>
-                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.temperature} degC</td>
+                  <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.temperature}°C</td>
                   <td className="DAT_Battery_RackList_Table_Main_Body_Row_Cell">{r.cycles}</td>
                 </tr>
               ))}
@@ -227,112 +156,137 @@ const data = {
         </div>
       </div>
 
-      {selectedRack && (
-        <div className="DAT_Battery_Detail">
-          <div className="DAT_Battery_Detail_Summary">
-            <div className="DAT_Battery_Detail_Summary_Header">
-              <span className="DAT_Battery_Detail_Summary_Header_Title">{selectedRack.id} Detail</span>
+      {isModalOpen && selectedRack && (
+        <div className="DAT_Modal_Overlay" onClick={() => setIsModalOpen(false)}>
+          <div
+            className="DAT_Modal_Overlay_Box"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="DAT_Modal_Overlay_Box_Header">
+              <h2>{selectedRack.id} - Rack Detail</h2>
             </div>
-            <div className="DAT_Battery_Detail_Summary_Grid">
-              {[
-                ["Voltage", `${selectedRack.voltage}V`],
-                ["Current", `${selectedRack.current}A`],
-                ["SOC", `${selectedRack.soc}%`],
-                ["SOH", `${selectedRack.soh}%`],
-                ["Max Cell V", `${selectedRack.maxCellV}V`],
-                ["Min Cell V", `${selectedRack.minCellV}V`],
-                ["Delta V", `${selectedRack.deltaV}V`],
-                ["Max Temp", `${selectedRack.maxTemp} degC`],
-                ["Cycles", selectedRack.cycles],
-              ].map(([k, v]) => (
-                <div key={k} className="DAT_Battery_Detail_Summary_Grid_Item">
-                  <span className="DAT_Battery_Detail_Summary_Grid_Item_Label">{k}</span>
-                  <span className="DAT_Battery_Detail_Summary_Grid_Item_Value">{v}</span>
-                </div>
-              ))}
+
+            {/* KPI GRID */}
+            <div className="DAT_Modal_Overlay_Box_Grid">
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">SOC:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.soc}%</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">SOH:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.soh}%</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Temperature:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.temperature}°C</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Max Temp:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.maxTemp}°C</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Min Cell:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.minCellV}</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Max Cell:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.maxCellV}</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Voltage:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.voltage}V</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Current:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.current}A</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">Cycles:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.cycles}</span>
+              </div>
+
+              <div className="DAT_Modal_Overlay_Box_Grid_Card">
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Label">DeltaV:</span>
+                <span className="DAT_Modal_Overlay_Box_Grid_Card_Value">{selectedRack.deltaV}</span>
+              </div>
+
             </div>
-          </div>
-          <div className="DAT_Battery_Detail_Matrix">
-            <div className="DAT_Battery_Detail_Matrix_Header">
-              <span className="DAT_Battery_Detail_Matrix_Header_Title">Cell Matrix</span>
+
+            <div className="DAT_Modal_Overlay_Box_Module">
+              {selectedRack.module.map((m) => {
+                return (
+                  <div className="DAT_Modal_Overlay_Box_Module_Card" onClick={() => {
+                    setIsModalOpen(false)
+                    setIsModalModuleOpen(true)
+                    setModuleName(m)
+                  }}>
+                    <span className="DAT_Modal_Overlay_Box_Module_Card_Value">{m}</span>
+                  </div>
+                )
+              })}
             </div>
-            <div className="DAT_Battery_Detail_Matrix_Grid">
-              {selectedRack.cells.map((cell) => (
-                <div
-                  key={cell.id}
-                  className="DAT_Battery_Detail_Matrix_Grid_Item"
-                  style={{ background: getCellColor(cell) }}
-                  title={`${cell.id}\nVoltage: ${cell.voltage}V\nTemp: ${cell.temperature} degC\nStatus: ${cell.status}`}
-                >
-                  <span className="DAT_Battery_Detail_Matrix_Grid_Item_Id">{cell.id.split("-").pop()}</span>
-                  <span className="DAT_Battery_Detail_Matrix_Grid_Item_Voltage">{cell.voltage}V</span>
-                </div>
-              ))}
-            </div>
-            <div className="DAT_Battery_Detail_Matrix_Legend">
-              <span>
-                <span
-                  className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "rgba(34, 197, 94, 1)" }}
-                ></span>{" "}
-                Normal
-              </span>
-              <span>
-                <span
-                  className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "rgba(245, 158, 11, 1)" }}
-                ></span>{" "}
-                Low
-              </span>
-              <span>
-                <span
-                  className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "rgba(239, 68, 68, 1)" }}
-                ></span>{" "}
-                High
-              </span>
+
+            <div className="DAT_Modal_Overlay_Box_Footer">
+              <button onClick={() => setIsModalOpen(false)}>Close</button>
             </div>
           </div>
         </div>
       )}
 
-      {selectedRack && (
-        <div className="DAT_Battery_Analytics">
-          <div className="DAT_Battery_Analytics_Card">
-            <div className="DAT_Battery_Analytics_Card_Header">
-              <span className="DAT_Battery_Analytics_Card_Header_Title">Rack Trends</span>
+      {isModelModuleOpen && selectedRack && (
+        <div className="DAT_Modal_Overlay" onClick={() => setIsModalModuleOpen(false)}>
+          <div
+            className="DAT_Modal_Overlay_BoxCell"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="DAT_Modal_Overlay_BoxCell_Header" onClick={() => {
+                setIsModalModuleOpen(false)
+                setIsModalOpen(true)
+              }}>
+              <div className="DAT_Modal_Overlay_BoxCell_Header_Icon">
+                <FaArrowLeftLong size={20}/>
+              </div>
+              <h2>{selectedRack.id} - {moduleName} - Cells</h2>
             </div>
-            <Line data={data}/>
-          </div>
-          <div className="DAT_Battery_Analytics_Card">
-            <div className="DAT_Battery_Analytics_Card_Header">
-              <span className="DAT_Battery_Analytics_Card_Header_Title">Battery Alarms</span>
+
+            <div className="DAT_Modal_Overlay_BoxCell_Cell">
+              {selectedRack.cells.map((cell) => {
+                return (
+                  <div className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card` : "DAT_Modal_Overlay_BoxCell_Cell_Card--High"}>
+                    <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header">
+                       <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Title">{cell.id}</span>
+                       <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status">
+                          <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Label">Status:</span>
+                          <span className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value` : "DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value_High"}>{cell.status}</span>
+                       </div>
+                    </div>
+                    <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats">
+                      <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item">
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item_Label">Voltage:</span>
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item_Value">{cell.voltage}V</span>
+                      </div>
+                      <div className="">
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item_Label">Temperature:</span>
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item_Value">{cell.temperature}°C</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+
             </div>
-            <div className="DAT_Battery_Analytics_Card_Table">
-              <table className="DAT_Battery_Analytics_Card_Table_Main">
-                <thead>
-                  <tr className="DAT_Battery_Analytics_Card_Table_Main_Row">
-                    <th className="DAT_Battery_Analytics_Card_Table_Main_Head">Time</th>
-                    <th className="DAT_Battery_Analytics_Card_Table_Main_Head">Level</th>
-                    <th className="DAT_Battery_Analytics_Card_Table_Main_Head">Message</th>
-                    <th className="DAT_Battery_Analytics_Card_Table_Main_Head">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="DAT_Battery_Analytics_Card_Table_Main_Body">
-                  {batteryAlarms.map((a) => (
-                    <tr key={a.id} className="DAT_Battery_Analytics_Card_Table_Main_Row">
-                      <td className="DAT_Battery_Analytics_Card_Table_Main_Cell">{a.time.slice(11)}</td>
-                      <td className="DAT_Battery_Analytics_Card_Table_Main_Cell">
-                        <StatusBadge status={a.level} />
-                      </td>
-                      <td className="DAT_Battery_Analytics_Card_Table_Main_Cell">{a.message}</td>
-                      <td className="DAT_Battery_Analytics_Card_Table_Main_Cell">
-                        <StatusBadge status={a.status} />
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+
+            <div className="DAT_Modal_Overlay_BoxCell_Footer">
+              <button onClick={() => setIsModalModuleOpen(false)}>Close</button>
             </div>
           </div>
         </div>
