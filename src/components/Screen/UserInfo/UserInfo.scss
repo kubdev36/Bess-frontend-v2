@@ -147,7 +147,9 @@
         &_Container {
             background-color: rgba(255, 255, 255, 1);
             border-radius: 5px;
-            box-shadow: 2px 2px 5px rgba(73, 73, 73, 0.2), -2px -2px 5px rgba(67, 67, 67, 0.2);
+            box-shadow:
+                2px 2px 5px rgba(73, 73, 73, 0.2),
+                -2px -2px 5px rgba(67, 67, 67, 0.2);
             margin: 80px auto 250px;
             overflow: hidden;
             position: relative;
