@@ -78,7 +78,7 @@
         white-space: nowrap;
         transition: all var(--transition-base);
         background: var(--primary);
-        color: #fff;
+        color: rgba(255, 255, 255, 1);
 
         &:hover {
           background: var(--primary-hover);
