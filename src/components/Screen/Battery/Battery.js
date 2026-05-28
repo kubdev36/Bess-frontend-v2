@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { LuBadgeCheck, LuSearch } from "react-icons/lu";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockAlarms, mockContainers } from "../../data/mockData";
-import "./BatteryPage.scss";
+import "./Battery.scss";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -52,7 +52,7 @@ const rackTrendData = [
   },
 ];
 
-export default function BatteryPage() {
+export default function Battery() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
   const [selectedRack, setSelectedRack] = useState(null);
   const [searchRack, setSearchRack] = useState("");
@@ -77,38 +77,39 @@ export default function BatteryPage() {
     }))
     : [];
   const getCellColor = (cell) => {
-    if (cell.status === "High") return "#EF4444";
-    if (cell.status === "Low") return "#F59E0B";
-    const ratio = (cell.voltage - 3.0) / 0.35;
-    const g = Math.round(180 + ratio * 75);
-    return `rgb(34, ${Math.min(255, g)}, 94)`;
-  };
+  if (cell.status === "High") return "rgba(239, 68, 68, 1)";   
+  if (cell.status === "Low") return "rgba(245, 158, 11, 1)";   
 
-  const data = {
-    labels: rackTrendData.map((item) => item.timestamp),
+  const ratio = (cell.voltage - 3.0) / 0.35;
+  const g = Math.round(180 + ratio * 75);
 
-    datasets: [
-      {
-        label: "Rack 1",
-        data: rackTrendData.map((item) => item.rack1),
-        borderColor: "#36A2EB",
-        tension: 0.3,
-      },
-      {
-        label: "Rack 2",
-        data: rackTrendData.map((item) => item.rack2),
-        borderColor: "#FF6384",
-        tension: 0.3,
-      },
+  return `rgba(34, ${Math.min(255, g)}, 94, 1)`;
+};
 
-      {
-        label: "Rack 3",
-        data: rackTrendData.map((item) => item.rack3),
-        borderColor: "#4BC0C0",
-        tension: 0.3,
-      },
-    ]
-  }
+const data = {
+  labels: rackTrendData.map((item) => item.timestamp),
+
+  datasets: [
+    {
+      label: "Rack 1",
+      data: rackTrendData.map((item) => item.rack1),
+      borderColor: "rgba(54, 162, 235, 1)", 
+      tension: 0.3,
+    },
+    {
+      label: "Rack 2",
+      data: rackTrendData.map((item) => item.rack2),
+      borderColor: "rgba(255, 99, 132, 1)", 
+      tension: 0.3,
+    },
+    {
+      label: "Rack 3",
+      data: rackTrendData.map((item) => item.rack3),
+      borderColor: "rgba(75, 192, 192, 1)", 
+      tension: 0.3,
+    },
+  ],
+};
 
   return (
     <div className="DAT_Battery">
@@ -272,21 +273,21 @@ export default function BatteryPage() {
               <span>
                 <span
                   className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "#22C55E" }}
+                  style={{ background: "rgba(34, 197, 94, 1)" }}
                 ></span>{" "}
                 Normal
               </span>
               <span>
                 <span
                   className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "#F59E0B" }}
+                  style={{ background: "rgba(245, 158, 11, 1)" }}
                 ></span>{" "}
                 Low
               </span>
               <span>
                 <span
                   className="DAT_Battery_Detail_Matrix_Legend_Dot"
-                  style={{ background: "#EF4444" }}
+                  style={{ background: "rgba(239, 68, 68, 1)" }}
                 ></span>{" "}
                 High
               </span>

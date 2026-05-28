@@ -14,7 +14,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { mockEnergyReport } from "../../data/mockData";
-import "./EnergyReportPage.scss";
+import "./EnergyReport.scss";
 import { useIntl } from "react-intl";
 
 
@@ -38,7 +38,7 @@ const presets = [
   "custom_range",
 ];
 
-export default function EnergyReportPage() {
+export default function EnergyReport() {
   const [preset, setPreset] = useState("Last 7 days");
   const lang = useIntl();
 
@@ -163,7 +163,7 @@ export default function EnergyReportPage() {
                       .reverse()
                       .map((item) => item.charge),
 
-                    backgroundColor: "#0EA5E9",
+                    backgroundColor: "rgba(14, 165, 233, 1)",
                     borderRadius: 4,
                   },
 
@@ -174,7 +174,7 @@ export default function EnergyReportPage() {
                       .reverse()
                       .map((item) => item.discharge),
 
-                    backgroundColor: "#8B5CF6",
+                    backgroundColor: "rgba(139, 92, 246, 1)",
                     borderRadius: 4,
                   },
                 ],
@@ -192,7 +192,7 @@ export default function EnergyReportPage() {
                 scales: {
                   x: {
                     grid: {
-                      color: "#E5EAF2",
+                      color: "rgba(229, 234, 242, 1)",
                       borderDash: [3, 3],
                     },
 
@@ -207,7 +207,7 @@ export default function EnergyReportPage() {
                     beginAtZero: true,
 
                     grid: {
-                      color: "#E5EAF2",
+                      color: "rgba(229, 234, 242, 1)",
                       borderDash: [3, 3],
                     },
 
@@ -237,14 +237,14 @@ export default function EnergyReportPage() {
               <Area
                 type="monotone"
                 dataKey="efficiency"
-                stroke="#1677FF"
-                fill="rgba(22,119,255,0.12)"
+                stroke="rgba(22, 119, 255, 1)"
+                fill="rgba(22, 119, 255, 0.12)"
               />
               <Area
                 type="monotone"
                 dataKey="load"
-                stroke="#14B8A6"
-                fill="rgba(20,184,166,0.12)"
+                stroke="rgba(20, 184, 166, 1)"
+                fill="rgba(20, 184, 166, 0.12)"
               />
             </AreaChart>
           </ResponsiveContainer> */}
@@ -265,8 +265,8 @@ export default function EnergyReportPage() {
                       .reverse()
                       .map((item) => item.efficiency),
 
-                    borderColor: "#1677FF",
-                    backgroundColor: "rgba(22,119,255,0.12)",
+                    borderColor: "rgba(22, 119, 255, 1)",
+                    backgroundColor: "rgba(22, 119, 255, 0.12)",
 
                     fill: true,
                     tension: 0.4,
@@ -280,8 +280,8 @@ export default function EnergyReportPage() {
                       .reverse()
                       .map((item) => item.load),
 
-                    borderColor: "#14B8A6",
-                    backgroundColor: "rgba(20,184,166,0.12)",
+                    borderColor: "rgba(20, 184, 166, 1)",
+                    backgroundColor: "rgba(20, 184, 166, 0.12)",
 
                     fill: true,
                     tension: 0.4,
@@ -301,7 +301,7 @@ export default function EnergyReportPage() {
                 scales: {
                   x: {
                     grid: {
-                      color: "#E5EAF2",
+                      color: "rgba(229, 234, 242, 1)",
                       borderDash: [3, 3],
                     },
 
@@ -316,7 +316,7 @@ export default function EnergyReportPage() {
                     beginAtZero: true,
 
                     grid: {
-                      color: "#E5EAF2",
+                      color: "rgba(229, 234, 242, 1)",
                       borderDash: [3, 3],
                     },
 

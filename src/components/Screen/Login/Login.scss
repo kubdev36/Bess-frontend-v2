@@ -8,7 +8,7 @@
   background-size: cover;
   background-position: center;
   overflow: hidden;
-  color: #ffffff;
+  color: rgba(255, 255, 255, 1);
 
   &_Overlay {
     position: absolute;
@@ -38,8 +38,8 @@
       margin-bottom: 26px;
 
       h1 {
-        color: #ffffff;
-        font-size: 2rem;
+        color: rgba(255, 255, 255, 1);
+        font-size: 32px;
         font-weight: 700;
       }
 
@@ -49,7 +49,7 @@
         border: none;
         border-radius: 999px;
         background: rgba(105, 152, 223, 0.82);
-        color: #ffffff;
+        color: rgba(255, 255, 255, 1);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -60,7 +60,7 @@
           position: absolute;
           top: 4px;
           right: 6px;
-          font-size: 0.95rem;
+          font-size: 15.2px;
           font-weight: 700;
         }
       }
@@ -84,8 +84,8 @@
           border: none;
           outline: none;
           background: transparent;
-          color: #ffffff;
-          font-size: 1rem;
+          color: rgba(255, 255, 255, 1);
+          font-size: 16px;
           font-weight: 600;
         }
 
@@ -96,7 +96,7 @@
         &_Icon {
           position: absolute;
           left: 6px;
-          color: #ffffff;
+          color: rgba(255, 255, 255, 1);
           font-size: 21px;
           display: inline-flex;
           align-items: center;
@@ -107,7 +107,7 @@
           right: 0;
           border: none;
           background: transparent;
-          color: #ffffff;
+          color: rgba(255, 255, 255, 1);
           width: 36px;
           height: 36px;
           display: inline-flex;
@@ -121,15 +121,15 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        color: #ffffff;
-        font-size: 0.98rem;
+        color: rgba(255, 255, 255, 1);
+        font-size: 16px;
         font-weight: 600;
         margin-top: -4px;
 
         input {
           width: 19px;
           height: 19px;
-          accent-color: #1d2c86;
+          accent-color: rgba(29, 44, 134, 1);
         }
       }
 
@@ -137,17 +137,17 @@
         padding: 10px 12px;
         border-radius: 8px;
         background: rgba(180, 33, 33, 0.32);
-        color: #ffffff;
-        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 1);
+        font-size: 15.2px;
       }
 
       &_Submit {
         height: 48px;
         border: none;
         border-radius: 6px;
-        background: #1a247c;
-        color: #ffffff;
-        font-size: 1rem;
+        background: rgba(26, 36, 124, 1);
+        color: rgba(255, 255, 255, 1);
+        font-size: 16px;
         font-weight: 700;
 
         &:disabled {
@@ -164,8 +164,8 @@
         button {
           border: none;
           background: transparent;
-          color: #ffffff;
-          font-size: 0.98rem;
+          color: rgba(255, 255, 255, 1);
+          font-size: 16px;
           font-weight: 600;
         }
       }
@@ -174,8 +174,8 @@
         align-self: center;
         border: none;
         background: transparent;
-        color: #ffffff;
-        font-size: 0.98rem;
+        color: rgba(255, 255, 255, 1);
+        font-size: 16px;
         font-weight: 600;
       }
     }
@@ -191,8 +191,8 @@
     align-items: center;
     justify-content: center;
     gap: min(20vw, 340px);
-    color: #ffffff;
-    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 1);
+    font-size: 15.2px;
     font-weight: 600;
   }
 
