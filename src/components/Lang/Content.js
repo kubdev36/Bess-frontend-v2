@@ -191,7 +191,7 @@ const enMessages = {
   capacity: "Capacity",
   battery_type: "Battery Type",
   commissioning_date: "Commissioning Date",
-  operator: "Operator",
+  site_operator: "Operator",
   owner: 'Owner',
   email_enabled: "Email Enabled",
   email_recipients: "Email Recipients",
@@ -233,7 +233,6 @@ const enMessages = {
   user_locked_button: "Locked",
   user_unlock_button: "Unlocked",
   user_edit_button: "Edit",
-  user_email_table: "Email",
   energy_report: "Energy Report",
   ack_alarm: "ack",
   clear_alarm: " clear",
@@ -263,7 +262,8 @@ const enMessages = {
   new_password: "New Password",
   password_confirm: "Confirm Password",
   save: "Save",
-  password_input: "Enter password"
+  password_input: "Enter password",
+  user_search: "Search name or email"
 };
 
 const viMessages = {
@@ -404,7 +404,7 @@ const viMessages = {
   export: "Xuất dữ liệu",
   state: "Trạng thái",
   report: "Báo cáo",
-  description_energy:
+  report_description:
     "Theo dõi sạc, xả, PV, grid import/export và hiệu suất hệ thống.",
   today: "Hôm nay",
   yesterday: "Hôm qua",
@@ -434,7 +434,7 @@ const viMessages = {
   power_DC: "Công suất DC",
   voltage_DC: "Điện áp DC",
   current_DC: "Dòng điện DC",
-  frequency: "Tần số",
+  frequency: "Tần số AC",
   power_AC_DC: "Điện áp AC/DC",
   temp_PCS: "Nhiệt độ PCS",
   pcs_ac: "AC",
@@ -460,7 +460,7 @@ const viMessages = {
   capacity: "Dung lượng",
   battery_type: "Loại pin",
   commissioning_date: "Ngày vận hành",
-  operator: "Nhà điều hành",
+  site_operator: "Nhà điều hành",
   owner: 'Chủ sở hữu',
   email_enabled: "Kích hoạt email",
   email_recipients: "Người nhận email",
@@ -502,7 +502,6 @@ const viMessages = {
   user_edit_button: "Chỉnh sửa",
   user_locked_button: "Khóa",
   user_unlock_button: "Mở khóa",
-  add_user: "Thêm mới người dùng",
   energy_report: "Báo cáo năng lượng",
   ack_alarm: "Xác nhận",
   clear_alarm: "Xóa",
@@ -536,7 +535,9 @@ const viMessages = {
   new_password: "Mật khẩu mới",
   password_confirm: "Xác nhận mật khẩu",
   save: "lưu",
-  password_input: "Nhập mật khẩu"
+  password_input: "Nhập mật khẩu",
+  user_search: "Tìm kiếm theo tên hoặc email"
+
 };
 
 export const messages = {

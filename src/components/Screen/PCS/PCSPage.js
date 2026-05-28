@@ -226,18 +226,21 @@ const PCSPage = (props) => {
       voltage: `${sys.pcsACVoltage} V`,
       current: `${sys.pcsACCurrent} A`,
       power: `${sys.pcsACPower} kW`,
+      frequency: `${sys.pcsFrequency} Hz`,
     },
     {
       phase: "S",
       voltage: `${sys.pcsACVoltage} V`,
       current: `${sys.pcsACCurrent} A`,
       power: `${sys.pcsACPower} kW`,
+      frequency: "-",
     },
     {
       phase: "T",
       voltage: `${sys.pcsACVoltage} V`,
       current: `${sys.pcsACCurrent} A`,
       power: `${sys.pcsACPower} kW`,
+      frequency: "-",
     },
   ];
 
@@ -355,6 +358,7 @@ const PCSPage = (props) => {
               <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "voltage_AC" })}</span>
               <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "current_AC" })}</span>
               <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "power_AC" })}</span>
+              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "frequency" })}</span>
             </div>
             {acPhases.map((item) => (
               <div key={item.phase} className="DAT_PCS_PowerFlow_AC_Table_Row">
@@ -362,6 +366,7 @@ const PCSPage = (props) => {
                 <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.voltage}</span>
                 <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.current}</span>
                 <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.power}</span>
+                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.frequency}</span>
               </div>
             ))}
           </div>
@@ -453,7 +458,7 @@ const PCSPage = (props) => {
               onChange={(e) => setSelectedDate(e.target.value)}
             />
           </div>
-          <div className="DAT_PCS_Panel_ChartWrap">
+          <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
             <Line data={dcChart.data} options={dcChart.options} />
           </div>
         </div>
