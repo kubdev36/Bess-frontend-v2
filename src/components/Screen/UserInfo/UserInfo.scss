@@ -59,7 +59,7 @@
 
                 &_Button_Primary {
                     background: var(--primary);
-                    color: #fff;
+                    color: rgba(255, 255, 255, 1);
 
                     &:hover {
                         background: var(--primary-hover);
@@ -109,7 +109,7 @@
                 }
 
                 &_Avt {
-                    box-shadow: 0 0 0 3px #d5d5d5;
+                    box-shadow: 0 0 0 3px rgba(213, 213, 213, 1);
                     cursor: pointer;
                     height: 45px;
                     width: 45px;
@@ -145,9 +145,9 @@
         align-items: center;
 
         &_Container {
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 1);
             border-radius: 5px;
-            box-shadow: 2px 2px 5px #49494933, -2px -2px 5px #43434333;
+            box-shadow: 2px 2px 5px rgba(73, 73, 73, 0.2), -2px -2px 5px rgba(67, 67, 67, 0.2);
             margin: 80px auto 250px;
             overflow: hidden;
             position: relative;
@@ -155,7 +155,7 @@
 
             &_Header {
                 align-items: center;
-                background-color: #0b1967;
+                background-color: rgba(11, 25, 103, 1);
                 padding: 16px;
                 display: flex;
                 align-items: center;
@@ -166,7 +166,7 @@
                     flex: 5 1;
                     font-size: var(--font-size-xl);
                     font-weight: var(--font-weight-bold);
-                    color: #fff;
+                    color: rgba(255, 255, 255, 1);
                     display: flex;
                     align-items: center;
                     gap: 8px;
@@ -179,7 +179,7 @@
                     align-items: center;
                     justify-content: center;
                     border: none;
-                    color: #fff;
+                    color: rgba(255, 255, 255, 1);
                     font-size: 14px;
                     cursor: pointer;
                     transition: all var(--transition-fast);
@@ -195,19 +195,20 @@
 
             &_Main {
                 align-items: center;
-                border-bottom: 1px solid #c6c5c580;
-                color: #505050;
+                border-bottom: 1px solid rgba(198, 197, 197, 0.5);
+                color: rgba(80, 80, 80, 1);
                 font-size: 14px;
                 justify-content: center;
                 padding: 16px;
 
                 &_Label {
                     cursor: default;
+                    color: rgba(255, 255, 255, 1);
                 }
 
                 &_Box {
                     align-items: center;
-                    border: 1px solid #c6c5c580;
+                    border: 1px solid rgba(198, 197, 197, 0.5);
                     border-radius: 5px;
                     display: flex;
                     gap: 8px;
@@ -251,10 +252,10 @@
                 padding: 8px;
 
                 button {
-                    background-color: #0b1967;
+                    background-color: rgba(11, 25, 103, 1);
                     border: none;
                     border-radius: 5px;
-                    color: #fff;
+                    color: rgba(255, 255, 255, 1);
                     cursor: pointer;
                     padding: 8px 16px;
                 }
