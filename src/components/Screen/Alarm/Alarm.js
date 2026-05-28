@@ -10,10 +10,10 @@ import Modal from "../../Modal/Modal";
 import StatusBadge from "../../Modal/StatusBadge";
 import { useAuth } from "../../contexts/AuthContext";
 import { mockAlarms } from "../../data/mockData";
-import "./AlarmPage.scss";
+import "./Alarm.scss";
 import { useIntl } from "react-intl";
 
-export default function AlarmPage() {
+export default function Alarm() {
   const { hasPermission } = useAuth();
   const [alarms, setAlarms] = useState(mockAlarms);
   const [filterLevel, setFilterLevel] = useState("All");
@@ -243,7 +243,7 @@ export default function AlarmPage() {
       <Modal
         isOpen={!!selectedAlarm}
         onClose={() => setSelectedAlarm(null)}
-        title={selectedAlarm ? `Alarm ${selectedAlarm.code}` : ""}
+        title={selectedAlarm ? `${lang.formatMessage({ id: "alarm_detail_title" })} ${selectedAlarm.code}` : ""}
       >
         {selectedAlarm && (
           <div className="DAT_Alarm_Detail">
@@ -267,7 +267,7 @@ export default function AlarmPage() {
             {selectedAlarm.relatedParams && (
               <>
                 <div className="DAT_Alarm_Detail_Title">
-                  Related Parameters
+                  {lang.formatMessage({ id: "related_parameters" })}
                 </div>
                 {Object.entries(selectedAlarm.relatedParams).map(([k, v]) => (
                   <div key={k} className="DAT_Alarm_Detail_Row">

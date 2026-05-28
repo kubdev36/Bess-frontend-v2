@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import Modal from "../../Modal/Modal";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockUsers } from "../../data/mockData";
-import "./UserManagementPage.scss";
+import "./UserManagement.scss";
 import { useIntl } from "react-intl";
 
 const emptyUser = {
@@ -14,7 +14,7 @@ const emptyUser = {
   status: "Active",
 };
 
-export default function UserManagementPage() {
+export default function UserManagement() {
   const [users, setUsers] = useState(mockUsers);
   const [search, setSearch] = useState("");
   const [role, setRole] = useState("All");
@@ -205,27 +205,27 @@ export default function UserManagementPage() {
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        title={editing ? "Edit User" : "Add User"}
+        title={editing ? lang.formatMessage({ id: "user_modal_edit_title" }) : lang.formatMessage({ id: "user_modal_add_title" })}
         footer={
           <>
             <button
               className="DAT_UserManagement_Modal_Footer_Button_Secondary"
               onClick={() => setShowModal(false)}
             >
-              Cancel
+              {lang.formatMessage({ id: "modal_cancel" })}
             </button>
             <button
               className="DAT_UserManagement_Modal_Footer_Button_Primary"
               onClick={saveUser}
             >
-              Save User
+              {lang.formatMessage({ id: "user_modal_save_user" })}
             </button>
           </>
         }
       >
         <div className="DAT_UserManagement_Form_Grid">
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Full Name</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_full_name" })}</label>
             <input
               className="DAT_UserManagement_Form_Grid_Group_Input"
               value={form.name}
@@ -233,7 +233,7 @@ export default function UserManagementPage() {
             />
           </div>
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Email</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_email" })}</label>
             <input
               className="DAT_UserManagement_Form_Grid_Group_Input"
               value={form.email}
@@ -241,7 +241,7 @@ export default function UserManagementPage() {
             />
           </div>
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Password</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_password" })}</label>
             <input
               className="DAT_UserManagement_Form_Grid_Group_Input"
               type="password"
@@ -250,7 +250,7 @@ export default function UserManagementPage() {
             />
           </div>
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Confirm Password</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_confirm_password" })}</label>
             <input
               className="DAT_UserManagement_Form_Grid_Group_Input"
               type="password"
@@ -261,7 +261,7 @@ export default function UserManagementPage() {
             />
           </div>
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Role</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_role" })}</label>
             <select
               className="DAT_UserManagement_Form_Grid_Group_Select"
               value={form.role}
@@ -274,7 +274,7 @@ export default function UserManagementPage() {
             </select>
           </div>
           <div className="DAT_UserManagement_Form_Grid_Group">
-            <label className="DAT_UserManagement_Form_Grid_Group_Label">Status</label>
+            <label className="DAT_UserManagement_Form_Grid_Group_Label">{lang.formatMessage({ id: "user_modal_status" })}</label>
             <select
               className="DAT_UserManagement_Form_Grid_Group_Select"
               value={form.status}

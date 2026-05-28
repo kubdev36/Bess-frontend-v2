@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter,
   Navigate,
@@ -9,14 +9,14 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "./components/contexts/AuthContext";
 import MainLayout from "./components/Layout/MainLayout";
-import LoginPage from "./components/Screen/Login/LoginPage";
+import LoginPage from "./components/Screen/Login/Login";
 import DashboardPage from "./components/Screen/Dashboard/Dashboard";
-import BatteryPage from "./components/Screen/Battery/BatteryPage";
-import PCSPage from "./components/Screen/PCS/PCSPage";
-import AlarmPage from "./components/Screen/Alarm/AlarmPage";
-import EnergyReportPage from "./components/Screen/EnergyReport/EnergyReportPage";
-import UserManagementPage from "./components/Screen/UserManagement/UserManagementPage";
-import SystemSettingsPage from "./components/Screen/SystemSettings/SystemSettingsPage";
+import BatteryPage from "./components/Screen/Battery/Battery";
+import PCSPage from "./components/Screen/PCS/PCS";
+import AlarmPage from "./components/Screen/Alarm/Alarm";
+import EnergyReportPage from "./components/Screen/EnergyReport/EnergyReport";
+import UserManagementPage from "./components/Screen/UserManagement/UserManagement";
+import SystemSettingsPage from "./components/Screen/SystemSettings/SystemSettings";
 import RolePage from "./components/Screen/Role/Role";
 import UserInfoPage from "./components/Screen/UserInfo/UserInfo";
 import { io } from "socket.io-client";
