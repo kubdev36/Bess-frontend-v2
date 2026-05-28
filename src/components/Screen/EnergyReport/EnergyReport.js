@@ -187,8 +187,10 @@ export default function EnergyReport() {
                   legend: {
                     position: "bottom",
                   },
+                  datalabels: {
+                    display: false,
+                  },
                 },
-
                 scales: {
                   x: {
                     grid: {
@@ -227,27 +229,6 @@ export default function EnergyReport() {
           <div className="DAT_Report_Chart_Container_Header">
             {lang.formatMessage({ id: "efficiency" })} / {lang.formatMessage({ id: "load_trend" })}
           </div>
-          {/* <ResponsiveContainer width="100%" height={280}>
-            <AreaChart data={rows.slice().reverse()}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5EAF2" />
-              <XAxis dataKey="date" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip />
-              <Legend />
-              <Area
-                type="monotone"
-                dataKey="efficiency"
-                stroke="rgba(22, 119, 255, 1)"
-                fill="rgba(22, 119, 255, 0.12)"
-              />
-              <Area
-                type="monotone"
-                dataKey="load"
-                stroke="rgba(20, 184, 166, 1)"
-                fill="rgba(20, 184, 166, 0.12)"
-              />
-            </AreaChart>
-          </ResponsiveContainer> */}
           <div style={{ width: "100%", height: 280 }}>
             <Line
               data={{
@@ -296,7 +277,11 @@ export default function EnergyReport() {
                   legend: {
                     position: "bottom",
                   },
+                  datalabels: {
+                    display: false,
+                  },
                 },
+
 
                 scales: {
                   x: {
