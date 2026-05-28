@@ -94,7 +94,7 @@
 
       &_Button_Primary {
         background: var(--primary);
-        color: #fff;
+        color: rgba(255, 255, 255, 1);
 
         &:hover {
           background: var(--primary-hover);
@@ -135,7 +135,7 @@
           font-size: var(--font-size-sm);
           font-weight: var(--font-weight-semibold);
           text-transform: uppercase;
-          letter-spacing: 0.03em;
+          letter-spacing: 0.5px;
         }
 
         &_Row {
@@ -221,7 +221,7 @@
 
       &_Button_Primary {
         background: var(--primary);
-        color: #fff;
+        color: rgba(255, 255, 255, 1);
 
         &:hover {
           background: var(--primary-hover);
