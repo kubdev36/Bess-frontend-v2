@@ -134,7 +134,7 @@
                 font-size: var(--font-size-sm);
                 font-weight: var(--font-weight-semibold);
                 text-transform: uppercase;
-                letter-spacing: 0.03em;
+                letter-spacing: 0.48px;
             }
 
             td {
@@ -209,7 +209,7 @@
                 padding: 6px 12px;
                 font-size: var(--font-size-sm);
                 background: var(--primary);
-                color: #fff;
+                color: rgba(255, 255, 255, 1);
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -231,7 +231,7 @@
                 padding: 6px 12px;
                 font-size: var(--font-size-sm);
                 background: var(--success-dark);
-                color: #fff;
+                color: rgba(255, 255, 255, 1);
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
@@ -285,7 +285,7 @@
                 &.active {
                     border-color: var(--primary);
                     background: var(--primary);
-                    color: #fff;
+                    color: rgba(255, 255, 255, 1);
                 }
 
                 &:disabled {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { mockSystemSettings } from "../../data/mockData";
-import "./SystemSettingsPage.scss";
+import "./SystemSettings.scss";
 import { useIntl } from "react-intl";
 
 const tabs = ["site", "device", "notification", "realtime"];
@@ -25,7 +25,7 @@ const createDefaultSettings = () => ({
   device: defaultDeviceSettings,
 });
 
-export default function SystemSettingsPage() {
+export default function SystemSettings() {
   const lang = useIntl();
   const [activeTab, setActiveTab] = useState("site");
   const [settings, setSettings] = useState(createDefaultSettings);

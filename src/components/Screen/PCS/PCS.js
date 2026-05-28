@@ -23,7 +23,7 @@ import {
   mockSystemSummary as sys,
 } from "../../data/mockData";
 import { socket } from "../../../App";
-import "./PCSPage.scss";
+import "./PCS.scss";
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +51,11 @@ const dcMetricTabs = [
   { key: "power", label: "P", unit: "kW", color: "rgba(37, 99, 235, 1)", fillColor: "rgba(37, 99, 235, 0.1)" },
   { key: "voltage", label: "V", unit: "V", color: "rgba(6, 182, 212, 1)", fillColor: "rgba(6, 182, 212, 0.1)" },
   { key: "current", label: "A", unit: "A", color: "rgba(249, 115, 22, 1)", fillColor: "rgba(249, 115, 22, 0.1)" },
+];
+
+const pcsUnits = [
+  { key: "unit1", label: "Unit 1" },
+  { key: "unit2", label: "Unit 2" },
 ];
 
 const buildChartConfig = (rows, metric, title) => {
@@ -159,11 +164,12 @@ const buildChartConfig = (rows, metric, title) => {
   };
 };
 
-const PCSPage = (props) => {
+const PCS = (props) => {
   const lang = useIntl();
   const [dataInf, setDataInf] = useState({});
   const [step, setStep] = useState(0);
   const [selectedDate, setSelectedDate] = useState(defaultChartDate);
+  const [selectedUnit, setSelectedUnit] = useState(pcsUnits[0].key);
   const [selectedAcMetric, setSelectedAcMetric] = useState(acMetricTabs[0].key);
   const [selectedDcMetric, setSelectedDcMetric] = useState(dcMetricTabs[0].key);
   const batteryStatus = {
@@ -220,35 +226,73 @@ const PCSPage = (props) => {
     };
   }, [props.data, step]);
 
-  const acPhases = [
-    {
-      phase: "R",
-      voltage: `${sys.pcsACVoltage} V`,
-      current: `${sys.pcsACCurrent} A`,
-      power: `${sys.pcsACPower} kW`,
-      frequency: `${sys.pcsFrequency} Hz`,
-    },
-    {
-      phase: "S",
-      voltage: `${sys.pcsACVoltage} V`,
-      current: `${sys.pcsACCurrent} A`,
-      power: `${sys.pcsACPower} kW`,
-      frequency: "-",
-    },
-    {
-      phase: "T",
-      voltage: `${sys.pcsACVoltage} V`,
-      current: `${sys.pcsACCurrent} A`,
-      power: `${sys.pcsACPower} kW`,
-      frequency: "-",
-    },
-  ];
+  const pcsUnitData = useMemo(
+    () => ({
+      unit1: {
+        acPhases: [
+          {
+            phase: "R",
+            voltage: `${sys.pcsACVoltage} V`,
+            current: `${sys.pcsACCurrent} A`,
+            power: `${sys.pcsACPower} kW`,
+            frequency: `${sys.pcsFrequency} Hz`,
+          },
+          {
+            phase: "S",
+            voltage: `${sys.pcsACVoltage} V`,
+            current: `${sys.pcsACCurrent} A`,
+            power: `${sys.pcsACPower} kW`,
+            frequency: "-",
+          },
+          {
+            phase: "T",
+            voltage: `${sys.pcsACVoltage} V`,
+            current: `${sys.pcsACCurrent} A`,
+            power: `${sys.pcsACPower} kW`,
+            frequency: "-",
+          },
+        ],
+        dcMetrics: [
+          [lang.formatMessage({ id: "voltage_DC" }), `${sys.pcsDCVoltage} V`],
+          [lang.formatMessage({ id: "current_DC" }), `${sys.pcsDCCurrent} A`],
+          [lang.formatMessage({ id: "power_DC" }), `${sys.pcsDCPower} kW`],
+        ],
+      },
+      unit2: {
+        acPhases: [
+          {
+            phase: "R",
+            voltage: `${sys.pcsACVoltage - 3} V`,
+            current: `${sys.pcsACCurrent - 8} A`,
+            power: `${sys.pcsACPower - 10} kW`,
+            frequency: `${(sys.pcsFrequency - 0.02).toFixed(2)} Hz`,
+          },
+          {
+            phase: "S",
+            voltage: `${sys.pcsACVoltage - 2} V`,
+            current: `${sys.pcsACCurrent - 6} A`,
+            power: `${sys.pcsACPower - 9} kW`,
+            frequency: "-",
+          },
+          {
+            phase: "T",
+            voltage: `${sys.pcsACVoltage - 4} V`,
+            current: `${sys.pcsACCurrent - 7} A`,
+            power: `${sys.pcsACPower - 11} kW`,
+            frequency: "-",
+          },
+        ],
+        dcMetrics: [
+          [lang.formatMessage({ id: "voltage_DC" }), `${sys.pcsDCVoltage - 12} V`],
+          [lang.formatMessage({ id: "current_DC" }), `${sys.pcsDCCurrent - 9} A`],
+          [lang.formatMessage({ id: "power_DC" }), `${sys.pcsDCPower - 8} kW`],
+        ],
+      },
+    }),
+    [lang],
+  );
 
-  const dcMetrics = [
-    [lang.formatMessage({ id: "voltage_DC" }), `${sys.pcsDCVoltage} V`],
-    [lang.formatMessage({ id: "current_DC" }), `${sys.pcsDCCurrent} A`],
-    [lang.formatMessage({ id: "power_DC" }), `${sys.pcsDCPower} kW`],
-  ];
+  const activeUnitData = pcsUnitData[selectedUnit] ?? pcsUnitData.unit1;
 
   const chartSeed = useMemo(() => Number(selectedDate.slice(-2)) || 1, [selectedDate]);
 
@@ -296,6 +340,7 @@ const PCSPage = (props) => {
 
   const acMetric = acMetricTabs.find((item) => item.key === selectedAcMetric) ?? acMetricTabs[0];
   const dcMetric = dcMetricTabs.find((item) => item.key === selectedDcMetric) ?? dcMetricTabs[0];
+  const selectedUnitLabel = pcsUnits.find((item) => item.key === selectedUnit)?.label ?? "Unit 1";
 
   const acChart = useMemo(() => {
     const currentMeta = acChartMeta[selectedAcMetric];
@@ -319,7 +364,7 @@ const PCSPage = (props) => {
     <div className="DAT_PCS">
       <div className="DAT_PCS_Overview">
         <div className="DAT_PCS_Overview_OverviewTitle">
-          <span className="DAT_PCS_Overview_OverviewTitle_Text">PCS-001</span>
+          <div className="DAT_PCS_Overview_OverviewTitle_Text">PCS Level</div>
           <div className="DAT_PCS_Overview_OverviewTitle_StatusPill">
             {batteryStatus[dataInf?.["7000-1"] ?? 0]}
           </div>
@@ -327,21 +372,9 @@ const PCSPage = (props) => {
         <div className="DAT_PCS_Overview_OverviewStats">
           <div className="DAT_PCS_Overview_OverviewStats_StatCard">
             <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatLabel">
-              {lang.formatMessage({ id: "effciency" })}
-            </span>
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsEfficiency}%</span>
-          </div>
-          <div className="DAT_PCS_Overview_OverviewStats_StatCard">
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatLabel">
               {lang.formatMessage({ id: "tempurature" })}
             </span>
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsTemperature} degC</span>
-          </div>
-          <div className="DAT_PCS_Overview_OverviewStats_StatCard">
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatLabel">
-              {lang.formatMessage({ id: "power_factor" })}
-            </span>
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsPowerFactor}</span>
+            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsTemperature}°C</span>
           </div>
         </div>
       </div>
@@ -350,7 +383,7 @@ const PCSPage = (props) => {
         <div className="DAT_PCS_PowerFlow_AC">
           <span className="DAT_PCS_PowerFlow_AC_Title">
             <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
-            {lang.formatMessage({ id: "pcs_ac" })}
+            {`${lang.formatMessage({ id: "pcs_ac" })} ${selectedUnitLabel.toUpperCase()}`}
           </span>
           <div className="DAT_PCS_PowerFlow_AC_Table">
             <div className="DAT_PCS_PowerFlow_AC_Table_Header">
@@ -360,7 +393,7 @@ const PCSPage = (props) => {
               <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "power_AC" })}</span>
               <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "frequency" })}</span>
             </div>
-            {acPhases.map((item) => (
+            {activeUnitData.acPhases.map((item) => (
               <div key={item.phase} className="DAT_PCS_PowerFlow_AC_Table_Row">
                 <span className="DAT_PCS_PowerFlow_AC_Table_Row_Phase">{item.phase}</span>
                 <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.voltage}</span>
@@ -373,28 +406,41 @@ const PCSPage = (props) => {
         </div>
 
         <div className="DAT_PCS_PowerFlow_Transfer">
-          <span className="DAT_PCS_PowerFlow_Transfer_Arrow DAT_PCS_PowerFlow_Transfer_ArrowLeft" />
-          <div className="DAT_PCS_PowerFlow_Transfer_Box">
-            <span className="DAT_PCS_PowerFlow_Transfer_Box_Label">AC/DC</span>
+          <div className="DAT_PCS_PowerFlow_Transfer_Content">
+            <div className="DAT_PCS_PowerFlow_Transfer_Box">
+              <span className="DAT_PCS_PowerFlow_Transfer_Box_Arrow" aria-hidden="true">↔</span>
+              <span className="DAT_PCS_PowerFlow_Transfer_Box_Label">AC/DC</span>
+            </div>
+            <div className="DAT_PCS_PowerFlow_Transfer_UnitSwitcher">
+              {pcsUnits.map((unit) => (
+                <button
+                  key={unit.key}
+                  type="button"
+                  className={`DAT_PCS_PowerFlow_Transfer_UnitButton ${selectedUnit === unit.key ? "DAT_PCS_PowerFlow_Transfer_UnitButton--active" : ""}`}
+                  onClick={() => setSelectedUnit(unit.key)}
+                >
+                  {unit.label}
+                </button>
+              ))}
+            </div>
           </div>
-          <span className="DAT_PCS_PowerFlow_Transfer_Arrow DAT_PCS_PowerFlow_Transfer_ArrowRight" />
         </div>
 
         <div className="DAT_PCS_PowerFlow_DC">
           <span className="DAT_PCS_PowerFlow_DC_Title">
             <LuBatteryCharging style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
-            {lang.formatMessage({ id: "pcs_dc" })}
+            {`${lang.formatMessage({ id: "pcs_dc" })} ${selectedUnitLabel.toUpperCase()}`}
           </span>
           <div className="DAT_PCS_PowerFlow_DC_Table">
             <div className="DAT_PCS_PowerFlow_DC_Table_Header">
-              {dcMetrics.map(([label]) => (
+              {activeUnitData.dcMetrics.map(([label]) => (
                 <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Header_Label">
                   {label}
                 </span>
               ))}
             </div>
             <div className="DAT_PCS_PowerFlow_DC_Table_Row">
-              {dcMetrics.map(([label, value]) => (
+              {activeUnitData.dcMetrics.map(([label, value]) => (
                 <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Row_Value">
                   {value}
                 </span>
@@ -507,4 +553,4 @@ const PCSPage = (props) => {
   );
 };
 
-export default PCSPage;
+export default PCS;

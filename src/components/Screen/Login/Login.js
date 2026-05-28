@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LuEye, LuEyeOff, LuGlobe, LuLock, LuUser } from "react-icons/lu";
 import { useAuth } from "../../contexts/AuthContext";
-import "./LoginPage.scss";
+import "./Login.scss";
 
-export default function LoginPage() {
+export default function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const backgroundStyle = {
