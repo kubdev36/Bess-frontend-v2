@@ -112,6 +112,8 @@ const statusMessageIds = {
   Discharging: "status_discharging",
   Warning: "status_warning",
   Critical: "status_critical",
+  Alert: "status_alert",
+  Notice: "status_notice",
   Standby: "status_standby",
   Connected: "status_connected",
   Disconnected: "status_disconnected",
@@ -150,14 +152,9 @@ export default function StatusBadge({ status }) {
   const className = badgeMap[status] || "status-badge--gray";
   const Icon = iconMap[status];
   const messageId = statusMessageIds[status];
-  const customLabelMap = {
-    Alert: lang.formatMessage({ id: "status_alert", defaultMessage: "Alert" }),
-    Notice: lang.formatMessage({ id: "status_notice", defaultMessage: "Notice" }),
-  };
-  const label = customLabelMap[status]
-    || (messageId
-      ? lang.formatMessage({ id: messageId, defaultMessage: status })
-      : status);
+  const label = messageId
+    ? lang.formatMessage({ id: messageId, defaultMessage: status })
+    : status;
 
   return (
     <span

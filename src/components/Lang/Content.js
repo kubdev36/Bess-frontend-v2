@@ -287,7 +287,9 @@ const enMessages = {
   user_modal_confirm_password: "Confirm Password",
   user_modal_role: "Role",
   user_modal_status: "Status",
-  alarms_title: "Alarms"
+  alarms_title: "Alarms",
+  status_alert: "Alert",
+  status_notice: "Notice"
 };
 
 const viMessages = {
@@ -586,7 +588,9 @@ const viMessages = {
   user_modal_confirm_password: "Xác nhận mật khẩu",
   user_modal_role: "Vai trò",
   user_modal_status: "Trạng thái",
-  alarms_title: "Cảnh báo"
+  alarms_title: "Cảnh báo",
+  status_alert: "Cảnh báo",
+  status_notice: "Chú ý"
 };
 
 export const messages = {
