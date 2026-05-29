@@ -458,6 +458,65 @@ const PCS = (props) => {
             </div>
           </div>
 
+          <div className="DAT_PCSMobile_ChartGrid">
+            <div className="DAT_PCSMobile_ChartGrid_Panel">
+              <span className="DAT_PCSMobile_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCSMobile_ChartGrid_Panel_TabList">
+                  {acMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCSMobile_ChartGrid_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCSMobile_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedAcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCSMobile_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ChartWrap">
+                <Line data={acChart.data} options={acChart.options} />
+              </div>
+            </div>
+
+            <div className="DAT_PCSMobile_ChartGrid_Panel">
+              <span className="DAT_PCSMobile_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCSMobile_ChartGrid_Panel_TabList">
+                  {dcMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCSMobile_ChartGrid_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCSMobile_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedDcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCSMobile_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ChartWrap">
+                <Line data={dcChart.data} options={dcChart.options} />
+              </div>
+            </div>
+          </div>
 
         </div>
       ) : (
