@@ -29,6 +29,8 @@ const badgeMap = {
   Discharging: "status-badge--purple",
   Warning: "status-badge--warning",
   Critical: "status-badge--danger",
+  Alert: "status-badge--danger",
+  Notice: "status-badge--warning",
   Standby: "status-badge--gray",
   Connected: "status-badge--success",
   Disconnected: "status-badge--danger",
@@ -72,6 +74,8 @@ const iconMap = {
   Discharging: FaArrowUp,
   Warning: FaTriangleExclamation,
   Critical: FaCircleExclamation,
+  Alert: FaCircleExclamation,
+  Notice: FaTriangleExclamation,
   Standby: FaCircle,
   Connected: FaPlug,
   Disconnected: FaCircleXmark,
@@ -142,9 +146,14 @@ export default function StatusBadge({ status }) {
   const className = badgeMap[status] || "status-badge--gray";
   const Icon = iconMap[status];
   const messageId = statusMessageIds[status];
-  const label = messageId
-    ? intl.formatMessage({ id: messageId, defaultMessage: status })
-    : status;
+  const customLabelMap = {
+    Alert: intl.locale === "vi" ? "C\u1ea3nh b\u00e1o" : "Alert",
+    Notice: intl.locale === "vi" ? "Ch\u00fa \u00fd" : "Notice",
+  };
+  const label = customLabelMap[status]
+    || (messageId
+      ? intl.formatMessage({ id: messageId, defaultMessage: status })
+      : status);
 
   return (
     <span

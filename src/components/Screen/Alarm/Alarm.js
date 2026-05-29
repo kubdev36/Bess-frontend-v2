@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  LuChevronLeft,
-  LuChevronRight,
-  LuDownload,
-  LuEye,
-  LuSearch,
-} from "react-icons/lu";
+import { LuChevronLeft, LuChevronRight, LuEye, LuSearch,LuBell } from "react-icons/lu";
 import Modal from "../../Modal/Modal";
 import StatusBadge from "../../Modal/StatusBadge";
 import { useAuth } from "../../contexts/AuthContext";
@@ -13,20 +7,82 @@ import { mockAlarms } from "../../data/mockData";
 import "./Alarm.scss";
 import { useIntl } from "react-intl";
 
+const normalizeAlarmLevel = (level) => {
+  if (level === "Warning" || level === "Info") {
+    return "Notice";
+  }
+
+  return "Alert";
+};
+
+const allowedDevices = ["BMS", "PCS"];
+
+const getAlarmExtraInfo = (alarm) => {
+  const voltage = alarm.relatedParams?.voltage || "527.8V";
+  const current = alarm.relatedParams?.current || "0.0A";
+
+  if (alarm.device === "BMS") {
+    return [
+      ["Tầng", "1"],
+      ["Cell max (V)", "3.28"],
+      ["Cell min (V)", "3.15"],
+      ["Rack", "02"],
+      ["Nhiệt độ (°C)", "28.5"],
+      ["SOC (%)", "85.2"],
+      ["DC bus (V)", voltage.replace("V", "")],
+      ["Dòng điện (A)", current.replace("A", "")],
+      ["SOH (%)", "97.8"],
+    ];
+  }
+
+  return [
+    ["Tầng", "1"],
+    ["Input state 1", "49347"],
+    ["Input state 2", "1937"],
+    ["Output state", "32"],
+    ["Tốc độ (mm/s)", "0"],
+    ["Vị trí (m)", "0"],
+    ["Điện áp DC bus (V)", voltage.replace("V", "")],
+    ["Dòng điện (A)", current.replace("A", "")],
+    ["Tần số (Hz)", "0"],
+  ];
+};
+
+const getAlarmCause = (alarm) => {
+  if (alarm.device === "BMS") {
+    return "Bảo vệ quá nhiệt";
+  }
+
+  return "Bảo vệ quá nhiệt";
+};
+
+const getAlarmMeasures = (alarm) => {
+  if (alarm.device === "BMS") {
+    return ["Kiểm tra logic kết nối đầu vào", "Tăng khả năng giải nhiệt motor"];
+  }
+
+  return ["Kiểm tra logic kết nối đầu vào", "Tăng khả năng giải nhiệt motor"];
+};
+
 export default function Alarm() {
+  const lang = useIntl();
   const { hasPermission } = useAuth();
-  const [alarms, setAlarms] = useState(mockAlarms);
+  const [alarms, setAlarms] = useState(
+    mockAlarms.filter((alarm) => allowedDevices.includes(alarm.device)),
+  );
   const [filterLevel, setFilterLevel] = useState("All");
-  const [filterStatus, setFilterStatus] = useState("All");
   const [filterDevice, setFilterDevice] = useState("All");
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [selectedAlarm, setSelectedAlarm] = useState(null);
   const perPage = 10;
+  const alertLabel = lang.locale === "vi" ? "C\u1ea3nh b\u00e1o" : "Alert";
+  const noticeLabel = lang.locale === "vi" ? "Ch\u00fa \u00fd" : "Notice";
 
   const filtered = alarms.filter((a) => {
-    if (filterLevel !== "All" && a.level !== filterLevel) return false;
-    if (filterStatus !== "All" && a.status !== filterStatus) return false;
+    const normalizedLevel = normalizeAlarmLevel(a.level);
+
+    if (filterLevel !== "All" && normalizedLevel !== filterLevel) return false;
     if (filterDevice !== "All" && a.device !== filterDevice) return false;
     if (
       search &&
@@ -39,21 +95,20 @@ export default function Alarm() {
 
   const totalPages = Math.ceil(filtered.length / perPage);
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
-  const lang = useIntl();
 
   const handleAck = (id) => {
     setAlarms((prev) =>
       prev.map((a) =>
         a.id === id
           ? {
-            ...a,
-            status: "Acknowledged",
-            operator: "Admin",
-            acknowledgedAt: new Date()
-              .toISOString()
-              .slice(0, 16)
-              .replace("T", " "),
-          }
+              ...a,
+              status: "Acknowledged",
+              operator: "Admin",
+              acknowledgedAt: new Date()
+                .toISOString()
+                .slice(0, 16)
+                .replace("T", " "),
+            }
           : a,
       ),
     );
@@ -64,13 +119,13 @@ export default function Alarm() {
       prev.map((a) =>
         a.id === id
           ? {
-            ...a,
-            status: "Cleared",
-            clearedAt: new Date()
-              .toISOString()
-              .slice(0, 16)
-              .replace("T", " "),
-          }
+              ...a,
+              status: "Cleared",
+              clearedAt: new Date()
+                .toISOString()
+                .slice(0, 16)
+                .replace("T", " "),
+            }
           : a,
       ),
     );
@@ -78,104 +133,91 @@ export default function Alarm() {
 
   return (
     <div className="DAT_Alarm">
-      <div className="DAT_Alarm_Filter">
-        <select
-          className="DAT_Alarm_Filter_Form"
-          style={{ width: 130 }}
-          value={filterLevel}
-          onChange={(e) => {
-            setFilterLevel(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="All">{lang.formatMessage({ id: "all_levels" })}</option>
-          <option value="Info">{lang.formatMessage({ id: "information" })}</option>
-          <option value="Warning">{lang.formatMessage({ id: "warning" })}</option>
-          <option value="Fault">{lang.formatMessage({ id: "error" })}</option>
-          <option value="Critical">{lang.formatMessage({ id: "critical" })}</option>
-        </select>
-        <select
-          className="DAT_Alarm_Filter_Form"
-          style={{ width: 130 }}
-          value={filterDevice}
-          onChange={(e) => {
-            setFilterDevice(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="All">{lang.formatMessage({ id: "all_devices" })}</option>
-          <option value="BMS">BMS</option>
-          <option value="PCS">PCS</option>
-          <option value="Grid">{lang.formatMessage({ id: "grid" })}</option>
-          <option value="Battery">{lang.formatMessage({ id: "battery" })}</option>
-          <option value="System">{lang.formatMessage({ id: "system" })}</option>
-        </select>
-        <select
-          className="DAT_Alarm_Filter_Form"
-          style={{ width: 140 }}
-          value={filterStatus}
-          onChange={(e) => {
-            setFilterStatus(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="All">{lang.formatMessage({ id: "all_status" })}</option>
-          <option value="Active">{lang.formatMessage({ id: "status_active" })}</option>
-          <option value="Acknowledged">{lang.formatMessage({ id: "status_acknowledged" })}</option>
-          <option value="Cleared">{lang.formatMessage({ id: "status_cleared" })}</option>
-        </select>
-        <div className="DAT_Alarm_Filter_Search" style={{ width: 200 }}>
-          <span className="DAT_Alarm_Filter_Search_Icon">
-            <LuSearch />
-          </span>
-          <input
-            className="DAT_Alarm_Filter_Search_Input"
-            placeholder={lang.formatMessage({ id: "search_alarms" })}
-            value={search}
+      <div className="DAT_Alarm_Overview">
+        <div className="DAT_Alarm_Overview_OverviewTitle">
+          <LuBell />
+          <div className="DAT_Alarm_Overview_OverviewTitle_Text">Alarm</div>
+        </div>
+
+        <div className="DAT_Alarm_Filter">
+          <select
+            className="DAT_Alarm_Filter_Form"
+            style={{ width: 130 }}
+            value={filterLevel}
             onChange={(e) => {
-              setSearch(e.target.value);
+              setFilterLevel(e.target.value);
               setPage(1);
             }}
-          />
+          >
+            <option value="All">
+              {lang.formatMessage({ id: "all_levels" })}
+            </option>
+            <option value="Alert">{alertLabel}</option>
+            <option value="Notice">{noticeLabel}</option>
+          </select>
+          <select
+            className="DAT_Alarm_Filter_Form"
+            style={{ width: 130 }}
+            value={filterDevice}
+            onChange={(e) => {
+              setFilterDevice(e.target.value);
+              setPage(1);
+            }}
+          >
+            <option value="All">
+              {lang.formatMessage({ id: "all_devices" })}
+            </option>
+            {allowedDevices.map((device) => (
+              <option key={device} value={device}>
+                {device}
+              </option>
+            ))}
+          </select>
+          <div className="DAT_Alarm_Filter_Search" style={{ width: 200 }}>
+            <span className="DAT_Alarm_Filter_Search_Icon">
+              <LuSearch />
+            </span>
+            <input
+              className="DAT_Alarm_Filter_Search_Input"
+              placeholder={lang.formatMessage({ id: "search_alarms" })}
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         </div>
-        <button className="DAT_Alarm_Filter_Export">
-          <LuDownload />
-          {lang.formatMessage({ id: "export" })}
-        </button>
-
       </div>
 
       <div className="DAT_Alarm_Main">
         <table className="DAT_Alarm_Main_Table">
           <thead>
             <tr>
-              <th>ID</th>
-              <th>{lang.formatMessage({ id: "date" })}</th>
+              <th>{lang.formatMessage({ id: "alarm_id" })}</th>
               <th>{lang.formatMessage({ id: "level" })}</th>
               <th>{lang.formatMessage({ id: "device" })}</th>
               <th>{lang.formatMessage({ id: "message" })}</th>
-              <th>{lang.formatMessage({ id: "status" })}</th>
-              <th>{lang.formatMessage({ id: "operator" })}</th>
               <th>{lang.formatMessage({ id: "action" })}</th>
+              <th>{lang.formatMessage({ id: "date" })}</th>
             </tr>
           </thead>
           <tbody>
             {paged.map((a) => (
               <tr
                 key={a.id}
-                className={a.status === "Active" ? "highlight_danger" : ""}
+                className={
+                  normalizeAlarmLevel(a.level) === "Alert"
+                    ? "highlight_danger"
+                    : "highlight_warning"
+                }
               >
                 <td className="Font_Medium">{a.code}</td>
-                <td>{a.time}</td>
                 <td>
-                  <StatusBadge status={a.level} />
+                  <StatusBadge status={normalizeAlarmLevel(a.level)} />
                 </td>
                 <td>{a.device}</td>
                 <td>{a.message}</td>
-                <td>
-                  <StatusBadge status={a.status} />
-                </td>
-                <td className="Text_Secondary">{a.operator}</td>
                 <td>
                   <button
                     className="DAT_Alarm_Main_Table_View"
@@ -199,11 +241,10 @@ export default function Alarm() {
                         onClick={() => handleClear(a.id)}
                       >
                         {lang.formatMessage({ id: "clear_alarm" })}
-
                       </button>
                     )}
-
                 </td>
+                <td>{a.time}</td>
               </tr>
             ))}
           </tbody>
@@ -243,40 +284,43 @@ export default function Alarm() {
       <Modal
         isOpen={!!selectedAlarm}
         onClose={() => setSelectedAlarm(null)}
-        title={selectedAlarm ? `${lang.formatMessage({ id: "alarm_detail_title" })} ${selectedAlarm.code}` : ""}
+        title={
+          selectedAlarm
+            ? `${lang.formatMessage({ id: "alarm_detail_title" })} ${selectedAlarm.code}`
+            : ""
+        }
       >
         {selectedAlarm && (
           <div className="DAT_Alarm_Detail">
-            {[
-              [lang.formatMessage({ id: "alarm_id" }), selectedAlarm.code],
-              [lang.formatMessage({ id: "date" }), selectedAlarm.time],
-              [lang.formatMessage({ id: "level" }), selectedAlarm.level],
-              [lang.formatMessage({ id: "device" }), selectedAlarm.device],
-              [lang.formatMessage({ id: "message" }), selectedAlarm.message],
-              [lang.formatMessage({ id: "description" }), selectedAlarm.description],
-              [lang.formatMessage({ id: "status" }), selectedAlarm.status],
-              [lang.formatMessage({ id: "operator" }), selectedAlarm.operator],
-              [lang.formatMessage({ id: "acknowledged_at" }), selectedAlarm.acknowledgedAt || "-"],
-              [lang.formatMessage({ id: "clear_at" }), selectedAlarm.clearedAt || "-"],
-            ].map(([k, v]) => (
-              <div key={k} className="DAT_Alarm_Detail_Row">
-                <span className="DAT_Alarm_Detail_Row_Label">{k}</span>
-                <span className="DAT_Alarm_Detail_Row_Val">{v}</span>
-              </div>
-            ))}
-            {selectedAlarm.relatedParams && (
-              <>
-                <div className="DAT_Alarm_Detail_Title">
-                  {lang.formatMessage({ id: "related_parameters" })}
+            <div className="DAT_Alarm_Detail_Device">
+              <span className="DAT_Alarm_Detail_Device_Label">
+                Thông tin thiết bị:
+              </span>
+              <span className="DAT_Alarm_Detail_Device_Value">
+                {selectedAlarm.device}
+              </span>
+            </div>
+            <div className="DAT_Alarm_Detail_Title">Thông tin thêm:</div>
+            <div className="DAT_Alarm_Detail_Grid">
+              {getAlarmExtraInfo(selectedAlarm).map(([k, v]) => (
+                <div key={k} className="DAT_Alarm_Detail_Grid_Item">
+                  <span className="DAT_Alarm_Detail_Grid_Item_Label">{k}:</span>
+                  <span className="DAT_Alarm_Detail_Grid_Item_Value">{v}</span>
                 </div>
-                {Object.entries(selectedAlarm.relatedParams).map(([k, v]) => (
-                  <div key={k} className="DAT_Alarm_Detail_Row">
-                    <span className="DAT_Alarm_Detail_Row_Label">{k}</span>
-                    <span className="DAT_Alarm_Detail_Row_Val">{v}</span>
-                  </div>
-                ))}
-              </>
-            )}
+              ))}
+            </div>
+            <div className="DAT_Alarm_Detail_Title">Nguyên nhân:</div>
+            <div className="DAT_Alarm_Detail_Box">
+              {getAlarmCause(selectedAlarm)}
+            </div>
+            <div className="DAT_Alarm_Detail_Title">Biện pháp:</div>
+            <div className="DAT_Alarm_Detail_Box">
+              {getAlarmMeasures(selectedAlarm).map((measure, index) => (
+                <div key={`${selectedAlarm.code}-measure-${index + 1}`}>
+                  {measure}
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </Modal>

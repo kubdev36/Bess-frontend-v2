@@ -1,10 +1,10 @@
 .DAT_Sidebar {
   width: var(--sidebar-width);
-  height: 100vh;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 1);
   border-right: 1px solid var(--border-light);
   display: flex;
   flex-direction: column;
@@ -61,11 +61,11 @@
       margin-bottom: 8px;
 
       &_Label {
-        font-size: 0.68rem;
+        font-size: 10.88px;
         font-weight: var(--font-weight-semibold);
         color: var(--text-muted);
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.65px;
         padding: 12px 12px 6px;
       }
 
@@ -79,7 +79,7 @@
         padding: 10px 12px;
         border-radius: var(--radius-md);
         color: var(--text-body);
-        font-size: 0.88rem;
+        font-size: 14.08px;
         font-weight: var(--font-weight-medium);
         text-decoration: none;
         transition: all var(--transition-fast);
@@ -95,7 +95,7 @@
       &_Item_Active,
       &_Item_Collapsed_Active {
         background: var(--primary) !important;
-        color: #fff !important;
+        color: rgba(255, 255, 255, 1) !important;
       }
 
       &_Item_Collapsed,
