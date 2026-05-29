@@ -4,12 +4,11 @@ import "./SystemSettings.scss";
 import { useIntl } from "react-intl";
 import { LuSettings } from "react-icons/lu";
 
-const tabs = ["site", "device", "notification", "realtime"];
+const tabs = ["site", "device", "notification"];
 const tabLabels = {
-  site: "site_information",
-  device: "device_configuration",
-  notification: "notification_settings",
-  realtime: "realtime_settings",
+  site: "manual_configuration",
+  device: "cyclical_control",
+  notification: "solar_control",
 };
 
 const defaultDeviceSettings = {
