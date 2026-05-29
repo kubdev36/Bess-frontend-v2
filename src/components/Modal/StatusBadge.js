@@ -146,20 +146,17 @@ const statusMessageIds = {
 };
 
 export default function StatusBadge({ status }) {
-  const intl = useIntl();
+  const lang = useIntl();
   const className = badgeMap[status] || "status-badge--gray";
   const Icon = iconMap[status];
   const messageId = statusMessageIds[status];
-  const label = messageId
-    ? intl.formatMessage({ id: messageId, defaultMessage: status })
-    : status;
   const customLabelMap = {
-    Alert: intl.locale === "vi" ? "C\u1ea3nh b\u00e1o" : "Alert",
-    Notice: intl.locale === "vi" ? "Ch\u00fa \u00fd" : "Notice",
+    Alert: lang.formatMessage({ id: "status_alert", defaultMessage: "Alert" }),
+    Notice: lang.formatMessage({ id: "status_notice", defaultMessage: "Notice" }),
   };
   const label = customLabelMap[status]
     || (messageId
-      ? intl.formatMessage({ id: messageId, defaultMessage: status })
+      ? lang.formatMessage({ id: messageId, defaultMessage: status })
       : status);
 
   return (

@@ -136,7 +136,7 @@ export default function Alarm() {
       <div className="DAT_Alarm_Overview">
         <div className="DAT_Alarm_Overview_OverviewTitle">
           <LuBell />
-          <div className="DAT_Alarm_Overview_OverviewTitle_Text">Alarm</div>
+          <div className="DAT_Alarm_Overview_OverviewTitle_Text">{lang.formatMessage({ id: "alarms_title" })}</div>
         </div>
 
         <div className="DAT_Alarm_Filter">
