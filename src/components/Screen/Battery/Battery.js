@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { LuBadgeCheck, LuSearch } from "react-icons/lu";
+import { LuBadgeCheck, LuSearch, LuBatteryCharging } from "react-icons/lu";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockAlarms, mockContainers } from "../../data/mockData";
 import "./Battery.scss";
 import { FaArrowLeftLong } from "react-icons/fa6";
-
 export default function Battery() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
   const [selectedRack, setSelectedRack] = useState(null);
@@ -20,28 +19,6 @@ export default function Battery() {
     return matchSearch && matchStatus;
   });
 
-  const batteryAlarms = mockAlarms
-    .filter((a) => a.device === "Battery" || a.device === "BMS")
-    .slice(0, 8);
-
-  const rackChartData = selectedRack
-    ? Array.from({ length: 24 }, (_, i) => ({
-      time: `${String(i).padStart(2, "0")}:00`,
-      voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
-      temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
-      soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
-    }))
-    : [];
-  const getCellColor = (cell) => {
-    if (cell.status === "High") return "rgba(239, 68, 68, 1)";
-    if (cell.status === "Low") return "rgba(245, 158, 11, 1)";
-
-    const ratio = (cell.voltage - 3.0) / 0.35;
-    const g = Math.round(180 + ratio * 75);
-
-    return `rgba(34, ${Math.min(255, g)}, 94, 1)`;
-  };
-
   return (
     <div className="DAT_Battery">
       <div className="DAT_Battery_Overview">
@@ -55,28 +32,31 @@ export default function Battery() {
             }}
           >
             <div className="DAT_Battery_Overview_Card_Header">
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Title">{c.name}</div>
+              <div className="DAT_Battery_Overview_Card_Header_BoxTitle">
+                <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title">
+                  <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title_Icon">
+                    <LuBatteryCharging size={40} />
+                  </div>
+                  <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title_Label">BMS Level</div>
+                </div>
                 <StatusBadge status={c.status} />
               </div>
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Racks:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.racks.length}</div>
-              </div>
 
               <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOC:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soc}%</div>
-              </div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">SOC:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.soc}%</div>
+                </div>
 
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOH:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soh}%</div>
-              </div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">SOH:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.soh}%</div>
+                </div>
 
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Temp:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.temperature}°C</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">Temp:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.temperature}°C</div>
+                </div>
               </div>
             </div>
           </div>
@@ -248,14 +228,22 @@ export default function Battery() {
             className="DAT_Modal_Overlay_BoxCell"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="DAT_Modal_Overlay_BoxCell_Header" onClick={() => {
+            <div className="DAT_Modal_Overlay_BoxCell_Header">
+              <div className="DAT_Modal_Overlay_BoxCell_Header_Back" onClick={() => {
                 setIsModalModuleOpen(false)
                 setIsModalOpen(true)
               }}>
-              <div className="DAT_Modal_Overlay_BoxCell_Header_Icon">
-                <FaArrowLeftLong size={20}/>
+                <div className="DAT_Modal_Overlay_BoxCell_Header_Back_Icon">
+                  <FaArrowLeftLong size={20} />
+                </div>
+                <h2>{selectedRack.id} - {moduleName} - Cells</h2>
               </div>
-              <h2>{selectedRack.id} - {moduleName} - Cells</h2>
+              <button
+                className="DAT_Modal_Overlay_BoxCell_Header_Close"
+                onClick={() => setIsModalModuleOpen(false)}
+              >
+                ✕
+              </button>
             </div>
 
             <div className="DAT_Modal_Overlay_BoxCell_Cell">
@@ -263,11 +251,11 @@ export default function Battery() {
                 return (
                   <div className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card` : "DAT_Modal_Overlay_BoxCell_Cell_Card--High"}>
                     <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header">
-                       <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Title">{cell.id}</span>
-                       <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status">
-                          <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Label">Status:</span>
-                          <span className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value` : "DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value_High"}>{cell.status}</span>
-                       </div>
+                      <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Title">{cell.id}</span>
+                      <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status">
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Label">Status:</span>
+                        <span className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value` : "DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value_High"}>{cell.status}</span>
+                      </div>
                     </div>
                     <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats">
                       <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item">
@@ -282,11 +270,6 @@ export default function Battery() {
                   </div>
                 )
               })}
-
-            </div>
-
-            <div className="DAT_Modal_Overlay_BoxCell_Footer">
-              <button onClick={() => setIsModalModuleOpen(false)}>Close</button>
             </div>
           </div>
         </div>

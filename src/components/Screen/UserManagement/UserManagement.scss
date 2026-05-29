@@ -19,16 +19,19 @@
     gap: 10px;
 
     &_Info {
-      &_Title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      &_Icon {
+        display: flex;
+        align-items: center;
         color: var(--text-primary);
-        font-size: var(--font-size-lg);
-        font-weight: var(--font-weight-semibold);
       }
 
-      &_Subtitle {
-        margin-top: 2px;
-        color: var(--text-secondary);
-        font-size: var(--font-size-sm);
+      &_Title {
+        color: var(--text-primary);
+        font-size: 24px;
+        font-weight: var(--font-weight-semibold);
       }
     }
 

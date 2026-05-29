@@ -34,19 +34,45 @@
           align-items: center;
           gap: 10px;
 
+          &_Item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 8px 16px;
+            background: var(--bg-alt);
+            border-radius: var(--radius-md);
+
+            &_Label {
+              color: var(--text-secondary);
+              font-size: var(--font-size-sm);
+            }
+
+            &_Value {
+              color: var(--primary);
+              font-size: var(--font-size-lg);
+              font-weight: 700;
+            }
+
+          }
+        }
+
+        &_BoxTitle {
           &_Title {
-            font-size: var(--font-size-lg);
-            font-weight: var(--font-weight-semibold);
-          }
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            &_Icon {
+              display: flex;
+              align-items: center;
+              color: var(--primary);
+            }
 
-          &_Label {
-            color: var(--text-secondary);
-            font-size: var(--font-size-lg);
-          }
-
-          &_Value {
-            font-size: var(--font-size-lg);
-            font-weight: var(--font-weight-semibold);
+            &_Label {
+              color: var(--primary);
+              font-size: 24px;
+              font-weight: var(--font-weight-semibold);
+            }
           }
         }
       }
@@ -81,8 +107,8 @@
 
         &_Icon {
           position: absolute;
-          top: 50%;
-          left: 7px;
+          top: 56%;
+          left: 8px;
           transform: translateY(-50%);
           color: var(--text-muted);
           font-size: 16px;
@@ -447,142 +473,199 @@
   }
 
   &_BoxCell {
-    width: 1500px;
+    width: 80%;
+    height: 72%;
     background: rgba(255, 255, 255, 1);
     color: rgba(15, 23, 42, 1);
     border-radius: 16px;
-    padding: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
     animation: pop 0.2s ease;
+
+    overflow-y: auto;
+
+    padding-right: 6px;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.35);
+      border-radius: 999px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(148, 163, 184, 0.55);
+    }
 
     &_Header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       border-bottom: 1px solid rgba(226, 232, 240, 1);
+      padding-top: 10px;
       padding-bottom: 10px;
       gap: 15px;
-      cursor: pointer;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 255, 255, 1);
 
-      &_Icon {
+      &_Back {
         display: flex;
+        gap: 15px;
         align-items: center;
+        cursor: pointer;
+
+        &_Icon {
+          display: flex;
+          align-items: center;
+        }
+
+        h2 {
+          font-size: var(--font-size-2xl);
+          font-weight: 600;
+          color: var(--text-primary);
+        }
       }
 
-      h2 {
-        font-size: var(--font-size-2xl);
+      &_Close {
+        width: 38px;
+        height: 38px;
+
+        border: none;
+        border-radius: 12px;
+
+        background: rgba(148, 163, 184, 0.1);
+
+        font-size: 18px;
         font-weight: 600;
-        color: var(--text-primary);
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
       }
     }
 
-      &_Cell {
-        margin-top: 16px;
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 12px;
+    &_Cell {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
 
-        &_Card {
+      &_Card {
+        background: rgba(248, 250, 252, 1);
+        padding: 14px;
+        border-radius: 12px;
+        gap: 6px;
+        border: 1px solid rgba(226, 232, 240, 1);
+        transition: 0.2s;
+
+        &--High {
           background: rgba(248, 250, 252, 1);
           padding: 14px;
           border-radius: 12px;
           gap: 6px;
-          border: 1px solid rgba(226, 232, 240, 1);
           transition: 0.2s;
+          border: 1px solid var(--danger);
+        }
 
-          &--High {
-            background: rgba(248, 250, 252, 1);
-            padding: 14px;
-            border-radius: 12px;
-            gap: 6px;
-            transition: 0.2s;
-            border: 1px solid var(--danger);
-          }
+        &_Header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 10px;
 
-          &_Header {
+          &_Status {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+            gap: 3px;
 
-            &_Status {
-              display: flex;
-              gap: 3px;
-
-              &_Label {
-                font-size: var(--font-size-sm);
-                color: var(--text-secondary);
-              }
-
-              &_Value {
-                font-size: var(--font-size-sm);
-                font-weight: var(--font-weight-semibold);
-                color: var(--success-dark);
-              }
-
-              &_Value_High {
-                font-size: var(--font-size-sm);
-                font-weight: var(--font-weight-semibold);
-                color: var(--danger-dark);
-              }
+            &_Label {
+              font-size: var(--font-size-sm);
+              color: var(--text-secondary);
             }
 
-            &_Title {
-              color: var(--text-primary);
-              font-weight: 700;
+            &_Value {
+              font-size: var(--font-size-sm);
+              font-weight: var(--font-weight-semibold);
+              color: var(--success-dark);
+            }
+
+            &_Value_High {
+              font-size: var(--font-size-sm);
+              font-weight: var(--font-weight-semibold);
+              color: var(--danger-dark);
             }
           }
 
+          &_Title {
+            color: var(--text-primary);
+            font-weight: 700;
+          }
+        }
 
-          &_Stats {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
 
-            &_Item {
-              &_Label {
-                font-size: var(--font-size-sm);
-                color: var(--text-secondary);
-              }
+        &_Stats {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 10px;
 
-              &_Value {
-                font-size: var(--font-size-sm);
-                font-weight: var(--font-weight-semibold);
-                margin-left: 5px;
-              }
+          &_Item {
+            &_Label {
+              font-size: var(--font-size-sm);
+              color: var(--text-secondary);
+            }
+
+            &_Value {
+              font-size: var(--font-size-sm);
+              font-weight: var(--font-weight-semibold);
+              margin-left: 5px;
             }
           }
         }
       }
+    }
 
-      &_Footer {
-        margin-top: 16px;
-        display: flex;
-        justify-content: flex-end;
+    &_Footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
 
-        button {
-          width: 100px;
-          padding: 8px 14px;
-          border: none;
-          border-radius: 4px;
-          background: rgb(11, 25, 103);
-          font-weight: 700;
-          color: rgba(255, 255, 255, 1);
-          cursor: pointer;
-        }
+      button {
+        width: 100px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 4px;
+        background: rgb(11, 25, 103);
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        cursor: pointer;
       }
     }
   }
+}
 
-  /* animation */
-  @keyframes pop {
-    from {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
+/* animation */
+@keyframes pop {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
   }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -19,20 +19,18 @@
         &_Header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
             gap: var(--space-base);
-            flex-wrap: wrap;
 
-            &_Title {
-                color: var(--text-primary);
-                font-size: var(--font-size-lg);
-                font-weight: var(--font-weight-semibold);
+            &_Icon {
+                display: flex;
+                align-items: center;
+                color: var(--primary)
             }
 
-            &_Subtitle {
-                margin-top: 2px;
-                color: var(--text-secondary);
-                font-size: var(--font-size-sm);
+            &_Title {
+                color: var(--primary);
+                font-size: 24px;
+                font-weight: var(--font-weight-semibold);
             }
 
             &_Actions {

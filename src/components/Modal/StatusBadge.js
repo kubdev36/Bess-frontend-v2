@@ -15,6 +15,8 @@ import {
   FaTriangleExclamation,
   FaXmark,
 } from "react-icons/fa6";
+import { TbAdjustmentsOff, TbBatteryCharging2 } from "react-icons/tb";
+import { FiBatteryCharging } from "react-icons/fi";
 import { LuSend } from "react-icons/lu";
 import { useIntl } from "react-intl";
 import "./StatusBadge.scss";
@@ -27,6 +29,7 @@ const badgeMap = {
   Running: "status-badge--primary",
   Charging: "status-badge--cyan",
   Discharging: "status-badge--purple",
+  Off: "status-badge--purple",
   Warning: "status-badge--warning",
   Critical: "status-badge--danger",
   Alert: "status-badge--danger",
@@ -70,8 +73,9 @@ const iconMap = {
   Fault: FaShield,
   Normal: FaShield,
   Running: FaRadio,
-  Charging: FaArrowDown,
-  Discharging: FaArrowUp,
+  Charging: FiBatteryCharging,
+  Discharging: TbBatteryCharging2,
+  Off: TbAdjustmentsOff,
   Warning: FaTriangleExclamation,
   Critical: FaCircleExclamation,
   Alert: FaCircleExclamation,
@@ -146,6 +150,9 @@ export default function StatusBadge({ status }) {
   const className = badgeMap[status] || "status-badge--gray";
   const Icon = iconMap[status];
   const messageId = statusMessageIds[status];
+  const label = messageId
+    ? intl.formatMessage({ id: messageId, defaultMessage: status })
+    : status;
   const customLabelMap = {
     Alert: intl.locale === "vi" ? "C\u1ea3nh b\u00e1o" : "Alert",
     Notice: intl.locale === "vi" ? "Ch\u00fa \u00fd" : "Notice",
