@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import './UserInfo.scss'
 import { useAuth } from "../../contexts/AuthContext";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash, FaUserEdit } from "react-icons/fa";
 import { useIntl } from "react-intl";
 
 export default function UserInfo() {
@@ -79,10 +79,11 @@ export default function UserInfo() {
     <div className="DAT_UserInfor">
       <div className="DAT_UserInfor_Card">
         <div className="DAT_UserInfor_Card_Header">
-          <div>
-            <div className="DAT_UserInfor_Card_Header_Title">{lang.formatMessage({ id: "user_information" })}</div>
-            <div className="DAT_UserInfor_Card_Header_Subtitle">
-            </div>
+          <div className="DAT_UserInfor_Card_Header_Icon">
+            <FaUserEdit size={30}/>
+          </div>
+          <div className="DAT_UserInfor_Card_Header_Title">
+            {lang.formatMessage({ id: "user_information" })}
           </div>
         </div>
       </div>

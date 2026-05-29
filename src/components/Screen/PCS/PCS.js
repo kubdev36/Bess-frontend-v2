@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { LuBatteryCharging, LuDownload, LuZap } from "react-icons/lu";
+import { LuBatteryCharging, LuDownload, LuZap, LuCpu } from "react-icons/lu";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,6 +9,7 @@ import {
   PointElement,
   Tooltip,
 } from "chart.js";
+
 import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import zoomPlugin from "chartjs-plugin-zoom";
@@ -174,10 +175,10 @@ const PCS = (props) => {
   const [selectedDcMetric, setSelectedDcMetric] = useState(dcMetricTabs[0].key);
   const batteryStatus = {
     0: "Off",
-    1: "Đang chờ",
-    2: "Lỗi",
-    3: "Sạc",
-    4: "Xả",
+    1: "Pending",
+    2: "Error",
+    3: "Charging",
+    4: "Discharging",
     5: "Chg.derate",
     6: "Disch.derate",
   }
@@ -359,14 +360,18 @@ const PCS = (props) => {
     }));
     return buildChartConfig(rows, dcMetric, currentMeta.title);
   }, [dcChartMeta, dcMetric, pcsTrendData, selectedDcMetric]);
-
   return (
     <div className="DAT_PCS">
       <div className="DAT_PCS_Overview">
         <div className="DAT_PCS_Overview_OverviewTitle">
-          <div className="DAT_PCS_Overview_OverviewTitle_Text">PCS Level</div>
+          <div className="DAT_PCS_Overview_OverviewTitle_Header">
+            <div className="DAT_PCS_Overview_OverviewTitle_Header_Icon">
+              <LuCpu size={25}/>
+            </div>
+            <div className="DAT_PCS_Overview_OverviewTitle_Header_Title">PCS Level</div>
+          </div>
           <div className="DAT_PCS_Overview_OverviewTitle_StatusPill">
-            {batteryStatus[dataInf?.["7000-1"] ?? 0]}
+            <StatusBadge status={batteryStatus[dataInf?.["7000-1"] ?? 0]} />
           </div>
         </div>
         <div className="DAT_PCS_Overview_OverviewStats">

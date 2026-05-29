@@ -19,28 +19,6 @@ export default function Battery() {
     return matchSearch && matchStatus;
   });
 
-  const batteryAlarms = mockAlarms
-    .filter((a) => a.device === "Battery" || a.device === "BMS")
-    .slice(0, 8);
-
-  const rackChartData = selectedRack
-    ? Array.from({ length: 24 }, (_, i) => ({
-      time: `${String(i).padStart(2, "0")}:00`,
-      voltage: selectedRack.voltage + Math.sin(i / 4) * 5,
-      temperature: selectedRack.temperature + Math.sin(i / 6) * 3,
-      soc: selectedRack.soc + Math.sin(i / 3.8) * 5,
-    }))
-    : [];
-  const getCellColor = (cell) => {
-    if (cell.status === "High") return "rgba(239, 68, 68, 1)";
-    if (cell.status === "Low") return "rgba(245, 158, 11, 1)";
-
-    const ratio = (cell.voltage - 3.0) / 0.35;
-    const g = Math.round(180 + ratio * 75);
-
-    return `rgba(34, ${Math.min(255, g)}, 94, 1)`;
-  };
-
   return (
     <div className="DAT_Battery">
       <div className="DAT_Battery_Overview">
@@ -54,11 +32,13 @@ export default function Battery() {
             }}
           >
             <div className="DAT_Battery_Overview_Card_Header">
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Icon">
-                  <LuBatteryCharging size={40}/> 
+              <div className="DAT_Battery_Overview_Card_Header_BoxTitle">
+                <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title">
+                  <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title_Icon">
+                    <LuBatteryCharging size={40} />
+                  </div>
+                  <div className="DAT_Battery_Overview_Card_Header_BoxTitle_Title_Label">BMS Level</div>
                 </div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Title">BMS Level</div>
                 <StatusBadge status={c.status} />
               </div>
 

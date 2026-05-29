@@ -15,6 +15,8 @@ import {
   FaTriangleExclamation,
   FaXmark,
 } from "react-icons/fa6";
+import { TbAdjustmentsOff, TbBatteryCharging2 } from "react-icons/tb";
+import { FiBatteryCharging } from "react-icons/fi";
 import { LuSend } from "react-icons/lu";
 import { useIntl } from "react-intl";
 import "./StatusBadge.scss";
@@ -27,6 +29,7 @@ const badgeMap = {
   Running: "status-badge--primary",
   Charging: "status-badge--cyan",
   Discharging: "status-badge--purple",
+  Off: "status-badge--purple",
   Warning: "status-badge--warning",
   Critical: "status-badge--danger",
   Standby: "status-badge--gray",
@@ -68,8 +71,9 @@ const iconMap = {
   Fault: FaShield,
   Normal: FaShield,
   Running: FaRadio,
-  Charging: FaArrowDown,
-  Discharging: FaArrowUp,
+  Charging: FiBatteryCharging,
+  Discharging: TbBatteryCharging2,
+  Off: TbAdjustmentsOff,
   Warning: FaTriangleExclamation,
   Critical: FaCircleExclamation,
   Standby: FaCircle,
@@ -145,7 +149,6 @@ export default function StatusBadge({ status }) {
   const label = messageId
     ? intl.formatMessage({ id: messageId, defaultMessage: status })
     : status;
-
   return (
     <span
       className={`status-badge ${className}`}

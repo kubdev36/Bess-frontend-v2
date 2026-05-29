@@ -4,6 +4,7 @@ import StatusBadge from "../../Modal/StatusBadge";
 import { mockUsers } from "../../data/mockData";
 import "./UserManagement.scss";
 import { useIntl } from "react-intl";
+import { LuUsers } from "react-icons/lu";
 
 const emptyUser = {
   name: "",
@@ -94,6 +95,9 @@ export default function UserManagement() {
     <div className="DAT_UserManagement">
       <div className="DAT_UserManagement_Card">
         <div className="DAT_UserManagement_Card_Info">
+          <div className="DAT_UserManagement_Card_Info_Icon">
+            <LuUsers size={25}/>
+          </div>
           <div className="DAT_UserManagement_Card_Info_Title">{lang.formatMessage({ id: "user_management" })}</div>
         </div>
         <div className="DAT_UserManagement_Card_Actions">

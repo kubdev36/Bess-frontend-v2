@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { mockSystemSettings } from "../../data/mockData";
 import "./SystemSettings.scss";
 import { useIntl } from "react-intl";
+import { LuSettings } from "react-icons/lu";
 
 const tabs = ["site", "device", "notification", "realtime"];
 const tabLabels = {
@@ -59,6 +60,9 @@ export default function SystemSettings() {
     <div className="DAT_SystemSettings">
       <div className="DAT_SystemSettings_HeaderCard">
         <div className="DAT_SystemSettings_HeaderCard_Main">
+          <div className="DAT_SystemSettings_HeaderCard_Main_Icon">
+            <LuSettings size={25}/>
+          </div>
           <div className="DAT_SystemSettings_HeaderCard_Main_Title">
             {lang.formatMessage({id: "system_settings"})}
           </div>
