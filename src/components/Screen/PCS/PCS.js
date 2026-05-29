@@ -9,7 +9,7 @@ import {
   PointElement,
   Tooltip,
 } from "chart.js";
-
+import { isMobile } from 'react-device-detect';
 import annotationPlugin from "chartjs-plugin-annotation";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import zoomPlugin from "chartjs-plugin-zoom";
@@ -361,200 +361,321 @@ const PCS = (props) => {
     return buildChartConfig(rows, dcMetric, currentMeta.title);
   }, [dcChartMeta, dcMetric, pcsTrendData, selectedDcMetric]);
   return (
-    <div className="DAT_PCS">
-      <div className="DAT_PCS_Overview">
-        <div className="DAT_PCS_Overview_OverviewTitle">
-          <div className="DAT_PCS_Overview_OverviewTitle_Header">
-            <div className="DAT_PCS_Overview_OverviewTitle_Header_Icon">
-              <LuCpu size={25}/>
-            </div>
-            <div className="DAT_PCS_Overview_OverviewTitle_Header_Title">PCS Level</div>
-          </div>
-          <div className="DAT_PCS_Overview_OverviewTitle_StatusPill">
-            <StatusBadge status={batteryStatus[dataInf?.["7000-1"] ?? 0]} />
-          </div>
-        </div>
-        <div className="DAT_PCS_Overview_OverviewStats">
-          <div className="DAT_PCS_Overview_OverviewStats_StatCard">
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatLabel">
-              {lang.formatMessage({ id: "tempurature" })}
-            </span>
-            <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsTemperature}°C</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="DAT_PCS_PowerFlow">
-        <div className="DAT_PCS_PowerFlow_AC">
-          <span className="DAT_PCS_PowerFlow_AC_Title">
-            <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
-            {`${lang.formatMessage({ id: "pcs_ac" })} ${selectedUnitLabel.toUpperCase()}`}
-          </span>
-          <div className="DAT_PCS_PowerFlow_AC_Table">
-            <div className="DAT_PCS_PowerFlow_AC_Table_Header">
-              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Phase"></span>
-              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "voltage_AC" })}</span>
-              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "current_AC" })}</span>
-              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "power_AC" })}</span>
-              <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "frequency" })}</span>
-            </div>
-            {activeUnitData.acPhases.map((item) => (
-              <div key={item.phase} className="DAT_PCS_PowerFlow_AC_Table_Row">
-                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Phase">{item.phase}</span>
-                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.voltage}</span>
-                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.current}</span>
-                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.power}</span>
-                <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.frequency}</span>
+    <>
+      {isMobile ? (
+        <div className="DAT_PCSMobile">
+          <div className="DAT_PCSMobile_Overview">
+            <div className="DAT_PCSMobile_Overview_OverviewTitle">
+              <div className="DAT_PCSMobile_Overview_OverviewTitle_Header">
+                <div className="DAT_PCSMobile_Overview_OverviewTitle_Header_Icon">
+                  <LuCpu size={25} />
+                </div>
+                <div className="DAT_PCSMobile_Overview_OverviewTitle_Header_Title">PCS Level</div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="DAT_PCS_PowerFlow_Transfer">
-          <div className="DAT_PCS_PowerFlow_Transfer_Content">
-            <div className="DAT_PCS_PowerFlow_Transfer_Box">
-              <span className="DAT_PCS_PowerFlow_Transfer_Box_Arrow" aria-hidden="true">↔</span>
-              <span className="DAT_PCS_PowerFlow_Transfer_Box_Label">AC/DC</span>
+              <div className="DAT_PCSMobile_Overview_OverviewTitle_StatusPill">
+                <StatusBadge status={batteryStatus[dataInf?.["7000-1"] ?? 0]} />
+              </div>
             </div>
-            <div className="DAT_PCS_PowerFlow_Transfer_UnitSwitcher">
-              {pcsUnits.map((unit) => (
-                <button
-                  key={unit.key}
-                  type="button"
-                  className={`DAT_PCS_PowerFlow_Transfer_UnitButton ${selectedUnit === unit.key ? "DAT_PCS_PowerFlow_Transfer_UnitButton--active" : ""}`}
-                  onClick={() => setSelectedUnit(unit.key)}
-                >
-                  {unit.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="DAT_PCS_PowerFlow_DC">
-          <span className="DAT_PCS_PowerFlow_DC_Title">
-            <LuBatteryCharging style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
-            {`${lang.formatMessage({ id: "pcs_dc" })} ${selectedUnitLabel.toUpperCase()}`}
-          </span>
-          <div className="DAT_PCS_PowerFlow_DC_Table">
-            <div className="DAT_PCS_PowerFlow_DC_Table_Header">
-              {activeUnitData.dcMetrics.map(([label]) => (
-                <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Header_Label">
-                  {label}
+            <div className="DAT_PCSMobile_Overview_OverviewStats">
+              <div className="DAT_PCSMobile_Overview_OverviewStats_StatCard">
+                <span className="DAT_PCSMobile_Overview_OverviewStats_StatCard_StatLabel">
+                  {lang.formatMessage({ id: "tempurature" })}
                 </span>
-              ))}
+                <span className="DAT_PCSMobile_Overview_OverviewStats_StatCard_StatValue">{sys.pcsTemperature}°C</span>
+              </div>
             </div>
-            <div className="DAT_PCS_PowerFlow_DC_Table_Row">
-              {activeUnitData.dcMetrics.map(([label, value]) => (
-                <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Row_Value">
-                  {value}
+          </div>
+
+          <div className="DAT_PCSMobile_PowerFlow">
+            <div className="DAT_PCSMobile_PowerFlow_AC">
+              <span className="DAT_PCSMobile_PowerFlow_AC_Title">
+                <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
+                {`${lang.formatMessage({ id: "pcs_ac" })} ${selectedUnitLabel.toUpperCase()}`}
+              </span>
+              <div className="DAT_PCSMobile_PowerFlow_AC_Table">
+                <div className="DAT_PCSMobile_PowerFlow_AC_Table_Header">
+                  <span className="DAT_PCSMobile_PowerFlow_AC_Table_Header_Phase"></span>
+                  <span className="DAT_PCSMobile_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "voltage_AC" })}</span>
+                  <span className="DAT_PCSMobile_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "current_AC" })}</span>
+                  <span className="DAT_PCSMobile_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "power_AC" })}</span>
+                  <span className="DAT_PCSMobile_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "frequency" })}</span>
+                </div>
+                {activeUnitData.acPhases.map((item) => (
+                  <div key={item.phase} className="DAT_PCSMobile_PowerFlow_AC_Table_Row">
+                    <span className="DAT_PCSMobile_PowerFlow_AC_Table_Row_Phase">{item.phase}</span>
+                    <span className="DAT_PCSMobile_PowerFlow_AC_Table_Row_Value">{item.voltage}</span>
+                    <span className="DAT_PCSMobile_PowerFlow_AC_Table_Row_Value">{item.current}</span>
+                    <span className="DAT_PCSMobile_PowerFlow_AC_Table_Row_Value">{item.power}</span>
+                    <span className="DAT_PCSMobile_PowerFlow_AC_Table_Row_Value">{item.frequency}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="DAT_PCSMobile_PowerFlow_Transfer">
+              <div className="DAT_PCSMobile_PowerFlow_Transfer_Content">
+                <div className="DAT_PCSMobile_PowerFlow_Transfer_Box">
+                  <span className="DAT_PCSMobile_PowerFlow_Transfer_Box_Arrow" aria-hidden="true">↕</span>
+                  <span className="DAT_PCSMobile_PowerFlow_Transfer_Box_Label">AC/DC</span>
+                </div>
+                <div className="DAT_PCSMobile_PowerFlow_Transfer_UnitSwitcher">
+                  {pcsUnits.map((unit) => (
+                    <button
+                      key={unit.key}
+                      type="button"
+                      className={`DAT_PCSMobile_PowerFlow_Transfer_UnitButton ${selectedUnit === unit.key ? "DAT_PCSMobile_PowerFlow_Transfer_UnitButton--active" : ""}`}
+                      onClick={() => setSelectedUnit(unit.key)}
+                    >
+                      {unit.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="DAT_PCSMobile_PowerFlow_DC">
+              <span className="DAT_PCSMobile_PowerFlow_DC_Title">
+                <LuBatteryCharging style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
+                {`${lang.formatMessage({ id: "pcs_dc" })} ${selectedUnitLabel.toUpperCase()}`}
+              </span>
+
+              <div className="DAT_PCSMobile_PowerFlow_DC_Table">
+                <div className="DAT_PCSMobile_PowerFlow_DC_Table_Header">
+                  {activeUnitData.dcMetrics.map(([label]) => (
+                    <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Header_Label">
+                      {label}
+                    </span>
+                  ))}
+                </div>
+                <div className="DAT_PCSMobile_PowerFlow_DC_Table_Row">
+                  {activeUnitData.dcMetrics.map(([label, value]) => (
+                    <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Row_Value">
+                      {value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="DAT_PCSMobile_ChartGrid">
+            <div className="DAT_PCSMobile_ChartGrid_Panel">
+              <span className="DAT_PCSMobile_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCSMobile_ChartGrid_Panel_TabList">
+                  {acMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCSMobile_ChartGrid_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCSMobile_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedAcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCSMobile_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ChartWrap">
+                <Line data={acChart.data} options={acChart.options} />
+              </div>
+            </div>
+
+            <div className="DAT_PCSMobile_ChartGrid_Panel">
+              <span className="DAT_PCSMobile_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCSMobile_ChartGrid_Panel_TabList">
+                  {dcMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCSMobile_ChartGrid_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCSMobile_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedDcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCSMobile_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCSMobile_ChartGrid_Panel_ChartWrap">
+                <Line data={dcChart.data} options={dcChart.options} />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      ) : (
+        <div className="DAT_PCS">
+          <div className="DAT_PCS_Overview">
+            <div className="DAT_PCS_Overview_OverviewTitle">
+              <div className="DAT_PCS_Overview_OverviewTitle_Header">
+                <div className="DAT_PCS_Overview_OverviewTitle_Header_Icon">
+                  <LuCpu size={25} />
+                </div>
+                <div className="DAT_PCS_Overview_OverviewTitle_Header_Title">PCS Level</div>
+              </div>
+              <div className="DAT_PCS_Overview_OverviewTitle_StatusPill">
+                <StatusBadge status={batteryStatus[dataInf?.["7000-1"] ?? 0]} />
+              </div>
+            </div>
+            <div className="DAT_PCS_Overview_OverviewStats">
+              <div className="DAT_PCS_Overview_OverviewStats_StatCard">
+                <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatLabel">
+                  {lang.formatMessage({ id: "tempurature" })}
                 </span>
-              ))}
+                <span className="DAT_PCS_Overview_OverviewStats_StatCard_StatValue">{sys.pcsTemperature}°C</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="DAT_PCS_PowerFlow">
+            <div className="DAT_PCS_PowerFlow_AC">
+              <span className="DAT_PCS_PowerFlow_AC_Title">
+                <LuZap style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
+                {`${lang.formatMessage({ id: "pcs_ac" })} ${selectedUnitLabel.toUpperCase()}`}
+              </span>
+              <div className="DAT_PCS_PowerFlow_AC_Table">
+                <div className="DAT_PCS_PowerFlow_AC_Table_Header">
+                  <span className="DAT_PCS_PowerFlow_AC_Table_Header_Phase"></span>
+                  <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "voltage_AC" })}</span>
+                  <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "current_AC" })}</span>
+                  <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "power_AC" })}</span>
+                  <span className="DAT_PCS_PowerFlow_AC_Table_Header_Label">{lang.formatMessage({ id: "frequency" })}</span>
+                </div>
+                {activeUnitData.acPhases.map((item) => (
+                  <div key={item.phase} className="DAT_PCS_PowerFlow_AC_Table_Row">
+                    <span className="DAT_PCS_PowerFlow_AC_Table_Row_Phase">{item.phase}</span>
+                    <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.voltage}</span>
+                    <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.current}</span>
+                    <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.power}</span>
+                    <span className="DAT_PCS_PowerFlow_AC_Table_Row_Value">{item.frequency}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="DAT_PCS_PowerFlow_Transfer">
+              <div className="DAT_PCS_PowerFlow_Transfer_Content">
+                <div className="DAT_PCS_PowerFlow_Transfer_Box">
+                  <span className="DAT_PCS_PowerFlow_Transfer_Box_Arrow" aria-hidden="true">↔</span>
+                  <span className="DAT_PCS_PowerFlow_Transfer_Box_Label">AC/DC</span>
+                </div>
+                <div className="DAT_PCS_PowerFlow_Transfer_UnitSwitcher">
+                  {pcsUnits.map((unit) => (
+                    <button
+                      key={unit.key}
+                      type="button"
+                      className={`DAT_PCS_PowerFlow_Transfer_UnitButton ${selectedUnit === unit.key ? "DAT_PCS_PowerFlow_Transfer_UnitButton--active" : ""}`}
+                      onClick={() => setSelectedUnit(unit.key)}
+                    >
+                      {unit.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="DAT_PCS_PowerFlow_DC">
+              <span className="DAT_PCS_PowerFlow_DC_Title">
+                <LuBatteryCharging style={{ marginRight: 8, verticalAlign: "text-bottom" }} />
+                {`${lang.formatMessage({ id: "pcs_dc" })} ${selectedUnitLabel.toUpperCase()}`}
+              </span>
+              <div className="DAT_PCS_PowerFlow_DC_Table">
+                <div className="DAT_PCS_PowerFlow_DC_Table_Header">
+                  {activeUnitData.dcMetrics.map(([label]) => (
+                    <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Header_Label">
+                      {label}
+                    </span>
+                  ))}
+                </div>
+                <div className="DAT_PCS_PowerFlow_DC_Table_Row">
+                  {activeUnitData.dcMetrics.map(([label, value]) => (
+                    <span key={label} className="DAT_PCS_PowerFlow_DC_Table_Row_Value">
+                      {value}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="DAT_PCS_ChartGrid">
+            <div className="DAT_PCS_ChartGrid_Panel">
+              <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
+              <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCS_ChartGrid_Panel_TabList">
+                  {acMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedAcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCS_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
+                <Line data={acChart.data} options={acChart.options} />
+              </div>
+            </div>
+
+            <div className="DAT_PCS_ChartGrid_Panel">
+              <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
+              <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
+                <div className="DAT_PCS_ChartGrid_Panel_TabList">
+                  {dcMetricTabs.map((tab) => (
+                    <button
+                      key={tab.key}
+                      type="button"
+                      className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
+                      onClick={() => setSelectedDcMetric(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="date"
+                  className="DAT_PCS_ChartGrid_Panel_DateInput"
+                  value={selectedDate}
+                  min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
+                  max={mockEnergyReport[0]?.date}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
+              </div>
+              <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
+                <Line data={dcChart.data} options={dcChart.options} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="DAT_PCS_ChartGrid">
-        <div className="DAT_PCS_ChartGrid_Panel">
-          <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_ac_trend" })}</span>
-          <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
-            <div className="DAT_PCS_ChartGrid_Panel_TabList">
-              {acMetricTabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  type="button"
-                  className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedAcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
-                  onClick={() => setSelectedAcMetric(tab.key)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <input
-              type="date"
-              className="DAT_PCS_ChartGrid_Panel_DateInput"
-              value={selectedDate}
-              min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
-              max={mockEnergyReport[0]?.date}
-              onChange={(e) => setSelectedDate(e.target.value)}
-            />
-          </div>
-          <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
-            <Line data={acChart.data} options={acChart.options} />
-          </div>
-        </div>
-
-        <div className="DAT_PCS_ChartGrid_Panel">
-          <span className="DAT_PCS_ChartGrid_Panel_PanelTitle">{lang.formatMessage({ id: "pcs_dc_trend" })}</span>
-          <div className="DAT_PCS_ChartGrid_Panel_ControlRow">
-            <div className="DAT_PCS_ChartGrid_Panel_TabList">
-              {dcMetricTabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  type="button"
-                  className={`DAT_PCS_ChartGrid_Panel_TabButton ${selectedDcMetric === tab.key ? "DAT_PCS_ChartGrid_Panel_TabButton--active" : ""}`}
-                  onClick={() => setSelectedDcMetric(tab.key)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <input
-              type="date"
-              className="DAT_PCS_ChartGrid_Panel_DateInput"
-              value={selectedDate}
-              min={mockEnergyReport[mockEnergyReport.length - 1]?.date}
-              max={mockEnergyReport[0]?.date}
-              onChange={(e) => setSelectedDate(e.target.value)}
-            />
-          </div>
-          <div className="DAT_PCS_ChartGrid_Panel_ChartWrap">
-            <Line data={dcChart.data} options={dcChart.options} />
-          </div>
-        </div>
-      </div>
-
-      {/* <div className="DAT_PCS_History">
-        <div className="DAT_PCS_History_HistoryHeader">
-          <span className="DAT_PCS_History_HistoryHeader_HistoryTitle">
-            {lang.formatMessage({ id: "fault_code_history" })}
-          </span>
-          <button className="DAT_PCS_History_HistoryHeader_HistoryButton">
-            <LuDownload />
-            {lang.formatMessage({ id: "export" })}
-          </button>
-        </div>
-        <table className="DAT_PCS_History_HistoryTable">
-          <thead>
-            <tr>
-              <th>{lang.formatMessage({ id: "time" })}</th>
-              <th>{lang.formatMessage({ id: "code" })}</th>
-              <th>{lang.formatMessage({ id: "name" })}</th>
-              <th>{lang.formatMessage({ id: "level" })}</th>
-              <th>{lang.formatMessage({ id: "status" })}</th>
-              <th>{lang.formatMessage({ id: "description" })}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mockPCSFaults.map((f) => (
-              <tr key={f.id} className="DAT_PCS_History_HistoryTable_HistoryRow">
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell DAT_PCS_History_HistoryTable_HistoryRow_HistoryCellSmall">{f.time}</td>
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell DAT_PCS_History_HistoryTable_HistoryRow_HistoryCellMedium">{f.code}</td>
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell">{f.name}</td>
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell">
-                  <StatusBadge status={f.level} />
-                </td>
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell">
-                  <StatusBadge status={f.status} />
-                </td>
-                <td className="DAT_PCS_History_HistoryTable_HistoryRow_HistoryCell DAT_PCS_History_HistoryTable_HistoryRow_HistoryCellSmall DAT_PCS_History_HistoryTable_HistoryRow_HistoryCellSecondary">{f.desc}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
-    </div>
+      )}
+    </>
   );
 };
 

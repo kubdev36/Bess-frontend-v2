@@ -289,7 +289,10 @@ const enMessages = {
   user_modal_status: "Status",
   alarms_title: "Alarms",
   status_alert: "Alert",
-  status_notice: "Notice"
+  status_notice: "Notice",
+  manual_configuration: "Manual Configuration",
+  cyclical_control: "Cyclical Control",
+  solar_control: "Solar Control"
 };
 
 const viMessages = {
@@ -590,7 +593,10 @@ const viMessages = {
   user_modal_status: "Trạng thái",
   alarms_title: "Cảnh báo",
   status_alert: "Cảnh báo",
-  status_notice: "Chú ý"
+  status_notice: "Chú ý",
+  manual_configuration: "Cấu hình thủ công",
+  cyclical_control: "Điều khiển theo chu trình",
+  solar_control: "Điều khiển solar"
 };
 
 export const messages = {
