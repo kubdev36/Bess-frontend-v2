@@ -2,7 +2,8 @@
   &_Overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    padding: 24px;
+    background: rgba(15, 23, 42, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,9 +14,11 @@
 
   &_Content {
     background: var(--card-bg);
-    border-radius: var(--radius-2xl);
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-lg);
+    max-width: calc(100vw - 48px);
     max-height: 85%;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     animation: DAT_Modal_SlideIn 0.2s ease-out;
@@ -45,6 +48,8 @@
     justify-content: space-between;
     padding: 20px 24px 16px;
     border-bottom: 1px solid var(--border-light);
+    background: var(--primary);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
   }
 
   &_Title {
@@ -54,26 +59,21 @@
     color: var(--text-primary);
     font-size: var(--font-size-xl);
     font-weight: var(--font-weight-semibold);
+    color: var(--card-bg);
   }
 
   &_Close {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: none;
-    background: var(--gray-100);
-    border-radius: var(--radius-md);
-    color: var(--text-secondary);
-    font-size: 14px;
+    background: transparent;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.96);
+    font-size: 22px;
     cursor: pointer;
-    transition: all var(--transition-fast);
-
-    &:hover {
-      background: var(--gray-200);
-      color: var(--text-primary);
-    }
   }
 
   &_Body {
