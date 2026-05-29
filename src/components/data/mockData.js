@@ -71,7 +71,7 @@ function genHourlyData() {
 export const mockHourlyData = genHourlyData();
 
 // --- Battery Containers / Racks / Cells ---
-function genCells(rackId, count = 16) {
+function genCells(rackId, count = 40) {
   const cells = [];
   for (let i = 1; i <= count; i++) {
     const v = +(3.15 + Math.random() * 0.15).toFixed(3);
@@ -84,8 +84,8 @@ function genCells(rackId, count = 16) {
   return cells;
 }
 
-function genRacks(containerId, count = 10) {
-  const statuses = ['Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Warning', 'Normal'];
+function genRacks(containerId, count = 8) {
+  const statuses = ['Normal', 'Normal', 'Normal', 'Normal', 'Normal', 'Warning', 'Normal', 'Normal', 'Warning', 'Normal'];
   const racks = [];
   for (let i = 1; i <= count; i++) {
     const id = `${containerId}-R${String(i).padStart(2, '0')}`;
@@ -98,6 +98,13 @@ function genRacks(containerId, count = 10) {
     const cells = genCells(id);
     const maxCellV = Math.max(...cells.map((c) => c.voltage));
     const minCellV = Math.min(...cells.map((c) => c.voltage));
+    const module = [
+      "Module 01", 
+      "Module 02", 
+      "Module 03", 
+      "Module 04", 
+      "Module 05", 
+      "Module 06"]
     racks.push({
       id,
       status: statuses[i - 1],
@@ -112,16 +119,23 @@ function genRacks(containerId, count = 10) {
       minCellV: +minCellV.toFixed(3),
       deltaV: +(maxCellV - minCellV).toFixed(3),
       maxTemp: Math.max(...cells.map((c) => c.temperature)),
+      module: module
     });
   }
   return racks;
 }
 
 export const mockContainers = [
-  { id: 'CTN-01', name: 'Container 1', status: 'Normal', racks: genRacks('CTN-01'), soc: 85.2, soh: 97.8, temperature: 28.5 },
-  { id: 'CTN-02', name: 'Container 2', status: 'Warning', racks: genRacks('CTN-02'), soc: 82.1, soh: 95.2, temperature: 32.0 },
-  { id: 'CTN-03', name: 'Container 3', status: 'Normal', racks: genRacks('CTN-03'), soc: 86.5, soh: 98.1, temperature: 27.0 },
-];
+  { 
+    id: 'CTN-01', 
+    name: 'Container 1', 
+    status: 'Normal', 
+    racks: genRacks('CTN-01'), 
+    soc: 85.2, 
+    soh: 97.8, 
+    temperature: 28.5 
+  },
+]
 
 // --- PCS Fault Codes ---
 export const mockPCSFaults = [

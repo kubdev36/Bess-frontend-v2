@@ -15,62 +15,40 @@
   }
 
   &_Overview {
-    display: grid;
-    gap: var(--space-base);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-
-    &_Selected {
-      border-color: var(--primary);
-      background: var(--primary-light);
-    }
-
     &_Card {
       @extend .DAT_Battery_Panel;
       cursor: pointer;
       position: relative;
+      display: flex;
+      justify-content: space-between;
 
       &_Header {
+        width: 100%;
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        margin-bottom: var(--space-sm);
+        justify-content: space-between;
+        gap: 10px;
 
-        &_Title {
-          font-size: var(--font-size-lg);
-          font-weight: var(--font-weight-semibold);
-        }
-      }
-
-      &_Stats {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-
-        &_Item {
+        &_Box {
           display: flex;
-          gap: 5px;
+          align-items: center;
+          gap: 10px;
+
+          &_Title {
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+          }
 
           &_Label {
             color: var(--text-secondary);
-            font-size: var(--font-size-sm);
+            font-size: var(--font-size-lg);
           }
 
           &_Value {
+            font-size: var(--font-size-lg);
             font-weight: var(--font-weight-semibold);
           }
         }
-      }
-
-      &_Badge {
-        position: absolute;
-        top: 2px;
-        left: 6px;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-        color: var(--primary);
-        font-size: var(--font-size-sm);
-        font-weight: 700;
       }
     }
   }
@@ -348,3 +326,263 @@
     }
   }
 }
+
+.DAT_Modal_Overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+  backdrop-filter: blur(6px);
+
+  &_Box {
+    width: 1000px;
+    background: rgba(255, 255, 255, 1);
+    color: rgba(15, 23, 42, 1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: pop 0.2s ease;
+
+    &_Header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(226, 232, 240, 1);
+      padding-bottom: 10px;
+
+      h2 {
+        font-size: var(--font-size-2xl);
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      button {
+        background: rgba(241, 245, 249, 1);
+        border: none;
+        border-radius: 8px;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+
+        &:hover {
+          background: rgba(226, 232, 240, 1);
+        }
+      }
+    }
+
+    &_Grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+
+      &_Card {
+        background: rgba(248, 250, 252, 1);
+        padding: 14px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        //flex-direction: column;
+        gap: 6px;
+        border: 1px solid rgba(226, 232, 240, 1);
+        transition: 0.2s;
+
+        &_Label {
+          font-size: var(--font-size-lg);
+          color: var(--text-secondary);
+        }
+
+        &_Value {
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-semibold);
+        }
+      }
+    }
+
+    &_Module {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+
+      &_Card {
+        background: rgba(241, 245, 249, 0.9);
+        border: 1px solid rgba(203, 213, 225, 0.7);
+        padding: 14px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        //flex-direction: column;
+        gap: 6px;
+        border: 1px solid rgba(226, 232, 240, 1);
+        transition: 0.2s;
+        cursor: pointer;
+
+        &_Value {
+          font-size: var(--font-size-lg);
+          font-weight: var(--font-weight-semibold);
+        }
+      }
+    }
+
+    &_Footer {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+        width: 100px;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 4px;
+        background: rgb(11, 25, 103);
+        font-weight: 700;
+        color: rgba(255, 255, 255, 1);
+        cursor: pointer;
+      }
+    }
+  }
+
+  &_BoxCell {
+    width: 1500px;
+    background: rgba(255, 255, 255, 1);
+    color: rgba(15, 23, 42, 1);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: pop 0.2s ease;
+
+    &_Header {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(226, 232, 240, 1);
+      padding-bottom: 10px;
+      gap: 15px;
+      cursor: pointer;
+
+      &_Icon {
+        display: flex;
+        align-items: center;
+      }
+
+      h2 {
+        font-size: var(--font-size-2xl);
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+    }
+
+      &_Cell {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+
+        &_Card {
+          background: rgba(248, 250, 252, 1);
+          padding: 14px;
+          border-radius: 12px;
+          gap: 6px;
+          border: 1px solid rgba(226, 232, 240, 1);
+          transition: 0.2s;
+
+          &--High {
+            background: rgba(248, 250, 252, 1);
+            padding: 14px;
+            border-radius: 12px;
+            gap: 6px;
+            transition: 0.2s;
+            border: 1px solid var(--danger);
+          }
+
+          &_Header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+
+            &_Status {
+              display: flex;
+              gap: 3px;
+
+              &_Label {
+                font-size: var(--font-size-sm);
+                color: var(--text-secondary);
+              }
+
+              &_Value {
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-semibold);
+                color: var(--success-dark);
+              }
+
+              &_Value_High {
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-semibold);
+                color: var(--danger-dark);
+              }
+            }
+
+            &_Title {
+              color: var(--text-primary);
+              font-weight: 700;
+            }
+          }
+
+
+          &_Stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+
+            &_Item {
+              &_Label {
+                font-size: var(--font-size-sm);
+                color: var(--text-secondary);
+              }
+
+              &_Value {
+                font-size: var(--font-size-sm);
+                font-weight: var(--font-weight-semibold);
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+
+      &_Footer {
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+
+        button {
+          width: 100px;
+          padding: 8px 14px;
+          border: none;
+          border-radius: 4px;
+          background: rgb(11, 25, 103);
+          font-weight: 700;
+          color: rgba(255, 255, 255, 1);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  /* animation */
+  @keyframes pop {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
