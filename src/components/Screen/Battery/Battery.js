@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { LuBadgeCheck, LuSearch } from "react-icons/lu";
+import { LuBadgeCheck, LuSearch, LuBatteryCharging } from "react-icons/lu";
 import StatusBadge from "../../Modal/StatusBadge";
 import { mockAlarms, mockContainers } from "../../data/mockData";
 import "./Battery.scss";
 import { FaArrowLeftLong } from "react-icons/fa6";
-
 export default function Battery() {
   const [selectedContainer, setSelectedContainer] = useState(mockContainers[0]);
   const [selectedRack, setSelectedRack] = useState(null);
@@ -56,27 +55,28 @@ export default function Battery() {
           >
             <div className="DAT_Battery_Overview_Card_Header">
               <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Title">{c.name}</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Icon">
+                  <LuBatteryCharging size={40}/> 
+                </div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Title">BMS Level</div>
                 <StatusBadge status={c.status} />
               </div>
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Racks:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.racks.length}</div>
-              </div>
 
               <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOC:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soc}%</div>
-              </div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">SOC:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.soc}%</div>
+                </div>
 
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">SOH:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.soh}%</div>
-              </div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">SOH:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.soh}%</div>
+                </div>
 
-              <div className="DAT_Battery_Overview_Card_Header_Box">
-                <div className="DAT_Battery_Overview_Card_Header_Box_Label">Temp:</div>
-                <div className="DAT_Battery_Overview_Card_Header_Box_Value">{c.temperature}°C</div>
+                <div className="DAT_Battery_Overview_Card_Header_Box_Item">
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Label">Temp:</div>
+                  <div className="DAT_Battery_Overview_Card_Header_Box_Item_Value">{c.temperature}°C</div>
+                </div>
               </div>
             </div>
           </div>
@@ -248,14 +248,22 @@ export default function Battery() {
             className="DAT_Modal_Overlay_BoxCell"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="DAT_Modal_Overlay_BoxCell_Header" onClick={() => {
+            <div className="DAT_Modal_Overlay_BoxCell_Header">
+              <div className="DAT_Modal_Overlay_BoxCell_Header_Back" onClick={() => {
                 setIsModalModuleOpen(false)
                 setIsModalOpen(true)
               }}>
-              <div className="DAT_Modal_Overlay_BoxCell_Header_Icon">
-                <FaArrowLeftLong size={20}/>
+                <div className="DAT_Modal_Overlay_BoxCell_Header_Back_Icon">
+                  <FaArrowLeftLong size={20} />
+                </div>
+                <h2>{selectedRack.id} - {moduleName} - Cells</h2>
               </div>
-              <h2>{selectedRack.id} - {moduleName} - Cells</h2>
+              <button
+                className="DAT_Modal_Overlay_BoxCell_Header_Close"
+                onClick={() => setIsModalModuleOpen(false)}
+              >
+                ✕
+              </button>
             </div>
 
             <div className="DAT_Modal_Overlay_BoxCell_Cell">
@@ -263,11 +271,11 @@ export default function Battery() {
                 return (
                   <div className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card` : "DAT_Modal_Overlay_BoxCell_Cell_Card--High"}>
                     <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header">
-                       <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Title">{cell.id}</span>
-                       <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status">
-                          <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Label">Status:</span>
-                          <span className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value` : "DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value_High"}>{cell.status}</span>
-                       </div>
+                      <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Title">{cell.id}</span>
+                      <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status">
+                        <span className="DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Label">Status:</span>
+                        <span className={cell.status === "Normal" ? `DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value` : "DAT_Modal_Overlay_BoxCell_Cell_Card_Header_Status_Value_High"}>{cell.status}</span>
+                      </div>
                     </div>
                     <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats">
                       <div className="DAT_Modal_Overlay_BoxCell_Cell_Card_Stats_Item">
@@ -282,11 +290,6 @@ export default function Battery() {
                   </div>
                 )
               })}
-
-            </div>
-
-            <div className="DAT_Modal_Overlay_BoxCell_Footer">
-              <button onClick={() => setIsModalModuleOpen(false)}>Close</button>
             </div>
           </div>
         </div>
