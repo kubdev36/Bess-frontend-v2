@@ -16,6 +16,7 @@ import { Bar } from "react-chartjs-2";
 import { mockEnergyReport } from "../../data/mockData";
 import "./EnergyReport.scss";
 import { useIntl } from "react-intl";
+import { LuCalendar, LuChartNoAxesCombined } from "react-icons/lu";
 
 
 ChartJS.register(
@@ -29,76 +30,158 @@ ChartJS.register(
   Filler,
 );
 
-const presets = [
-  "today",
-  "yesterday",
-  "last7days",
-  "this_month",
-  "this_year",
-  "custom_range",
+const monthNamesVi = [
+  "Một", "Hai", "Ba", "Tư", "Năm", "Sáu", "Bảy", "Tám", "Chín", "Mười", "Mười Một", "Mười Hai"
+];
+const monthNamesEn = [
+  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+];
+const shortMonthNamesVi = [
+  "Thg1", "Thg2", "Thg3", "Thg4", "Thg5", "Thg6", "Thg7", "Thg8", "Thg9", "Thg10", "Thg11", "Thg12"
+];
+const shortMonthNamesEn = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
 export default function EnergyReport() {
-  const [preset, setPreset] = useState("Last 7 days");
   const lang = useIntl();
+  const [viewMode, setViewMode] = useState("day"); // "day" or "month"
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // const rows = useMemo(() => {
-  //   if (preset === "Today") return mockEnergyReport.slice(0, 1);
-  //   if (preset === "Yesterday") return mockEnergyReport.slice(1, 2);
-  //   if (preset === "Last 7 days") return mockEnergyReport.slice(0, 7);
-  //   if (preset === "This month") return mockEnergyReport.slice(0, 30);
-  //   if (preset === "This year") return mockEnergyReport;
-  //   return mockEnergyReport.slice(0, 14);
-  // }, [preset]);
- const rows = useMemo(() => {
-    const now = new Date();
-
-  return mockEnergyReport.filter((item) => {
-    const d = new Date(item.date);
-
-    switch (preset) {
-      case "today":
-        return (
-          d.getDate() === now.getDate() &&
-          d.getMonth() === now.getMonth() &&
-          d.getFullYear() === now.getFullYear()
-        );
-
-      case "yesterday": {
-        const yesterday = new Date();
-        yesterday.setDate(now.getDate() - 1);
-
-        return (
-          d.getDate() === yesterday.getDate() &&
-          d.getMonth() === yesterday.getMonth() &&
-          d.getFullYear() === yesterday.getFullYear()
-        );
-      }
-
-      case "last7days": {
-        const last7 = new Date();
-        last7.setDate(now.getDate() - 7);
-
-        return d >= last7;
-      }
-
-      case "this_month":
-        return (
-          d.getMonth() === now.getMonth() &&
-          d.getFullYear() === now.getFullYear()
-        );
-
-      case "this_year":
-        return d.getFullYear() === now.getFullYear();
-
-      case "custom_range":
-        return true;
-
-      default:
-        return true;
+  const latestDate = useMemo(() => {
+    if (mockEnergyReport && mockEnergyReport.length > 0) {
+      return new Date(mockEnergyReport[0].date);
     }
-  });
-  }, [preset, mockEnergyReport]);
+    return new Date();
+  }, []);
+
+  const [selectedDate, setSelectedDate] = useState(latestDate);
+  const [navDate, setNavDate] = useState(new Date(latestDate.getTime()));
+
+  const formatToDayMonth = (dateStr) => {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-");
+    if (parts.length === 3) {
+      return `${parts[2]}/${parts[1]}`;
+    }
+    return dateStr;
+  };
+
+  const formattedDateDisplay = useMemo(() => {
+    const dd = String(selectedDate.getDate()).padStart(2, "0");
+    const mm = String(selectedDate.getMonth() + 1).padStart(2, "0");
+    if (viewMode === "day") {
+      return `${dd}/${mm}/${selectedDate.getFullYear()}`;
+    } else {
+      if (lang.locale === "vi") {
+        return `Tháng ${monthNamesVi[selectedDate.getMonth()]}`;
+      } else {
+        return `${monthNamesEn[selectedDate.getMonth()]}`;
+      }
+    }
+  }, [selectedDate, viewMode, lang]);
+
+  const handlePrevMonth = () => {
+    setNavDate(new Date(navDate.getFullYear(), navDate.getMonth() - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setNavDate(new Date(navDate.getFullYear(), navDate.getMonth() + 1, 1));
+  };
+
+  const handlePrevYear = () => {
+    setNavDate(new Date(navDate.getFullYear() - 1, navDate.getMonth(), 1));
+  };
+
+  const handleNextYear = () => {
+    setNavDate(new Date(navDate.getFullYear() + 1, navDate.getMonth(), 1));
+  };
+
+  const getDaysInMonth = () => {
+    const year = navDate.getFullYear();
+    const month = navDate.getMonth();
+    const firstDayInstance = new Date(year, month, 1);
+
+    let startDay = firstDayInstance.getDay();
+    if (startDay === 0) startDay = 7;
+    const paddingDays = startDay - 1;
+
+    const prevMonthLastDate = new Date(year, month, 0).getDate();
+    const currentMonthLastDate = new Date(year, month + 1, 0).getDate();
+
+    const cells = [];
+
+    for (let i = paddingDays - 1; i >= 0; i--) {
+      const d = prevMonthLastDate - i;
+      cells.push({
+        day: d,
+        isCurrentMonth: false,
+        date: new Date(year, month - 1, d),
+      });
+    }
+
+    for (let i = 1; i <= currentMonthLastDate; i++) {
+      cells.push({
+        day: i,
+        isCurrentMonth: true,
+        date: new Date(year, month, i),
+      });
+    }
+
+    const totalCells = 42;
+    const remainingCells = totalCells - cells.length;
+    for (let i = 1; i <= remainingCells; i++) {
+      cells.push({
+        day: i,
+        isCurrentMonth: false,
+        date: new Date(year, month + 1, i),
+      });
+    }
+
+    return cells;
+  };
+
+  const handleSelectDay = (dayDate) => {
+    setSelectedDate(dayDate);
+    setShowDropdown(false);
+  };
+
+  const handleSelectMonth = (monthIdx) => {
+    const newDate = new Date(navDate.getFullYear(), monthIdx, 1);
+    setSelectedDate(newDate);
+    setShowDropdown(false);
+  };
+
+  const handleClear = () => {
+    setSelectedDate(latestDate);
+    setNavDate(new Date(latestDate.getTime()));
+    setShowDropdown(false);
+  };
+
+  const handleSelectToday = () => {
+    setSelectedDate(latestDate);
+    setNavDate(new Date(latestDate.getTime()));
+    setShowDropdown(false);
+  };
+
+  const rows = useMemo(() => {
+    return mockEnergyReport.filter((item) => {
+      const d = new Date(item.date);
+      if (viewMode === "day") {
+        return (
+          d.getDate() === selectedDate.getDate() &&
+          d.getMonth() === selectedDate.getMonth() &&
+          d.getFullYear() === selectedDate.getFullYear()
+        );
+      } else {
+        return (
+          d.getMonth() === selectedDate.getMonth() &&
+          d.getFullYear() === selectedDate.getFullYear()
+        );
+      }
+    });
+  }, [viewMode, selectedDate]);
+
   const summary = rows.reduce(
     (acc, row) => ({
       charge: acc.charge + row.charge,
@@ -131,24 +214,151 @@ export default function EnergyReport() {
   return (
     <div className="DAT_Report">
       <div className="DAT_Report_Toolbar">
-        <div className="DAT_Report_Toolbar_Title">{lang.formatMessage({ id: "energy_report" })}</div>
+        <div className="DAT_Report_Toolbar_Title">
+          <LuChartNoAxesCombined />
+          {lang.formatMessage({ id: "energy_report" })}
+        </div>
+
 
         <div className="DAT_Report_Toolbar_Actions">
-          <div className="DAT_Report_Toolbar_Actions_Opt">
-            {presets.map((item) => (
-              <button
-                key={item}
-                className={`DAT_Report_Toolbar_Actions_Opt_Btn ${preset === item ? "Active" : ""}`}
+          <div className="DAT_Report_Toolbar_Actions_DateGroup">
+            <div className="DAT_Report_DatePicker_Container">
+              <div
+                className="DAT_Report_DatePicker"
                 onClick={() => {
-                  setPreset(item);
+                  setNavDate(new Date(selectedDate.getTime()));
+                  setShowDropdown(!showDropdown);
                 }}
               >
-                {lang.formatMessage({ id: item })}
+                <span className="DAT_Report_DatePicker_Value">{formattedDateDisplay}</span>
+                <LuCalendar className="DAT_Report_DatePicker_Icon" />
+              </div>
+
+              {showDropdown && (
+                <>
+                  <div
+                    className="DAT_Report_DatePicker_Backdrop"
+                    onClick={() => setShowDropdown(false)}
+                  />
+                  <div className="DAT_Report_CalendarDropdown">
+                    <div className="DAT_Report_CalendarDropdown_Header">
+                      <span className="DAT_Report_CalendarDropdown_Header_Title">
+                        {viewMode === "day" ? (
+                          <>
+                            {lang.locale === "vi" ? `Tháng ${monthNamesVi[navDate.getMonth()]} ${navDate.getFullYear()}` : `${monthNamesEn[navDate.getMonth()]} ${navDate.getFullYear()}`} ▾
+                          </>
+                        ) : (
+                          navDate.getFullYear()
+                        )}
+                      </span>
+                      <div className="DAT_Report_CalendarDropdown_Header_Nav">
+                        <button
+                          type="button"
+                          className="DAT_Report_CalendarDropdown_Header_Nav_Btn"
+                          onClick={viewMode === "day" ? handlePrevMonth : handlePrevYear}
+                        >
+                          ↑
+                        </button>
+                        <button
+                          type="button"
+                          className="DAT_Report_CalendarDropdown_Header_Nav_Btn"
+                          onClick={viewMode === "day" ? handleNextMonth : handleNextYear}
+                        >
+                          ↓
+                        </button>
+                      </div>
+                    </div>
+
+                    {viewMode === "day" ? (
+                      <>
+                        <div className="DAT_Report_CalendarDropdown_Weekdays">
+                          {lang.locale === "vi" ? (
+                            <>
+                              <div>H</div><div>B</div><div>T</div><div>N</div><div>S</div><div>B</div><div>C</div>
+                            </>
+                          ) : (
+                            <>
+                              <div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div><div>S</div>
+                            </>
+                          )}
+                        </div>
+                        <div className="DAT_Report_CalendarDropdown_DaysGrid">
+                          {getDaysInMonth().map((cell, idx) => {
+                            const isActive = cell.isCurrentMonth &&
+                              cell.date.getDate() === selectedDate.getDate() &&
+                              cell.date.getMonth() === selectedDate.getMonth() &&
+                              cell.date.getFullYear() === selectedDate.getFullYear();
+                            return (
+                              <div
+                                key={idx}
+                                className={`DAT_Report_CalendarDropdown_DaysGrid_Cell ${cell.isCurrentMonth ? "CurrentMonth" : "PrevNextMonth"} ${isActive ? "Active" : ""}`}
+                                onClick={() => cell.isCurrentMonth && handleSelectDay(cell.date)}
+                              >
+                                {cell.day}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </>
+                    ) : (
+                      <div className="DAT_Report_CalendarDropdown_MonthsGrid">
+                        {(lang.locale === "vi" ? shortMonthNamesVi : shortMonthNamesEn).map((mName, idx) => {
+                          const isActive = idx === selectedDate.getMonth() && navDate.getFullYear() === selectedDate.getFullYear();
+                          return (
+                            <div
+                              key={idx}
+                              className={`DAT_Report_CalendarDropdown_MonthsGrid_Cell ${isActive ? "Active" : ""}`}
+                              onClick={() => handleSelectMonth(idx)}
+                            >
+                              {mName}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    <div className="DAT_Report_CalendarDropdown_Footer">
+                      <button
+                        type="button"
+                        className="DAT_Report_CalendarDropdown_Footer_Btn"
+                        onClick={handleClear}
+                      >
+                        {lang.locale === "vi" ? "Xóa" : "Clear"}
+                      </button>
+                      <button
+                        type="button"
+                        className="DAT_Report_CalendarDropdown_Footer_Btn"
+                        onClick={handleSelectToday}
+                      >
+                        {viewMode === "day" ? (lang.locale === "vi" ? "Hôm nay" : "Today") : (lang.locale === "vi" ? "Tháng này" : "This Month")}
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="DAT_Report_Toggle">
+              <button
+                type="button"
+                className={`DAT_Report_Toggle_Btn ${viewMode === "day" ? "Active" : ""}`}
+                onClick={() => setViewMode("day")}
+              >
+                {lang.formatMessage({ id: "day" })}
               </button>
-            ))}
+              <button
+                type="button"
+                className={`DAT_Report_Toggle_Btn ${viewMode === "month" ? "Active" : ""}`}
+                onClick={() => setViewMode("month")}
+              >
+                {lang.formatMessage({ id: "month" })}
+              </button>
+            </div>
           </div>
+
+          {/* <button className="DAT_Report_Toolbar_Actions_ImportExcel">{lang.formatMessage({ id: "import_excel" })}</button> */}
           <button className="DAT_Report_Toolbar_Actions_Excel">{lang.formatMessage({ id: "export_excel" })}</button>
-          <button className="DAT_Report_Toolbar_Actions_PDF">{lang.formatMessage({ id: "export_pdf" })}</button>
+
         </div>
       </div>
 
@@ -203,7 +413,7 @@ export default function EnergyReport() {
                 labels: rows
                   .slice()
                   .reverse()
-                  .map((item) => item.date),
+                  .map((item) => formatToDayMonth(item.date)),
 
                 datasets: [
                   {
@@ -285,7 +495,7 @@ export default function EnergyReport() {
                 labels: rows
                   .slice()
                   .reverse()
-                  .map((item) => item.date),
+                  .map((item) => formatToDayMonth(item.date)),
 
                 datasets: [
                   {
@@ -398,7 +608,7 @@ export default function EnergyReport() {
               <tbody>
                 {rows.map((row) => (
                   <tr key={row.date}>
-                    <td>{row.date}</td>
+                    <td>{formatToDayMonth(row.date)}</td>
                     <td>{row.charge} kWh</td>
                     <td>{row.discharge} kWh</td>
                     <td>{row.gridImport} kWh</td>
