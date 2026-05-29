@@ -48,7 +48,7 @@ const menuGroups = [
     items: [
       { path: '/users', icon: <LuUsers />, labelId: "sidebar_item_user_management", perm: 'manage_users' },
       { path: '/settings', icon: <LuSettings />, labelId: "sidebar_item_system_settings", perm: 'system_settings' },
-      { path: '/roles', icon: <RiFolderSettingsFill />, labelId: "sidebar_item_role_management", perm: 'manage_roles' },
+      // { path: '/roles', icon: <RiFolderSettingsFill />, labelId: "sidebar_item_role_management", perm: 'manage_roles' },
       { path: '/user-info', icon: <FaUserEdit />, labelId: "sidebar_item_user_info", perm: 'view_user_info' }
 
     ],

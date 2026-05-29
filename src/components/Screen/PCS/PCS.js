@@ -515,7 +515,7 @@ const PCS = (props) => {
         </div>
       </div>
 
-      <div className="DAT_PCS_History">
+      {/* <div className="DAT_PCS_History">
         <div className="DAT_PCS_History_HistoryHeader">
           <span className="DAT_PCS_History_HistoryHeader_HistoryTitle">
             {lang.formatMessage({ id: "fault_code_history" })}
@@ -553,7 +553,7 @@ const PCS = (props) => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -13,7 +13,7 @@ import {
 
 import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
-import { mockEnergyReport } from "../../data/mockData";
+import { mockEnergyReport, mockEnergyReportHourly } from "../../data/mockData";
 import "./EnergyReport.scss";
 import { useIntl } from "react-intl";
 import { LuCalendar, LuChartNoAxesCombined } from "react-icons/lu";
@@ -66,6 +66,8 @@ export default function EnergyReport() {
     }
     return dateStr;
   };
+
+  const formatHourLabel = (timeStr) => timeStr || "";
 
   const formattedDateDisplay = useMemo(() => {
     const dd = String(selectedDate.getDate()).padStart(2, "0");
@@ -165,22 +167,44 @@ export default function EnergyReport() {
   };
 
   const rows = useMemo(() => {
-    return mockEnergyReport.filter((item) => {
-      const d = new Date(item.date);
-      if (viewMode === "day") {
+    if (viewMode === "day") {
+      return mockEnergyReportHourly.filter((item) => {
+        const d = new Date(item.date);
         return (
           d.getDate() === selectedDate.getDate() &&
           d.getMonth() === selectedDate.getMonth() &&
           d.getFullYear() === selectedDate.getFullYear()
         );
-      } else {
-        return (
-          d.getMonth() === selectedDate.getMonth() &&
-          d.getFullYear() === selectedDate.getFullYear()
-        );
-      }
+      });
+    }
+
+    return mockEnergyReport.filter((item) => {
+      const d = new Date(item.date);
+      return (
+        d.getMonth() === selectedDate.getMonth() &&
+        d.getFullYear() === selectedDate.getFullYear()
+      );
     });
   }, [viewMode, selectedDate]);
+
+  const chartLabels = useMemo(() => {
+    if (viewMode === "day") {
+      return rows.map((item) => formatHourLabel(item.time));
+    }
+
+    return rows
+      .slice()
+      .reverse()
+      .map((item) => formatToDayMonth(item.date));
+  }, [rows, viewMode]);
+
+  const chartRows = useMemo(() => {
+    if (viewMode === "day") {
+      return rows;
+    }
+
+    return rows.slice().reverse();
+  }, [rows, viewMode]);
 
   const summary = rows.reduce(
     (acc, row) => ({
@@ -210,6 +234,89 @@ export default function EnergyReport() {
     : 0;
   const costSaving = Math.round(summary.discharge * 0.12);
   const revenue = Math.round(summary.gridExport * 0.08);
+  const isDayView = viewMode === "day";
+  const axisNumberFormatter = new Intl.NumberFormat(lang.locale === "vi" ? "vi-VN" : "en-US");
+
+  const commonChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "bottom",
+        labels: {
+          boxWidth: 18,
+          boxHeight: 18,
+          usePointStyle: false,
+          font: {
+            size: 12,
+            weight: 500,
+          },
+        },
+      },
+      datalabels: {
+        display: false,
+      },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            size: 11,
+          },
+          maxRotation: 50,
+          minRotation: 50,
+          color: "rgba(90, 95, 107, 1)",
+        },
+        border: {
+          color: "rgba(183, 191, 204, 1)",
+        },
+      },
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: "rgba(219, 224, 231, 1)",
+          borderDash: [3, 3],
+        },
+        ticks: {
+          font: {
+            size: 11,
+          },
+          color: "rgba(90, 95, 107, 1)",
+          callback: (value) => axisNumberFormatter.format(value),
+        },
+        border: {
+          color: "rgba(183, 191, 204, 1)",
+        },
+      },
+    },
+  };
+
+  const lineChartOptions = {
+    ...commonChartOptions,
+    elements: {
+      point: {
+        radius: 0,
+        hoverRadius: 4,
+      },
+      line: {
+        borderWidth: 2,
+      },
+    },
+  };
+
+  const barChartOptions = {
+    ...commonChartOptions,
+    datasets: {
+      bar: {
+        grouped: true,
+        categoryPercentage: 0.72,
+        barPercentage: 0.82,
+      },
+    },
+  };
 
   return (
     <div className="DAT_Report">
@@ -408,80 +515,57 @@ export default function EnergyReport() {
             {lang.formatMessage({ id: "charge" })} / {lang.formatMessage({ id: "discharge" })}
           </div>
           <div style={{ width: "100%", height: 280 }}>
-            <Bar
-              data={{
-                labels: rows
-                  .slice()
-                  .reverse()
-                  .map((item) => formatToDayMonth(item.date)),
-
-                datasets: [
-                  {
-                    label: lang.formatMessage({ id: "charge" }),
-                    data: rows
-                      .slice()
-                      .reverse()
-                      .map((item) => item.charge),
-
-                    backgroundColor: "rgba(14, 165, 233, 1)",
-                    borderRadius: 4,
-                  },
-
-                  {
-                    label: lang.formatMessage({ id: "discharge" }),
-                    data: rows
-                      .slice()
-                      .reverse()
-                      .map((item) => item.discharge),
-
-                    backgroundColor: "rgba(139, 92, 246, 1)",
-                    borderRadius: 4,
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                  legend: {
-                    position: "bottom",
-                  },
-                  datalabels: {
-                    display: false,
-                  },
-                },
-                scales: {
-                  x: {
-                    grid: {
-                      color: "rgba(229, 234, 242, 1)",
-                      borderDash: [3, 3],
+            {isDayView ? (
+              <Line
+                data={{
+                  labels: chartLabels,
+                  datasets: [
+                    {
+                      label: lang.formatMessage({ id: "charge" }),
+                      data: chartRows.map((item) => item.charge),
+                      borderColor: "rgba(27, 99, 184, 1)",
+                      backgroundColor: "rgba(27, 99, 184, 1)",
+                      fill: false,
+                      tension: 0,
                     },
-
-                    ticks: {
-                      font: {
-                        size: 11,
-                      },
+                    {
+                      label: lang.formatMessage({ id: "discharge" }),
+                      data: chartRows.map((item) => item.discharge),
+                      borderColor: "rgba(255, 197, 61, 1)",
+                      backgroundColor: "rgba(255, 197, 61, 1)",
+                      fill: false,
+                      tension: 0,
                     },
-                  },
-
-                  y: {
-                    beginAtZero: true,
-
-                    grid: {
-                      color: "rgba(229, 234, 242, 1)",
-                      borderDash: [3, 3],
+                  ],
+                }}
+                options={lineChartOptions}
+              />
+            ) : (
+              <Bar
+                data={{
+                  labels: chartLabels,
+                  datasets: [
+                    {
+                      label: lang.formatMessage({ id: "charge" }),
+                      data: chartRows.map((item) => item.charge),
+                      backgroundColor: "rgba(18, 144, 201, 1)",
+                      borderRadius: 0,
+                      barThickness: 6,
+                      maxBarThickness: 8,
                     },
-
-                    ticks: {
-                      font: {
-                        size: 11,
-                      },
+                    {
+                      label: lang.formatMessage({ id: "discharge" }),
+                      data: chartRows.map((item) => item.discharge),
+                      backgroundColor: "rgba(255, 197, 61, 1)",
+                      borderRadius: 0,
+                      barThickness: 6,
+                      maxBarThickness: 8,
                     },
-                  },
-                },
-              }}
-            />
+                  ],
+                }}
+                options={barChartOptions}
+              />
+            )}
           </div>
         </div>
 
@@ -490,96 +574,57 @@ export default function EnergyReport() {
             {lang.formatMessage({ id: "efficiency" })} / {lang.formatMessage({ id: "load_trend" })}
           </div>
           <div style={{ width: "100%", height: 280 }}>
-            <Line
-              data={{
-                labels: rows
-                  .slice()
-                  .reverse()
-                  .map((item) => formatToDayMonth(item.date)),
-
-                datasets: [
-                  {
-                    label: lang.formatMessage({ id: "efficiency" }),
-
-                    data: rows
-                      .slice()
-                      .reverse()
-                      .map((item) => item.efficiency),
-
-                    borderColor: "rgba(22, 119, 255, 1)",
-                    backgroundColor: "rgba(22, 119, 255, 0.12)",
-
-                    fill: true,
-                    tension: 0.4,
-                  },
-
-                  {
-                    label: lang.formatMessage({ id: "load" }),
-
-                    data: rows
-                      .slice()
-                      .reverse()
-                      .map((item) => item.load),
-
-                    borderColor: "rgba(20, 184, 166, 1)",
-                    backgroundColor: "rgba(20, 184, 166, 0.12)",
-
-                    fill: true,
-                    tension: 0.4,
-                  },
-                ],
-              }}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                  legend: {
-                    position: "bottom",
-                  },
-                  datalabels: {
-                    display: false,
-                  },
-                },
-
-
-                scales: {
-                  x: {
-                    grid: {
-                      color: "rgba(229, 234, 242, 1)",
-                      borderDash: [3, 3],
+            {isDayView ? (
+              <Line
+                data={{
+                  labels: chartLabels,
+                  datasets: [
+                    {
+                      label: lang.formatMessage({ id: "efficiency" }),
+                      data: chartRows.map((item) => item.efficiency),
+                      borderColor: "rgba(33, 167, 53, 1)",
+                      backgroundColor: "rgba(33, 167, 53, 1)",
+                      fill: false,
+                      tension: 0,
                     },
-
-                    ticks: {
-                      font: {
-                        size: 11,
-                      },
+                    {
+                      label: lang.formatMessage({ id: "load" }),
+                      data: chartRows.map((item) => item.load),
+                      borderColor: "rgba(245, 158, 11, 1)",
+                      backgroundColor: "rgba(245, 158, 11, 1)",
+                      fill: false,
+                      tension: 0,
                     },
-                  },
-
-                  y: {
-                    beginAtZero: true,
-
-                    grid: {
-                      color: "rgba(229, 234, 242, 1)",
-                      borderDash: [3, 3],
+                  ],
+                }}
+                options={lineChartOptions}
+              />
+            ) : (
+              <Bar
+                data={{
+                  labels: chartLabels,
+                  datasets: [
+                    {
+                      label: lang.formatMessage({ id: "efficiency" }),
+                      data: chartRows.map((item) => item.efficiency),
+                      backgroundColor: "rgba(33, 167, 53, 1)",
+                      borderRadius: 0,
+                      barThickness: 6,
+                      maxBarThickness: 8,
                     },
-
-                    ticks: {
-                      font: {
-                        size: 11,
-                      },
+                    {
+                      label: lang.formatMessage({ id: "load" }),
+                      data: chartRows.map((item) => item.load),
+                      backgroundColor: "rgba(245, 158, 11, 1)",
+                      borderRadius: 0,
+                      barThickness: 6,
+                      maxBarThickness: 8,
                     },
-                  },
-                },
-
-                elements: {
-                  point: {
-                    radius: 0,
-                  },
-                },
-              }}
-            />
+                  ],
+                }}
+                options={barChartOptions}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -587,7 +632,6 @@ export default function EnergyReport() {
       <div className="DAT_Report_Detail">
         <div className="DAT_Report_Detail_Header">
           <span className="DAT_Report_Detail_Header_Title">{lang.formatMessage({ id: "detailed_report_table" })}</span>
-          <span className="DAT_Report_Detail_Header_Subtitle">{rows.length} {lang.formatMessage({ id: "records" })}</span>
         </div>
         {rows.length ? (
           <div className="DAT_Report_Detail_Container">
@@ -607,8 +651,8 @@ export default function EnergyReport() {
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.date}>
-                    <td>{formatToDayMonth(row.date)}</td>
+                  <tr key={viewMode === "day" ? `${row.date}-${row.time}` : row.date}>
+                    <td>{viewMode === "day" ? formatHourLabel(row.time) : formatToDayMonth(row.date)}</td>
                     <td>{row.charge} kWh</td>
                     <td>{row.discharge} kWh</td>
                     <td>{row.gridImport} kWh</td>
